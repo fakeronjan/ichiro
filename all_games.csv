@@ -1,0 +1,377 @@
+date,tournament,season,road_team,road_runs,home_team,home_runs,tier,neutral
+2004-08-15,Olympics,2004,AUS,1,CUB,4,1.0,True
+2004-08-15,Olympics,2004,JPN,12,ITA,0,1.0,True
+2004-08-15,Olympics,2004,NED,11,GRE,0,1.0,True
+2004-08-15,Olympics,2004,TPE,0,CAN,7,1.0,True
+2004-08-16,Olympics,2004,GRE,4,CUB,5,1.0,True
+2004-08-16,Olympics,2004,ITA,3,CAN,9,1.0,True
+2004-08-16,Olympics,2004,NED,3,JPN,8,1.0,True
+2004-08-16,Olympics,2004,TPE,3,AUS,0,1.0,True
+2004-08-17,Olympics,2004,AUS,6,ITA,0,1.0,True
+2004-08-17,Olympics,2004,CAN,7,NED,0,1.0,True
+2004-08-17,Olympics,2004,GRE,1,TPE,7,1.0,True
+2004-08-17,Olympics,2004,JPN,6,CUB,3,1.0,True
+2004-08-18,Olympics,2004,AUS,9,JPN,4,1.0,True
+2004-08-18,Olympics,2004,CAN,2,GRE,0,1.0,True
+2004-08-18,Olympics,2004,CUB,10,TPE,2,1.0,True
+2004-08-18,Olympics,2004,ITA,4,NED,10,1.0,True
+2004-08-20,Olympics,2004,CAN,1,JPN,9,1.0,True
+2004-08-20,Olympics,2004,GRE,6,AUS,11,1.0,True
+2004-08-20,Olympics,2004,ITA,5,TPE,4,1.0,True
+2004-08-20,Olympics,2004,NED,2,CUB,9,1.0,True
+2004-08-21,Olympics,2004,AUS,22,NED,2,1.0,True
+2004-08-21,Olympics,2004,CUB,5,CAN,2,1.0,True
+2004-08-21,Olympics,2004,GRE,12,ITA,7,1.0,True
+2004-08-21,Olympics,2004,TPE,3,JPN,4,1.0,True
+2004-08-22,Olympics,2004,CAN,11,AUS,0,1.0,True
+2004-08-22,Olympics,2004,CUB,5,ITA,0,1.0,True
+2004-08-22,Olympics,2004,JPN,6,GRE,1,1.0,True
+2004-08-22,Olympics,2004,TPE,5,NED,1,1.0,True
+2004-08-24,Olympics,2004,AUS,1,JPN,0,1.0,True
+2004-08-24,Olympics,2004,CAN,5,CUB,8,1.0,True
+2004-08-25,Olympics,2004,CUB,6,AUS,2,1.0,True
+2004-08-25,Olympics,2004,JPN,11,CAN,2,1.0,True
+2006-03-03,World Baseball Classic,2006,JPN,18,CHN,2,1.0,True
+2006-03-03,World Baseball Classic,2006,KOR,2,TPE,0,1.0,True
+2006-03-04,World Baseball Classic,2006,CHN,1,KOR,10,1.0,True
+2006-03-04,World Baseball Classic,2006,JPN,14,TPE,3,1.0,True
+2006-03-05,World Baseball Classic,2006,KOR,3,JPN,2,1.0,True
+2006-03-05,World Baseball Classic,2006,TPE,12,CHN,3,1.0,True
+2006-03-07,World Baseball Classic,2006,AUS,0,ITA,10,1.0,True
+2006-03-07,World Baseball Classic,2006,CAN,11,RSA,8,1.0,True
+2006-03-07,World Baseball Classic,2006,DOM,11,VEN,5,1.0,True
+2006-03-07,World Baseball Classic,2006,MEX,0,USA,2,1.0,True
+2006-03-07,World Baseball Classic,2006,PAN,1,PUR,2,1.0,True
+2006-03-08,World Baseball Classic,2006,CAN,8,USA,6,1.0,True
+2006-03-08,World Baseball Classic,2006,CUB,8,PAN,6,1.0,True
+2006-03-08,World Baseball Classic,2006,ITA,0,VEN,6,1.0,True
+2006-03-08,World Baseball Classic,2006,PUR,8,NED,3,1.0,True
+2006-03-08,World Baseball Classic,2006,RSA,4,MEX,10,1.0,True
+2006-03-09,World Baseball Classic,2006,CUB,11,NED,2,1.0,True
+2006-03-09,World Baseball Classic,2006,ITA,3,DOM,8,1.0,True
+2006-03-09,World Baseball Classic,2006,MEX,9,CAN,1,1.0,True
+2006-03-09,World Baseball Classic,2006,VEN,2,AUS,0,1.0,True
+2006-03-10,World Baseball Classic,2006,AUS,4,DOM,6,1.0,True
+2006-03-10,World Baseball Classic,2006,NED,10,PAN,0,1.0,True
+2006-03-10,World Baseball Classic,2006,PUR,12,CUB,2,1.0,True
+2006-03-10,World Baseball Classic,2006,USA,17,RSA,0,1.0,True
+2006-03-12,World Baseball Classic,2006,CUB,7,VEN,2,1.0,True
+2006-03-12,World Baseball Classic,2006,JPN,3,USA,4,1.0,True
+2006-03-12,World Baseball Classic,2006,MEX,1,KOR,2,1.0,True
+2006-03-12,World Baseball Classic,2006,PUR,7,DOM,1,1.0,True
+2006-03-13,World Baseball Classic,2006,DOM,7,CUB,3,1.0,True
+2006-03-13,World Baseball Classic,2006,USA,3,KOR,7,1.0,True
+2006-03-13,World Baseball Classic,2006,VEN,6,PUR,0,1.0,True
+2006-03-14,World Baseball Classic,2006,JPN,6,MEX,1,1.0,True
+2006-03-14,World Baseball Classic,2006,VEN,1,DOM,2,1.0,True
+2006-03-15,World Baseball Classic,2006,CUB,4,PUR,3,1.0,True
+2006-03-15,World Baseball Classic,2006,KOR,2,JPN,1,1.0,True
+2006-03-16,World Baseball Classic,2006,USA,1,MEX,2,1.0,True
+2006-03-18,World Baseball Classic,2006,CUB,3,DOM,1,1.0,True
+2006-03-18,World Baseball Classic,2006,JPN,6,KOR,0,1.0,True
+2006-03-20,World Baseball Classic,2006,JPN,10,CUB,6,1.0,True
+2008-08-13,Olympics,2008,CAN,10,CHN,0,1.0,True
+2008-08-13,Olympics,2008,JPN,2,CUB,4,1.0,True
+2008-08-13,Olympics,2008,NED,0,TPE,5,1.0,True
+2008-08-13,Olympics,2008,USA,7,KOR,8,1.0,True
+2008-08-14,Olympics,2008,CAN,6,CUB,7,1.0,True
+2008-08-14,Olympics,2008,CHN,0,KOR,0,1.0,True
+2008-08-14,Olympics,2008,JPN,6,TPE,1,1.0,True
+2008-08-14,Olympics,2008,USA,7,NED,0,1.0,True
+2008-08-15,Olympics,2008,CUB,5,USA,4,1.0,True
+2008-08-15,Olympics,2008,KOR,1,CAN,0,1.0,True
+2008-08-15,Olympics,2008,NED,0,JPN,6,1.0,True
+2008-08-15,Olympics,2008,TPE,7,CHN,8,1.0,True
+2008-08-16,Olympics,2008,CAN,4,USA,5,1.0,True
+2008-08-16,Olympics,2008,KOR,5,JPN,3,1.0,True
+2008-08-16,Olympics,2008,NED,6,CHN,4,1.0,True
+2008-08-16,Olympics,2008,TPE,0,CUB,1,1.0,True
+2008-08-17,Olympics,2008,CHN,0,KOR,1,1.0,True
+2008-08-18,Olympics,2008,CHN,1,USA,9,1.0,True
+2008-08-18,Olympics,2008,CUB,14,NED,3,1.0,True
+2008-08-18,Olympics,2008,JPN,1,CAN,0,1.0,True
+2008-08-18,Olympics,2008,KOR,9,TPE,8,1.0,True
+2008-08-19,Olympics,2008,CAN,4,NED,0,1.0,True
+2008-08-19,Olympics,2008,CHN,0,JPN,10,1.0,True
+2008-08-19,Olympics,2008,CUB,4,KOR,7,1.0,True
+2008-08-19,Olympics,2008,TPE,2,USA,4,1.0,True
+2008-08-20,Olympics,2008,CHN,1,CUB,17,1.0,True
+2008-08-20,Olympics,2008,KOR,10,NED,0,1.0,True
+2008-08-20,Olympics,2008,TPE,6,CAN,5,1.0,True
+2008-08-20,Olympics,2008,USA,4,JPN,2,1.0,True
+2008-08-22,Olympics,2008,JPN,2,KOR,6,1.0,True
+2008-08-22,Olympics,2008,USA,2,CUB,10,1.0,True
+2008-08-23,Olympics,2008,JPN,4,USA,8,1.0,True
+2008-08-23,Olympics,2008,KOR,3,CUB,2,1.0,True
+2009-03-05,World Baseball Classic,2009,CHN,0,JPN,4,1.0,True
+2009-03-06,World Baseball Classic,2009,TPE,0,KOR,9,1.0,True
+2009-03-07,World Baseball Classic,2009,CAN,5,USA,6,1.0,True
+2009-03-07,World Baseball Classic,2009,ITA,0,VEN,7,1.0,True
+2009-03-07,World Baseball Classic,2009,JPN,14,KOR,2,1.0,True
+2009-03-07,World Baseball Classic,2009,NED,3,DOM,2,1.0,True
+2009-03-07,World Baseball Classic,2009,PAN,0,PUR,7,1.0,True
+2009-03-07,World Baseball Classic,2009,TPE,1,CHN,4,1.0,True
+2009-03-08,World Baseball Classic,2009,AUS,17,MEX,7,1.0,True
+2009-03-08,World Baseball Classic,2009,CHN,0,KOR,14,1.0,True
+2009-03-08,World Baseball Classic,2009,PAN,0,DOM,9,1.0,True
+2009-03-08,World Baseball Classic,2009,RSA,1,CUB,8,1.0,True
+2009-03-08,World Baseball Classic,2009,USA,15,VEN,6,1.0,True
+2009-03-09,World Baseball Classic,2009,ITA,6,CAN,2,1.0,True
+2009-03-09,World Baseball Classic,2009,KOR,1,JPN,0,1.0,True
+2009-03-09,World Baseball Classic,2009,MEX,14,RSA,3,1.0,True
+2009-03-09,World Baseball Classic,2009,NED,1,PUR,3,1.0,True
+2009-03-10,World Baseball Classic,2009,CUB,5,AUS,4,1.0,True
+2009-03-10,World Baseball Classic,2009,DOM,1,NED,2,1.0,True
+2009-03-10,World Baseball Classic,2009,ITA,1,VEN,10,1.0,True
+2009-03-11,World Baseball Classic,2009,MEX,16,AUS,1,1.0,True
+2009-03-11,World Baseball Classic,2009,NED,0,PUR,5,1.0,True
+2009-03-11,World Baseball Classic,2009,VEN,5,USA,3,1.0,True
+2009-03-12,World Baseball Classic,2009,MEX,4,CUB,16,1.0,True
+2009-03-14,World Baseball Classic,2009,NED,1,VEN,3,1.0,True
+2009-03-14,World Baseball Classic,2009,USA,1,PUR,11,1.0,True
+2009-03-15,World Baseball Classic,2009,JPN,6,CUB,0,1.0,True
+2009-03-15,World Baseball Classic,2009,MEX,2,KOR,8,1.0,True
+2009-03-15,World Baseball Classic,2009,NED,3,USA,9,1.0,True
+2009-03-16,World Baseball Classic,2009,CUB,7,MEX,4,1.0,True
+2009-03-16,World Baseball Classic,2009,VEN,2,PUR,0,1.0,True
+2009-03-17,World Baseball Classic,2009,JPN,1,KOR,4,1.0,True
+2009-03-17,World Baseball Classic,2009,PUR,5,USA,6,1.0,True
+2009-03-18,World Baseball Classic,2009,JPN,5,CUB,0,1.0,True
+2009-03-18,World Baseball Classic,2009,USA,6,VEN,10,1.0,True
+2009-03-19,World Baseball Classic,2009,JPN,6,KOR,2,1.0,True
+2009-03-21,World Baseball Classic,2009,KOR,10,VEN,2,1.0,True
+2009-03-22,World Baseball Classic,2009,US,4,JPN,9,1.0,True
+2009-03-23,World Baseball Classic,2009,JPN,5,KOR,3,1.0,True
+2013-03-02,World Baseball Classic,2013,AUS,1,TPE,4,1.0,True
+2013-03-02,World Baseball Classic,2013,JPN,5,BRA,3,1.0,True
+2013-03-02,World Baseball Classic,2013,KOR,0,NED,5,1.0,True
+2013-03-03,World Baseball Classic,2013,CHN,2,JPN,5,1.0,True
+2013-03-03,World Baseball Classic,2013,CUB,5,BRA,2,1.0,True
+2013-03-03,World Baseball Classic,2013,NED,3,TPE,8,1.0,True
+2013-03-04,World Baseball Classic,2013,CHN,0,CUB,12,1.0,True
+2013-03-04,World Baseball Classic,2013,KOR,6,AUS,0,1.0,True
+2013-03-05,World Baseball Classic,2013,AUS,1,NED,4,1.0,True
+2013-03-05,World Baseball Classic,2013,BRA,2,CHN,5,1.0,True
+2013-03-05,World Baseball Classic,2013,TPE,2,KOR,3,1.0,True
+2013-03-06,World Baseball Classic,2013,JPN,3,CUB,6,1.0,True
+2013-03-07,World Baseball Classic,2013,ITA,6,MEX,5,1.0,True
+2013-03-07,World Baseball Classic,2013,VEN,3,DOM,9,1.0,True
+2013-03-08,World Baseball Classic,2013,CAN,4,ITA,14,1.0,True
+2013-03-08,World Baseball Classic,2013,ESP,0,PUR,3,1.0,True
+2013-03-08,World Baseball Classic,2013,JPN,4,TPE,3,1.0,True
+2013-03-08,World Baseball Classic,2013,MEX,5,USA,2,1.0,True
+2013-03-08,World Baseball Classic,2013,NED,6,CUB,2,1.0,True
+2013-03-09,World Baseball Classic,2013,CAN,10,MEX,3,1.0,True
+2013-03-09,World Baseball Classic,2013,DOM,6,ESP,3,1.0,True
+2013-03-09,World Baseball Classic,2013,PUR,6,VEN,3,1.0,True
+2013-03-09,World Baseball Classic,2013,TPE,0,CUB,14,1.0,True
+2013-03-09,World Baseball Classic,2013,USA,6,ITA,2,1.0,True
+2013-03-10,World Baseball Classic,2013,DOM,4,PUR,2,1.0,True
+2013-03-10,World Baseball Classic,2013,ESP,6,VEN,11,1.0,True
+2013-03-10,World Baseball Classic,2013,JPN,16,NED,4,1.0,True
+2013-03-10,World Baseball Classic,2013,USA,9,CAN,4,1.0,True
+2013-03-11,World Baseball Classic,2013,CUB,6,NED,7,1.0,True
+2013-03-12,World Baseball Classic,2013,ITA,4,DOM,5,1.0,True
+2013-03-12,World Baseball Classic,2013,NED,6,JPN,10,1.0,True
+2013-03-12,World Baseball Classic,2013,PUR,1,USA,7,1.0,True
+2013-03-13,World Baseball Classic,2013,ITA,3,PUR,4,1.0,True
+2013-03-14,World Baseball Classic,2013,DOM,3,USA,1,1.0,True
+2013-03-15,World Baseball Classic,2013,PUR,4,USA,3,1.0,True
+2013-03-16,World Baseball Classic,2013,PUR,0,DOM,2,1.0,True
+2013-03-17,World Baseball Classic,2013,PUR,3,JPN,1,1.0,True
+2013-03-18,World Baseball Classic,2013,NED,1,DOM,4,1.0,True
+2013-03-19,World Baseball Classic,2013,PUR,0,DOM,3,1.0,True
+2015-11-08,WBSC Premier12,2015,KOR,0,JPN,5,0.85,True
+2015-11-09,WBSC Premier12,2015,NED,7,TPE,4,0.85,True
+2015-11-10,WBSC Premier12,2015,CAN,5,CUB,1,0.85,True
+2015-11-10,WBSC Premier12,2015,DOM,5,USA,11,0.85,True
+2015-11-11,WBSC Premier12,2015,CUB,6,NED,5,0.85,True
+2015-11-11,WBSC Premier12,2015,KOR,10,DOM,1,0.85,True
+2015-11-11,WBSC Premier12,2015,MEX,5,JPN,6,0.85,True
+2015-11-11,WBSC Premier12,2015,PUR,0,CAN,2,0.85,True
+2015-11-11,WBSC Premier12,2015,TPE,7,ITA,1,0.85,True
+2015-11-11,WBSC Premier12,2015,VEN,7,USA,5,0.85,True
+2015-11-12,WBSC Premier12,2015,CAN,9,TPE,8,0.85,True
+2015-11-12,WBSC Premier12,2015,JPN,4,DOM,2,0.85,True
+2015-11-12,WBSC Premier12,2015,NED,16,ITA,1,0.85,True
+2015-11-12,WBSC Premier12,2015,PUR,7,CUB,8,0.85,True
+2015-11-12,WBSC Premier12,2015,USA,10,MEX,0,0.85,True
+2015-11-12,WBSC Premier12,2015,VEN,2,KOR,13,0.85,True
+2015-11-14,WBSC Premier12,2015,CUB,1,TPE,4,0.85,True
+2015-11-14,WBSC Premier12,2015,DOM,6,VEN,8,0.85,True
+2015-11-14,WBSC Premier12,2015,ITA,0,CAN,4,0.85,True
+2015-11-14,WBSC Premier12,2015,JPN,10,USA,2,0.85,True
+2015-11-14,WBSC Premier12,2015,KOR,4,MEX,3,0.85,True
+2015-11-14,WBSC Premier12,2015,PUR,7,NED,11,0.85,True
+2015-11-15,WBSC Premier12,2015,CAN,3,NED,1,0.85,True
+2015-11-15,WBSC Premier12,2015,ITA,1,CUB,2,0.85,True
+2015-11-15,WBSC Premier12,2015,MEX,9,DOM,6,0.85,True
+2015-11-15,WBSC Premier12,2015,TPE,4,PUR,7,0.85,True
+2015-11-15,WBSC Premier12,2015,USA,3,KOR,2,0.85,True
+2015-11-15,WBSC Premier12,2015,VEN,5,JPN,6,0.85,True
+2015-11-16,WBSC Premier12,2015,KOR,7,CUB,2,0.85,True
+2015-11-16,WBSC Premier12,2015,NED,1,USA,6,0.85,True
+2015-11-16,WBSC Premier12,2015,PUR,3,JPN,9,0.85,True
+2015-11-20,WBSC Premier12,2015,MEX,1,USA,6,0.85,True
+2015-11-21,WBSC Premier12,2015,KOR,8,USA,0,0.85,True
+2017-03-06,World Baseball Classic,2017,ISR,2,KOR,1,1.0,True
+2017-03-07,World Baseball Classic,2017,CUB,6,JPN,11,1.0,True
+2017-03-07,World Baseball Classic,2017,ISR,15,TPE,7,1.0,True
+2017-03-07,World Baseball Classic,2017,KOR,0,NED,5,1.0,True
+2017-03-08,World Baseball Classic,2017,CHN,0,CUB,6,1.0,True
+2017-03-08,World Baseball Classic,2017,JPN,4,AUS,1,1.0,True
+2017-03-08,World Baseball Classic,2017,TPE,5,NED,6,1.0,True
+2017-03-09,World Baseball Classic,2017,AUS,11,CHN,0,1.0,True
+2017-03-09,World Baseball Classic,2017,CAN,2,DOM,9,1.0,True
+2017-03-09,World Baseball Classic,2017,KOR,11,TPE,8,1.0,True
+2017-03-09,World Baseball Classic,2017,MEX,9,ITA,10,1.0,True
+2017-03-09,World Baseball Classic,2017,NED,2,ISR,4,1.0,True
+2017-03-10,World Baseball Classic,2017,AUS,3,CUB,4,1.0,True
+2017-03-10,World Baseball Classic,2017,CHN,1,JPN,7,1.0,True
+2017-03-10,World Baseball Classic,2017,COL,2,USA,3,1.0,True
+2017-03-10,World Baseball Classic,2017,VEN,0,PUR,11,1.0,True
+2017-03-11,World Baseball Classic,2017,COL,4,CAN,1,1.0,True
+2017-03-11,World Baseball Classic,2017,PUR,9,MEX,4,1.0,True
+2017-03-11,World Baseball Classic,2017,USA,5,DOM,7,1.0,True
+2017-03-11,World Baseball Classic,2017,VEN,11,ITA,10,1.0,True
+2017-03-12,World Baseball Classic,2017,CAN,0,USA,8,1.0,True
+2017-03-12,World Baseball Classic,2017,CUB,1,ISR,4,1.0,True
+2017-03-12,World Baseball Classic,2017,DOM,10,COL,3,1.0,True
+2017-03-12,World Baseball Classic,2017,ITA,3,PUR,9,1.0,True
+2017-03-12,World Baseball Classic,2017,JPN,8,NED,6,1.0,True
+2017-03-12,World Baseball Classic,2017,MEX,11,VEN,9,1.0,True
+2017-03-13,World Baseball Classic,2017,NED,12,ISR,2,1.0,True
+2017-03-13,World Baseball Classic,2017,VEN,4,ITA,3,1.0,True
+2017-03-14,World Baseball Classic,2017,CUB,5,JPN,8,1.0,True
+2017-03-15,World Baseball Classic,2017,ISR,3,JPN,8,1.0,True
+2017-03-15,World Baseball Classic,2017,NED,14,CUB,1,1.0,True
+2017-03-20,World Baseball Classic,2017,NED,3,PUR,4,1.0,True
+2017-03-21,World Baseball Classic,2017,USA,2,JPN,1,1.0,True
+2017-03-22,World Baseball Classic,2017,USA,8,PUR,0,1.0,True
+2019-11-02,WBSC Premier12,2019,DOM,1,MEX,6,0.85,True
+2019-11-02,WBSC Premier12,2019,NED,0,USA,9,0.85,True
+2019-11-03,WBSC Premier12,2019,DOM,14,NED,4,0.85,True
+2019-11-03,WBSC Premier12,2019,MEX,8,USA,2,0.85,True
+2019-11-04,WBSC Premier12,2019,USA,10,DOM,8,0.85,True
+2019-11-05,WBSC Premier12,2019,NED,2,MEX,10,0.85,True
+2019-11-05,WBSC Premier12,2019,PRI,1,TPE,6,0.85,True
+2019-11-05,WBSC Premier12,2019,VEN,4,JPN,8,0.85,True
+2019-11-06,WBSC Premier12,2019,AUS,0,KOR,5,0.85,True
+2019-11-06,WBSC Premier12,2019,CAN,3,CUB,0,0.85,True
+2019-11-06,WBSC Premier12,2019,PRI,0,JPN,4,0.85,True
+2019-11-06,WBSC Premier12,2019,TPE,3,VEN,0,0.85,True
+2019-11-07,WBSC Premier12,2019,AUS,2,CUB,3,0.85,True
+2019-11-07,WBSC Premier12,2019,JPN,8,TPE,1,0.85,True
+2019-11-07,WBSC Premier12,2019,KOR,3,CAN,1,0.85,True
+2019-11-07,WBSC Premier12,2019,VEN,7,PRI,1,0.85,True
+2019-11-08,WBSC Premier12,2019,CAN,1,AUS,3,0.85,True
+2019-11-08,WBSC Premier12,2019,CUB,0,KOR,7,0.85,True
+2019-11-11,WBSC Premier12,2019,AUS,2,JPN,3,0.85,True
+2019-11-11,WBSC Premier12,2019,TPE,0,MEX,2,0.85,True
+2019-11-11,WBSC Premier12,2019,USA,1,KOR,5,0.85,True
+2019-11-12,WBSC Premier12,2019,AUS,0,MEX,3,0.85,True
+2019-11-12,WBSC Premier12,2019,TPE,7,KOR,0,0.85,True
+2019-11-12,WBSC Premier12,2019,USA,4,JPN,3,0.85,True
+2019-11-13,WBSC Premier12,2019,AUS,2,USA,1,0.85,True
+2019-11-13,WBSC Premier12,2019,MEX,1,JPN,3,0.85,True
+2019-11-15,WBSC Premier12,2019,MEX,3,KOR,7,0.85,True
+2019-11-15,WBSC Premier12,2019,TPE,2,USA,3,0.85,True
+2019-11-16,WBSC Premier12,2019,AUS,1,TPE,5,0.85,True
+2019-11-16,WBSC Premier12,2019,KOR,8,JPN,10,0.85,True
+2019-11-17,WBSC Premier12,2019,KOR,3,JPN,5,0.85,True
+2019-11-17,WBSC Premier12,2019,USA,2,MEX,3,0.85,True
+2021-07-28,Olympics,2021,DOM,3,JPN,4,1.0,True
+2021-07-29,Olympics,2021,ISR,5,KOR,6,1.0,True
+2021-07-30,Olympics,2021,MEX,0,DOM,1,1.0,True
+2021-07-30,Olympics,2021,USA,8,ISR,1,1.0,True
+2021-07-31,Olympics,2021,JPN,7,MEX,4,1.0,True
+2021-07-31,Olympics,2021,KOR,2,USA,4,1.0,True
+2021-08-01,Olympics,2021,DOM,3,KOR,4,1.0,True
+2021-08-01,Olympics,2021,ISR,12,MEX,5,1.0,True
+2021-08-02,Olympics,2021,ISR,1,KOR,11,1.0,True
+2021-08-02,Olympics,2021,USA,6,JPN,7,1.0,True
+2021-08-03,Olympics,2021,ISR,6,DOM,7,1.0,True
+2021-08-04,Olympics,2021,DOM,1,USA,3,1.0,True
+2021-08-04,Olympics,2021,KOR,2,JPN,5,1.0,True
+2021-08-05,Olympics,2021,KOR,2,USA,7,1.0,True
+2021-08-07,Olympics,2021,DOM,10,KOR,6,1.0,True
+2021-08-07,Olympics,2021,USA,0,JPN,2,1.0,True
+2023-03-08,World Baseball Classic,2023,CUB,2,NED,4,1.0,True
+2023-03-08,World Baseball Classic,2023,PAN,12,TPE,5,1.0,True
+2023-03-09,World Baseball Classic,2023,AUS,8,KOR,7,1.0,True
+2023-03-09,World Baseball Classic,2023,CHN,1,JPN,8,1.0,True
+2023-03-09,World Baseball Classic,2023,ITA,6,CUB,3,1.0,True
+2023-03-09,World Baseball Classic,2023,PAN,1,NED,3,1.0,True
+2023-03-10,World Baseball Classic,2023,CUB,13,PAN,4,1.0,True
+2023-03-10,World Baseball Classic,2023,CZE,8,CHN,5,1.0,True
+2023-03-10,World Baseball Classic,2023,ITA,7,TPE,11,1.0,True
+2023-03-10,World Baseball Classic,2023,KOR,4,JPN,13,1.0,True
+2023-03-11,World Baseball Classic,2023,CHN,2,AUS,12,1.0,True
+2023-03-11,World Baseball Classic,2023,COL,5,MEX,4,1.0,True
+2023-03-11,World Baseball Classic,2023,CZE,2,JPN,10,1.0,True
+2023-03-11,World Baseball Classic,2023,DOM,1,VEN,5,1.0,True
+2023-03-11,World Baseball Classic,2023,GBR,2,USA,6,1.0,True
+2023-03-11,World Baseball Classic,2023,NCA,1,PUR,9,1.0,True
+2023-03-11,World Baseball Classic,2023,NED,5,TPE,9,1.0,True
+2023-03-11,World Baseball Classic,2023,PAN,2,ITA,0,1.0,True
+2023-03-12,World Baseball Classic,2023,CZE,3,KOR,7,1.0,True
+2023-03-12,World Baseball Classic,2023,GBR,8,CAN,18,1.0,True
+2023-03-12,World Baseball Classic,2023,JPN,7,AUS,1,1.0,True
+2023-03-12,World Baseball Classic,2023,MEX,11,USA,5,1.0,True
+2023-03-12,World Baseball Classic,2023,NCA,1,ISR,3,1.0,True
+2023-03-12,World Baseball Classic,2023,NED,1,ITA,7,1.0,True
+2023-03-12,World Baseball Classic,2023,TPE,1,CUB,7,1.0,True
+2023-03-12,World Baseball Classic,2023,VEN,9,PUR,6,1.0,True
+2023-03-13,World Baseball Classic,2023,AUS,8,CZE,3,1.0,True
+2023-03-13,World Baseball Classic,2023,CAN,1,USA,12,1.0,True
+2023-03-13,World Baseball Classic,2023,COL,5,GBR,7,1.0,True
+2023-03-13,World Baseball Classic,2023,DOM,6,NCA,1,1.0,True
+2023-03-13,World Baseball Classic,2023,ISR,0,PUR,10,1.0,True
+2023-03-13,World Baseball Classic,2023,KOR,22,CHN,2,1.0,True
+2023-03-14,World Baseball Classic,2023,CAN,5,COL,0,1.0,True
+2023-03-14,World Baseball Classic,2023,GBR,1,MEX,2,1.0,True
+2023-03-14,World Baseball Classic,2023,ISR,0,DOM,10,1.0,True
+2023-03-14,World Baseball Classic,2023,NCA,1,VEN,4,1.0,True
+2023-03-15,World Baseball Classic,2023,MEX,10,CAN,3,1.0,True
+2023-03-15,World Baseball Classic,2023,PUR,5,DOM,2,1.0,True
+2023-03-15,World Baseball Classic,2023,USA,3,COL,2,1.0,True
+2023-03-15,World Baseball Classic,2023,VEN,5,ISR,1,1.0,True
+2023-03-21,World Baseball Classic,2023,USA,2,JPN,3,1.0,True
+2024-11-09,WBSC Premier12,2024,PAN,8,NED,9,0.85,True
+2024-11-09,WBSC Premier12,2024,PUR,1,USA,0,0.85,True
+2024-11-09,WBSC Premier12,2024,VEN,8,MEX,4,0.85,True
+2024-11-10,WBSC Premier12,2024,MEX,7,PUR,5,0.85,True
+2024-11-10,WBSC Premier12,2024,NED,2,USA,12,0.85,True
+2024-11-10,WBSC Premier12,2024,VEN,2,PAN,4,0.85,True
+2024-11-11,WBSC Premier12,2024,PAN,3,MEX,2,0.85,True
+2024-11-11,WBSC Premier12,2024,USA,3,VEN,5,0.85,True
+2024-11-12,WBSC Premier12,2024,NED,20,PUR,8,0.85,True
+2024-11-12,WBSC Premier12,2024,PAN,3,USA,9,0.85,True
+2024-11-13,WBSC Premier12,2024,AUS,3,JPN,9,0.85,True
+2024-11-13,WBSC Premier12,2024,DOM,6,CUB,1,0.85,True
+2024-11-13,WBSC Premier12,2024,KOR,3,TPE,6,0.85,True
+2024-11-13,WBSC Premier12,2024,MEX,8,NED,6,0.85,True
+2024-11-13,WBSC Premier12,2024,PUR,2,VEN,5,0.85,True
+2024-11-14,WBSC Premier12,2024,CUB,4,KOR,8,0.85,True
+2024-11-14,WBSC Premier12,2024,NED,0,VEN,11,0.85,True
+2024-11-14,WBSC Premier12,2024,PUR,3,PAN,4,0.85,True
+2024-11-14,WBSC Premier12,2024,TPE,2,DOM,1,0.85,True
+2024-11-14,WBSC Premier12,2024,USA,12,MEX,2,0.85,True
+2024-11-15,WBSC Premier12,2024,DOM,0,AUS,5,0.85,True
+2024-11-15,WBSC Premier12,2024,KOR,3,JPN,6,0.85,True
+2024-11-16,WBSC Premier12,2024,AUS,3,CUB,4,0.85,True
+2024-11-16,WBSC Premier12,2024,DOM,6,KOR,9,0.85,True
+2024-11-16,WBSC Premier12,2024,JPN,3,TPE,1,0.85,True
+2024-11-17,WBSC Premier12,2024,CUB,6,JPN,7,0.85,True
+2024-11-17,WBSC Premier12,2024,TPE,11,AUS,3,0.85,True
+2024-11-18,WBSC Premier12,2024,AUS,2,KOR,5,0.85,True
+2024-11-18,WBSC Premier12,2024,CUB,0,TPE,2,0.85,True
+2024-11-18,WBSC Premier12,2024,JPN,11,DOM,3,0.85,True
+2024-11-21,WBSC Premier12,2024,TPE,0,VEN,2,0.85,True
+2024-11-21,WBSC Premier12,2024,USA,1,JPN,9,0.85,True
+2024-11-22,WBSC Premier12,2024,TPE,8,USA,2,0.85,True
+2024-11-22,WBSC Premier12,2024,VEN,6,JPN,9,0.85,True
+2024-11-23,WBSC Premier12,2024,TPE,6,JPN,9,0.85,True
+2024-11-23,WBSC Premier12,2024,USA,6,VEN,5,0.85,True
+2024-11-24,WBSC Premier12,2024,TPE,4,JPN,0,0.85,True
+2024-11-24,WBSC Premier12,2024,USA,6,VEN,1,0.85,True
