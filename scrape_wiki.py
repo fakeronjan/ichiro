@@ -48,6 +48,7 @@ TIER_WEIGHTS = {
 # ------------------------------------------------------------
 EVENTS = [
     # --- World Baseball Classic ---
+    ("2026 World Baseball Classic", "World Baseball Classic", 2026),
     ("2023 World Baseball Classic", "World Baseball Classic", 2023),
     ("2017 World Baseball Classic", "World Baseball Classic", 2017),
     ("2013 World Baseball Classic", "World Baseball Classic", 2013),
@@ -80,9 +81,11 @@ WORLD_CUP_EVENTS = [
 _SKIP_SUBPAGE_RE = re.compile(r"qualif", re.IGNORECASE)
 
 
-def fetch_wikitext(title, max_retries=3):
+def fetch_wikitext(title, max_retries=3, _redirect_depth=0):
     """Fetch raw wikitext for a page title. Returns '' on failure (NEVER raises)
-    so a flaky fetch degrades to 'no new games' rather than crashing the run."""
+    so a flaky fetch degrades to 'no new games' rather than crashing the run.
+    Follows #REDIRECT (up to 3 hops) -- e.g. '... championship game' redirects
+    to '... championship', where the gold-medal box actually lives."""
     url = WIKI_RAW.format(title=requests.utils.quote(title.replace(" ", "_")))
     for attempt in range(max_retries):
         try:
@@ -91,7 +94,11 @@ def fetch_wikitext(title, max_retries=3):
                 return ""
             r.raise_for_status()
             time.sleep(0.3)
-            return r.text
+            text = r.text
+            m = re.match(r"\s*#REDIRECT\s*\[\[([^\]|#]+)", text, re.IGNORECASE)
+            if m and _redirect_depth < 3:
+                return fetch_wikitext(m.group(1).strip(), max_retries, _redirect_depth + 1)
+            return text
         except Exception as e:
             if attempt == max_retries - 1:
                 print(f"  [warn] fetch failed for {title!r}: {e}")
@@ -341,16 +348,23 @@ def parse_linescore(wikitext, tournament, season):
 # Sub-page discovery + per-event scrape
 # ------------------------------------------------------------
 def discover_subpages(main_title, wikitext):
-    """Sub-pages that hold games: [[<main_title> <suffix>]] links. Handles both
-    'Pool A' (space) and '– Championship' (en-dash) suffix styles. Qualifier
-    / qualification feeders are filtered out."""
+    """Sub-pages that hold games. Two reference styles, both handled:
+      1. [[<main_title> <suffix>]] wiki-links ('Pool A' / '– Championship').
+      2. {{main|<main_title> <suffix>}} and {{#lst:<main_title> <suffix>|label}}
+         transclusions. Modern WBC pool/knockout pages are referenced ONLY this
+         way (not as plain wiki-links), so without this they were invisible.
+    Qualifier / qualification feeders are filtered out."""
     subs = set()
     base = re.escape(main_title)
     for m in re.finditer(rf"\[\[({base}[^\]|#]+)", wikitext):
         page = m.group(1).strip()
-        if _SKIP_SUBPAGE_RE.search(page):
-            continue
-        subs.add(page)
+        if not _SKIP_SUBPAGE_RE.search(page):
+            subs.add(page)
+    for m in re.finditer(rf"\{{\{{\s*(?:main|#lst|#lstx)\s*[:|]\s*({base}[^|}}#\n]+)",
+                         wikitext, re.IGNORECASE):
+        page = m.group(1).strip()
+        if not _SKIP_SUBPAGE_RE.search(page):
+            subs.add(page)
     return sorted(subs)
 
 
@@ -390,6 +404,12 @@ def parse_baseballboxes(wikitext, tournament, season):
     authoritative for the margin."""
     rows = []
     for block in _baseballbox_blocks(wikitext):
+        # Skip pre-tournament exhibition/friendly games (modern WBC pages list
+        # dozens of warm-up boxes, often with full-name team templates and
+        # non-IOC squads). Only competitive tournament games should count.
+        rnd = _bbox_field(block, "round")
+        if re.search(r"friendly|exhibition|non-mlb|warm-?up", rnd, re.IGNORECASE):
+            continue
         t1 = _extract_code(_bbox_field(block, "team1"))
         t2 = _extract_code(_bbox_field(block, "team2"))
         score = _bbox_field(block, "score").replace("&ndash;", "–").replace("&minus;", "–")
