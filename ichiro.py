@@ -9,7 +9,7 @@ MESSI (international soccer):
   - Margin cap to suppress blowouts: MARGIN_CAP = 8 runs (baseball-specific)
   - HCA = 0: WBC / Premier12 / Olympics are at neutral / host venues, not true
     home games. Every game is tagged neutral=True by the scraper.
-  - Fixed rolling window in game-days (see WINDOW_GAME_DAYS note below)
+  - Fixed rolling window in CALENDAR time (see WINDOW_YEARS note below)
   - Linear recency decay across the window
   - Per-tournament TIER WEIGHTS folded into the WLS observation weight (MESSI)
   - Medal/podium tracking per edition (gold / silver / bronze)
@@ -47,28 +47,20 @@ MARGIN_CAP = 8
 # host venues, not the participants' home parks. Scraper tags neutral=True.
 HOME_COURT_ADJUSTMENT = 0.0
 
-# ---- Rolling window (game-days) -------------------------------------------
-# *** FLAGGED FOR USER TUNING ***
-# International baseball has NO continuous season: national teams assemble only
-# for tournaments every 1-4 years. The whole dataset is ~140 distinct game-days
-# over ~20 years (2004-2024). griffey's WINDOW_MULTIPLIER x games-per-season
-# formula is meaningless here (there is no season cadence).
-#
-# We therefore use a FIXED window measured in game-days and lean LARGE, per the
-# brief: 200 game-days exceeds the entire dataset's game-day count, so EVERY
-# edition contributes to EVERY snapshot. Linear recency decay still tilts the
-# rating toward recent tournaments, but old editions never fully drop out.
-# This is the intended "lean into the sparseness" behaviour: a near-flat-weight
-# all-history rating that meaningfully updates once per tournament.
-#
-# Tuning knob: shrink toward ~30-40 game-days to make the rating "only the last
-# ~2 tournaments"; grow / set decay near-flat to weight all history equally.
-WINDOW_GAME_DAYS = 200
+# ---- Rolling window (fixed CALENDAR time) ---------------------------------
+# International baseball has NO continuous season; game-days are the wrong unit
+# (200 game-days spanned ~23yr = essentially all history, so "current form"
+# meant nothing). We use a FIXED CALENDAR window instead, matching CARMELO's
+# approach for consistency. Baseball is SPARSER than basketball (WBC/Premier12
+# fire only every ~4yr, irregularly), so it gets a LONGER window than CARMELO's
+# 4yr — 8yr keeps ~2 WBC + ~2 Premier12 cycles in view per snapshot.
+# Tuning knob reviewed with user 2026-05-29; tune vs face-validity.
+WINDOW_YEARS = 8
+WINDOW_DAYS = int(WINDOW_YEARS * 365.25)
 
-# Linear recency decay: weight = 1 - (game_days_ago / WINDOW_GAME_DAYS), so the
-# current game-day has weight 1.0 and the oldest in-window day approaches 0.
-# RECENCY_FLOOR keeps very old editions from decaying to ~0 (sparse data needs
-# every game). Set to 0.0 for pure linear decay.
+# Linear recency decay over calendar time: weight = 1 - (days_ago / WINDOW_DAYS),
+# current day = 1.0, oldest in-window approaches the floor. RECENCY_FLOOR keeps
+# old editions contributing (sparse data needs every game).
 RECENCY_FLOOR = 0.15
 
 # Eligibility: a team must have played at least this many games inside the
@@ -304,17 +296,21 @@ def compute_ratings(df):
                        .set_index("grouped_date_id")["season"].to_dict())
 
     for i in range(1, max_id + 1):
-        window = df[(df["grouped_date_id"] >= i - WINDOW_GAME_DAYS + 1) &
-                    (df["grouped_date_id"] <= i)].copy()
+        snap_date = df.loc[df["grouped_date_id"] == i, "date"].max()
+        if pd.isnull(snap_date):
+            continue
+        # Calendar-time window: games within the last WINDOW_DAYS calendar days,
+        # so the window means the same thing regardless of schedule sparsity.
+        cutoff = snap_date - pd.Timedelta(days=WINDOW_DAYS)
+        window = df[(df["date"] <= snap_date) & (df["date"] > cutoff)].copy()
         if not len(window):
             continue
-        # Linear recency decay with floor, x tournament tier weight.
-        window["game_days_ago"] = i - window["grouped_date_id"]
-        decay = 1.0 - (window["game_days_ago"] / WINDOW_GAME_DAYS)
-        decay = decay.clip(lower=RECENCY_FLOOR)
+        # Linear recency decay over calendar time, floored, x tournament tier.
+        window["days_ago"] = (snap_date - window["date"]).dt.days
+        decay = (1.0 - window["days_ago"] / WINDOW_DAYS).clip(lower=RECENCY_FLOOR)
         window["weight"] = decay * window["tier"]
 
-        current_date = window["date"].max()
+        current_date = snap_date
         season = int(rid_to_season.get(i, current_date.year))
 
         try:
