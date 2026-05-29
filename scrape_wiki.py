@@ -135,8 +135,37 @@ def _split_top_pipes(s):
     return parts
 
 
+# Section-header -> round-label classifier. Lets the engine identify the gold
+# final vs the bronze game when both share a closing date (e.g. Premier12 2024).
+_HEADER_RE = re.compile(r"^(={2,6})\s*(.*?)\s*\1\s*$", re.MULTILINE)
+
+
+def _round_for_position(text, pos):
+    """Classify the nearest section header preceding byte offset `pos` into a
+    round label: 'final' / 'bronze' / 'semifinal' / '' (group/round-robin)."""
+    label = ""
+    best = -1
+    for m in _HEADER_RE.finditer(text):
+        if m.start() > pos:
+            break
+        best = m.start()
+        h = m.group(2).lower()
+        if "championship final" in h or h.strip() in ("final", "finals", "gold medal game", "gold medal match"):
+            label = "final"
+        elif "bronze" in h or "third place" in h or "3rd place" in h:
+            label = "bronze"
+        elif "semifinal" in h or "semi-final" in h:
+            label = "semifinal"
+        elif "final" in h and "quarterfinal" not in h and "qualif" not in h:
+            # generic "...Final" header (e.g. "Championship round - Final")
+            label = "final"
+        else:
+            label = ""
+    return label
+
+
 def _bb_res_blocks(text):
-    """Yield each {{bb res|...}} block body (between the opening and matching }})."""
+    """Yield (block_body, start_offset) for each {{bb res|...}} block."""
     i = 0
     low = text
     while True:
@@ -152,7 +181,7 @@ def _bb_res_blocks(text):
             elif text[j:j+2] == "}}":
                 depth -= 1; j += 2
                 if depth == 0:
-                    yield text[start:j]
+                    yield text[start:j], start
                     break
             else:
                 j += 1
@@ -209,7 +238,7 @@ def parse_bb_res(wikitext, tournament, season):
     """Yield game dicts from {{bb res}} rows. Winner inferred from '''bold'''
     but score (A=road, B=home) is authoritative for the margin."""
     rows = []
-    for block in _bb_res_blocks(wikitext):
+    for block, pos in _bb_res_blocks(wikitext):
         body = block[block.find("|") + 1: block.rfind("}}")]
         parts = _split_top_pipes(body)
         if len(parts) < 4:
@@ -232,6 +261,7 @@ def parse_bb_res(wikitext, tournament, season):
             "date": gdate, "tournament": tournament, "season": season,
             "road_team": road, "road_runs": sa,
             "home_team": home, "home_runs": sb,
+            "round": _round_for_position(wikitext, pos),
         })
     return rows
 
@@ -265,7 +295,7 @@ def _linescore_blocks(text):
             elif text[j:j+2] == "}}":
                 depth -= 1; j += 2
                 if depth == 0:
-                    yield text[start:j]
+                    yield text[start:j], start
                     break
             else:
                 j += 1
@@ -276,7 +306,7 @@ def _linescore_blocks(text):
 
 def parse_linescore(wikitext, tournament, season):
     rows = []
-    for block in _linescore_blocks(wikitext):
+    for block, pos in _linescore_blocks(wikitext):
         road_abr = _linescore_field(block, "RoadAbr")
         home_abr = _linescore_field(block, "HomeAbr")
         road = (road_abr.strip().upper()[:4] if road_abr
@@ -302,6 +332,7 @@ def parse_linescore(wikitext, tournament, season):
             "date": gdate, "tournament": tournament, "season": season,
             "road_team": road, "road_runs": road_runs,
             "home_team": home, "home_runs": home_runs,
+            "round": _round_for_position(wikitext, pos),
         })
     return rows
 
@@ -341,9 +372,16 @@ def scrape_event(main_title, tournament, season):
         all_rows.extend(rows)
     df = pd.DataFrame(all_rows)
     if len(df):
-        df = df.drop_duplicates(
-            subset=["date", "road_team", "home_team", "road_runs", "home_runs"]
-        )
+        # When a game appears on both main + sub-page, prefer the copy that
+        # carries a round label (final/bronze/semifinal) over a blank one.
+        if "round" not in df.columns:
+            df["round"] = ""
+        df["round"] = df["round"].fillna("")
+        df["_has_round"] = (df["round"] != "").astype(int)
+        df = (df.sort_values("_has_round", ascending=False)
+                .drop_duplicates(subset=["date", "road_team", "home_team",
+                                         "road_runs", "home_runs"], keep="first")
+                .drop(columns="_has_round"))
         df["tier"] = TIER_WEIGHTS.get(tournament, 1.0)
         df["neutral"] = True
     return df
