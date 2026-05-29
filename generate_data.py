@@ -27,8 +27,9 @@ Sport adaptation vs MESSI:
 import json
 import os
 import re
+import bisect
 import pandas as pd
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 from ichiro import code_to_country
 
@@ -171,24 +172,35 @@ podiums = pd.read_csv("tournament_podiums.csv")
 podiums["team"] = podiums["team"].map(canon_name)
 
 
-# ── W-L record over the rating WINDOW (no draws in baseball) ─────────────────
-# Counted over the last WINDOW_YEARS so the standings record matches the
-# window-based rating beside it (not a jarring all-time tally).
+# ── W-L record over the rating WINDOW, AS OF a snapshot date (no draws) ───────
+# Each snapshot shows its team's W-L over the WINDOW_YEARS ending at THAT
+# snapshot's date, so a historical season file shows the record that produced
+# its rating — not a global present-day window (which would, e.g., show a
+# nation as 0-0 in an old file just because it has no recent games).
 # WINDOW_YEARS must match ichiro.py's window.
 WINDOW_YEARS = 4
-_gdates = pd.to_datetime(games["date"])
-_win_cutoff = _gdates.max() - pd.DateOffset(years=WINDOW_YEARS)
-records = {}  # country -> {"w","l"}
-for _, g in games[_gdates >= _win_cutoff].iterrows():
+_WINDOW_DELTA = timedelta(days=int(WINDOW_YEARS * 365.25))
+_team_outcomes = {}  # canon name -> ([sorted dates], [won bools aligned])
+_tmp_oc = {}
+for _, g in games.iterrows():
     hw = g["home_runs"] > g["road_runs"]
     for team, won in ((g["home_team"], hw), (g["road_team"], not hw)):
-        r = records.setdefault(team, {"w": 0, "l": 0})
-        r["w" if won else "l"] += 1
+        _tmp_oc.setdefault(team, []).append((g["date"], bool(won)))
+for _c, _lst in _tmp_oc.items():
+    _lst.sort(key=lambda x: x[0])
+    _team_outcomes[_c] = ([d for d, _ in _lst], [w for _, w in _lst])
 
 
-def record_str(name):
-    r = records.get(canon_name(name), {"w": 0, "l": 0})
-    return f"{r['w']}-{r['l']}"
+def record_str(name, as_of):
+    """W-L over the WINDOW_YEARS calendar window ending at as_of (a date)."""
+    entry = _team_outcomes.get(canon_name(name))
+    if not entry:
+        return "0-0"
+    dates, wons = entry
+    lo = bisect.bisect_left(dates, as_of - _WINDOW_DELTA)
+    hi = bisect.bisect_right(dates, as_of)
+    w = sum(1 for x in wons[lo:hi] if x)
+    return f"{w}-{(hi - lo) - w}"
 
 
 # ── Last game per (team, date) — the game that produced each snapshot ────────
@@ -369,14 +381,14 @@ print("Writing season standings files...")
 all_seasons = sorted(int(s) for s in df["season"].dropna().unique())
 
 
-def team_row(r):
+def team_row(r, as_of):
     return {
         "rank":                int(r["rank"]) if not pd.isna(r["rank"]) else None,
         "team":                r["name"],
         "flag":                flag_emoji(r["name"]),
         "confederation":       clean(r["confederation"]),
         "rating":              round2(r["rating"]),
-        "record":              record_str(r["name"]),
+        "record":              record_str(r["name"], as_of),
         "last_match":          clean(r["last_match"]),
         "last_match_date":     clean(r["last_match_date"]),
         "tournament_finishes": finishes_for(r["name"], r["season"]),
@@ -389,11 +401,12 @@ for season in all_seasons:
     snapshots = []
     for ranking_id, rdf in sdf.groupby("ranking_id"):
         rdf = rdf.sort_values("rank")
-        snap_date = str(rdf["date"].iloc[0])
+        snap_date_obj = rdf["date"].iloc[0]
+        snap_date = str(snap_date_obj)
         label, prestige = date_label_map.get(snap_date, (None, None))
         snapshots.append({
             "date": snap_date, "label": label, "prestige": prestige,
-            "teams": [team_row(r) for _, r in rdf.iterrows()],
+            "teams": [team_row(r, snap_date_obj) for _, r in rdf.iterrows()],
         })
     snapshots.sort(key=lambda x: x["date"])
     jdump({"season": season, "snapshots": snapshots},
@@ -414,10 +427,11 @@ print(f"  {len(all_seasons)} season files + seasons_index.json")
 # ============================================================
 latest_id = int(df["ranking_id"].max())
 latest = df[(df["ranking_id"] == latest_id) & df["eligible"]].sort_values("rank")
-latest_date = str(latest["date"].iloc[0]) if len(latest) else seasons_meta["last_date"]
+latest_date_obj = latest["date"].iloc[0] if len(latest) else None
+latest_date = str(latest_date_obj) if latest_date_obj is not None else seasons_meta["last_date"]
 standings = []
 for _, r in latest.iterrows():
-    row = team_row(r)
+    row = team_row(r, latest_date_obj)
     row["games_played"] = int(r["games_played"]) if not pd.isna(r["games_played"]) else 0
     standings.append(row)
 jdump({"updated": latest_date, "teams": standings},
