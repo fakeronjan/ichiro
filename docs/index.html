@@ -246,12 +246,11 @@
   .error   { color: #c62828; padding: 20px; font-size: 13px; }
   .data-note { font-size: 11px; color: #888; margin-bottom: 10px; }
 
-  /* Medals table */
-  .medal-g { color: #c8a84b; font-weight: 700; }
-  .medal-s { color: #9aa0a6; font-weight: 700; }
-  .medal-b { color: #cd7f32; font-weight: 700; }
-  .medal-cell { text-align: center; font-variant-numeric: tabular-nums; }
-  #medals-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  /* Tournaments (per-edition podium) table */
+  .col-champ  { background: #fffdf3; }
+  .col-ru     { background: #fafafa; }
+  .season-cell { font-weight: 700; color: #1a6b8a; white-space: nowrap; }
+  #history-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
   /* Table containers scroll horizontally rather than breaking layout */
   #standings-table-wrap,
@@ -332,7 +331,7 @@
 <nav>
   <button class="active" data-tab="standings">Standings</button>
   <button data-tab="team-summary">Team Summary</button>
-  <button data-tab="medals">Medals</button>
+  <button data-tab="league-history">Tournaments</button>
   <button data-tab="goat">GOAT Table</button>
 </nav>
 
@@ -364,17 +363,16 @@
   <div id="team-table-wrap"><p class="loading">Select a team above.</p></div>
 </div>
 
-<!-- ── MEDALS ───────────────────────────────────────────────────────────── -->
-<div id="medals" class="tab">
-  <div class="league-pills" id="medals-conf-pills"></div>
-  <p class="data-note">All-time podium finishes across the World Baseball Classic, Olympic baseball, the WBSC Premier12, and the Baseball World Cup. Sorted by golds, then silvers, then bronzes.</p>
-  <div id="medals-table-wrap"><p class="loading">Loading medals...</p></div>
+<!-- ── TOURNAMENTS (per-edition podiums) ─────────────────────────────────── -->
+<div id="league-history" class="tab">
+  <div class="league-pills" id="history-world-pills"></div>
+  <div id="history-table-wrap"><p class="loading">Select a tournament above.</p></div>
 </div>
 
 <!-- ── GOAT TABLE ───────────────────────────────────────────────────────── -->
 <div id="goat" class="tab">
   <div class="league-pills" id="goat-conf-pills"></div>
-  <p class="data-note">Top 50 single-snapshot ratings, taken at the end of each major tournament. Eligibility requires a podium finish (gold, silver, or bronze) in a major tournament that year. Data covers 2000 through the current year.</p>
+  <p class="data-note">Top 50 single-snapshot ratings, taken at the end of each Olympics / WBC. Eligibility requires a top-3 finish.</p>
   <div id="goat-table-wrap"><p class="loading">Loading GOAT table...</p></div>
 </div>
 
@@ -391,8 +389,8 @@ let nameToSlug        = {};  // country name → slug, built from teamsIndex
 let standingsConf  = 'all';
 let tsConf         = '';
 let goatConf       = 'all';
-let medalsConf     = 'all';
 let tsView         = 'cross';  // 'cross' (all-season summary) or 'single' (one season, all game-days)
+let historyTourny  = 'World Baseball Classic';
 
 const CONF_OPTIONS = [
   { value: 'Asia',     label: '🌏 Asia'     },
@@ -400,6 +398,17 @@ const CONF_OPTIONS = [
   { value: 'Europe',   label: '🇪🇺 Europe'   },
   { value: 'Africa',   label: '🌍 Africa'   },
   { value: 'Oceania',  label: '🌏 Oceania'  },
+];
+
+// Tournaments tab pill group. International baseball has no continental
+// championships, so all four global events live in one Global row. 👑 marks
+// the global pinnacle (World Baseball Classic); 🏆 for the rest (handled
+// per-tournament in renderLeagueHistory).
+const HISTORY_WORLD = [
+  { value: 'World Baseball Classic', label: '👑 World Baseball Classic' },
+  { value: 'Olympics',               label: '🏆 Olympics'               },
+  { value: 'WBSC Premier12',         label: '🏆 WBSC Premier12'         },
+  { value: 'Baseball World Cup',     label: '🏆 Baseball World Cup'      },
 ];
 
 function buildPillsFromOpts(containerId, opts, current, onSelect, clearSiblings) {
@@ -567,6 +576,13 @@ function seasonLinkClick(season, targetConf) {
   }
   document.getElementById('season-filter').value = season;
   loadSeason(season);
+}
+
+// Map a Tournaments-tab competition to a Standings confederation pill value.
+// International baseball events are all global (multi-confederation), so a
+// year-click never carries a confederation through to Standings.
+function tournamentConf(t) {
+  return '';
 }
 
 function attachLinks() {
@@ -965,59 +981,113 @@ document.getElementById('team-select').addEventListener('change', e => {
 document.getElementById('season-select').addEventListener('change', renderTeamTable);
 document.getElementById('date-type-select').addEventListener('change', renderTeamTable);
 
-// ── Medals ────────────────────────────────────────────────────────────────────
-let medalsData = null;
+// ── Tournaments (per-edition podiums) ──────────────────────────────────────────
+let championsData = null;
 
-async function loadMedals() {
+async function loadChampions() {
   try {
-    const res = await fetch(`${BASE}/medals.json`);
-    medalsData = await res.json();
-    renderMedals();
+    const res = await fetch(`${BASE}/champions.json`);
+    championsData = await res.json();
+    renderLeagueHistory(historyTourny);
   } catch(e) {
-    document.getElementById('medals-table-wrap').innerHTML =
-      `<p class="error">Could not load medals.</p>`;
+    document.getElementById('history-table-wrap').innerHTML =
+      `<p class="error">Could not load tournaments.</p>`;
   }
 }
 
-function renderMedals() {
-  if (!medalsData) return;
-  let teams = medalsData;
-  if (medalsConf !== 'all') teams = teams.filter(t => t.confederation === medalsConf);
-
-  if (!teams.length) {
-    document.getElementById('medals-table-wrap').innerHTML =
-      `<p class="loading">No podium finishes for this confederation.</p>`;
+function renderLeagueHistory(league) {
+  if (!championsData || !league) return;
+  const entries = championsData[league] || [];
+  if (!entries.length) {
+    document.getElementById('history-table-wrap').innerHTML =
+      `<p class="loading">No data for this competition.</p>`;
     return;
   }
 
-  const rows = teams.map((t, i) => {
+  // 👑 reserved for WBC gold counts (the global pinnacle); 🏆 elsewhere.
+  const champEmoji = league === 'World Baseball Classic' ? '👑' : '🏆';
+
+  function teamCell(t, bg, season, preRated) {
+    if (!t) return `<td class="${bg}" colspan="4" style="text-align:center;color:#aaa">-</td>`;
+    let countStr = '';
+    if (t.title_count) countStr = ` <span style="color:#888;font-size:0.85em;font-weight:400">(${t.title_count} ${champEmoji})</span>`;
+    else if (t.runner_up_count) countStr = ` <span style="color:#888;font-size:0.85em;font-weight:400">(${t.runner_up_count} 🥈)</span>`;
+    else if (t.third_count) countStr = ` <span style="color:#888;font-size:0.85em;font-weight:400">(${t.third_count} 🥉)</span>`;
+    // Edition W-L sub-line (ICHIRO addition vs MESSI): the medalist's record
+    // within this specific edition (e.g. "5-0" for Japan at the 2023 WBC).
+    const wlStr = t.wl
+      ? `<div style="font-size:10px;color:#999;font-weight:400;line-height:1.2">${t.wl}</div>`
+      : '';
+    const cellInner = `<span style="margin-right:4px">${t.flag || ''}</span>${t.team}${countStr}${wlStr}`;
+    if (preRated) {
+      return `
+        <td class="${bg} team-cell" style="white-space:nowrap">${cellInner}</td>
+        <td class="${bg} col-hide-mobile" style="color:#bbb;text-align:center">-</td>
+        <td class="${bg} col-hide-mobile" style="color:#bbb;text-align:center">-</td>
+        <td class="${bg} rating-cell" style="color:#bbb">-</td>`;
+    }
+    const rating   = t.rating    != null ? t.rating.toFixed(2) : '-';
+    const ovrRank  = t.rank      != null ? `${t.rank}`         : '-';
+    const confRank = t.conf_rank != null ? `${t.conf_rank}`    : '-';
     const slug = nameToSlug[t.team];
-    const cellInner = `<span style="margin-right:4px">${t.flag || ''}</span>${t.team}`;
     const teamTd = slug
-      ? `<td class="team-cell linked" data-team-slug="${slug}">${cellInner}</td>`
-      : `<td class="team-cell">${cellInner}</td>`;
-    return `<tr>
-      <td class="rank-cell">${i + 1}</td>
+      ? `<td class="${bg} team-cell linked" data-team-slug="${slug}" data-season="${season}" style="white-space:nowrap">${cellInner}</td>`
+      : `<td class="${bg} team-cell" style="white-space:nowrap">${cellInner}</td>`;
+    return `
       ${teamTd}
-      <td>${confederationBadge(t.confederation, false)}</td>
-      <td class="medal-cell medal-g">${t.gold || '-'}</td>
-      <td class="medal-cell medal-s">${t.silver || '-'}</td>
-      <td class="medal-cell medal-b">${t.bronze || '-'}</td>
-      <td class="medal-cell" style="font-weight:700">${t.total}</td>
-    </tr>`;
+      <td class="${bg} col-hide-mobile" style="font-variant-numeric:tabular-nums;white-space:nowrap;color:#888;font-size:0.85em">${ovrRank}</td>
+      <td class="${bg} col-hide-mobile" style="font-variant-numeric:tabular-nums;white-space:nowrap;color:#aaa;font-size:0.85em">${confRank}</td>
+      <td class="${bg} rating-cell" style="font-variant-numeric:tabular-nums">${rating}</td>`;
+  }
+
+  // International baseball events are all global, so a year-click never carries
+  // a confederation through to Standings (tournamentConf always empty).
+  const targetConf = tournamentConf(league);
+
+  let anyPreRated = false;
+  const rows = entries.map(e => {
+    const preRated = !!e.pre_rated;
+    if (preRated) anyPreRated = true;
+    const hostStr = e.host_flags
+      ? ` <span style="font-size:0.85em">${e.host_flags}</span>`
+      : '';
+    const sbSuffix = preRated ? ' <sup style="color:#888">†</sup>' : '';
+    const yearTd = preRated
+      ? `<td class="season-cell" style="white-space:nowrap">${e.season}${hostStr}${sbSuffix}</td>`
+      : `<td class="season-cell linked" data-season-link="${e.season}" data-target-conf="${targetConf}" style="white-space:nowrap">${e.season}${hostStr}</td>`;
+    const rowStyle = preRated ? ' style="background:#fafafa"' : '';
+    return `<tr${rowStyle}>
+    ${yearTd}
+    ${teamCell(e.champion,  'col-champ', e.season, preRated)}
+    ${teamCell(e.runner_up, 'col-ru', e.season, preRated)}
+    ${teamCell(e.third,     'col-ru', e.season, preRated)}
+  </tr>`;
   }).join('');
 
-  document.getElementById('medals-table-wrap').innerHTML = `
+  const footnote = anyPreRated
+    ? '<p style="font-size:11px;color:#888;margin-top:8px"><sup>†</sup> Editions before ICHIRO ratings begin (or with incomplete game data). Podium shown for completeness; ratings are not available at these editions\' final dates.</p>'
+    : '';
+
+  document.getElementById('history-table-wrap').innerHTML = `
     <table>
       <thead><tr>
-        <th>#</th><th>Country</th><th>Conf</th>
-        <th style="text-align:center">🥇 Gold</th>
-        <th style="text-align:center">🥈 Silver</th>
-        <th style="text-align:center">🥉 Bronze</th>
-        <th style="text-align:center">Total</th>
+        <th>Year</th>
+        <th class="col-champ">Gold</th>
+        <th class="col-champ col-hide-mobile">OVR #</th>
+        <th class="col-champ col-hide-mobile">Conf #</th>
+        <th class="col-champ">Rating</th>
+        <th class="col-ru">Silver</th>
+        <th class="col-ru col-hide-mobile">OVR #</th>
+        <th class="col-ru col-hide-mobile">Conf #</th>
+        <th class="col-ru">Rating</th>
+        <th class="col-ru">Bronze</th>
+        <th class="col-ru col-hide-mobile">OVR #</th>
+        <th class="col-ru col-hide-mobile">Conf #</th>
+        <th class="col-ru">Rating</th>
       </tr></thead>
       <tbody>${rows}</tbody>
-    </table>`;
+    </table>
+    ${footnote}`;
   attachLinks();
 }
 
@@ -1074,16 +1144,15 @@ buildConfPills('goat-conf-pills', true, goatConf, v => {
   goatConf = v;
   renderGoat();
 });
-buildConfPills('medals-conf-pills', true, medalsConf, v => {
-  medalsConf = v;
-  renderMedals();
-});
+const onHistoryPick = v => { historyTourny = v; renderLeagueHistory(v); };
+buildPillsFromOpts('history-world-pills', HISTORY_WORLD, historyTourny, onHistoryPick);
 // Load teams_index first so opponent/slug lookups are populated before any
 // table renders - avoids a double-render flash on initial page load.
 (async () => {
   await loadTeamsIndex();
+  renderLeagueHistory(historyTourny);
   initStandings();
-  loadMedals();
+  loadChampions();
   loadGoat();
 })();
 
