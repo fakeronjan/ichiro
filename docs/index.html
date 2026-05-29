@@ -15,120 +15,284 @@
     line-height: 1.5;
   }
 
-  header { background: #1a6b8a; color: #fff; padding: 20px 24px 16px; }
-  header h1 { font-size: 28px; font-weight: 800; letter-spacing: 3px; color: #ff6eb4; }
+  header {
+    background: #1a6b8a;
+    color: #fff;
+    padding: 20px 24px 16px;
+  }
+  header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #ff6eb4;
+  }
   header p.subtitle {
-    font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 2px;
-    letter-spacing: 1px; text-transform: uppercase;
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
   header p.model-note {
-    font-size: 12px; color: rgba(255,255,255,0.82); margin-top: 8px;
-    max-width: 760px; line-height: 1.5;
+    font-size: 12px;
+    color: rgba(255,255,255,0.82);
+    margin-top: 8px;
+    max-width: 720px;
+    line-height: 1.5;
   }
-  header p.updated { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 6px; }
+  header p.updated {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 6px;
+  }
 
-  nav.tabs { background: #155a75; display: flex; gap: 0; overflow-x: auto; }
-  nav.tabs button {
-    background: none; border: none; color: #aaa; padding: 12px 20px;
-    font-size: 13px; font-weight: 600; cursor: pointer; letter-spacing: 0.5px;
-    white-space: nowrap; border-bottom: 3px solid transparent;
+  nav {
+    background: #155a75;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: #aaa;
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
     transition: color 0.15s, border-color 0.15s;
   }
-  nav.tabs button:hover { color: #fff; }
-  nav.tabs button.active { color: #ff6eb4; border-bottom-color: #ff6eb4; }
+  nav button:hover { color: #fff; }
+  nav button.active { color: #ff6eb4; border-bottom-color: #ff6eb4; }
 
   .tab { display: none; padding: 16px; max-width: 1100px; margin: 0 auto; }
   .tab.active { display: block; }
 
-  .league-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+  .league-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
   .league-pills button {
-    background: #fff; border: 1px solid #ddd; color: #155a75; padding: 6px 12px;
-    font-size: 12px; font-weight: 600; border-radius: 999px; cursor: pointer;
-    letter-spacing: 0.3px; white-space: nowrap;
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #155a75;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 999px;
+    cursor: pointer;
+    letter-spacing: 0.3px;
   }
   .league-pills button:hover { background: #fafafa; }
   .league-pills button.active { background: #1a6b8a; color: #ff6eb4; border-color: #1a6b8a; }
 
   select {
-    padding: 7px 10px; border: 1px solid #ddd; border-radius: 4px;
-    font-size: 13px; background: #fff; cursor: pointer; min-width: 200px;
+    padding: 7px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    background: #fff;
+    cursor: pointer;
+    min-width: 160px;
   }
-  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
-  .count-label { font-size: 12px; color: #888; margin-left: auto; }
+  .count-label {
+    font-size: 12px;
+    color: #888;
+    margin-left: auto;
+  }
 
   table {
-    width: 100%; border-collapse: collapse; background: #fff; border-radius: 6px;
-    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   }
   thead th {
-    background: #1a6b8a; color: #ff6eb4; padding: 10px 12px; text-align: left;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+    background: #1a6b8a;
+    color: #ff6eb4;
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
     white-space: nowrap;
   }
   tbody tr { border-bottom: 1px solid #f0f0f0; }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: #fafafa; }
-  tbody td { padding: 9px 12px; font-size: 13px; vertical-align: middle; }
-
-  .rank-cell { font-weight: 700; color: #888; width: 36px; text-align: center; }
-  .team-cell { font-weight: 600; white-space: nowrap; }
-  .num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
-
-  .linked { cursor: pointer; }
-  .linked:hover { text-decoration: underline; }
-  .team-cell.linked { color: #1a6b8a; }
-
-  .conf-pill {
-    display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px;
-    border-radius: 999px; letter-spacing: 0.3px; white-space: nowrap;
-    background: #f4f4f4; color: #555; border: 1px solid #e8e8e8;
+  tbody td {
+    padding: 9px 12px;
+    font-size: 13px;
+    vertical-align: middle;
   }
 
-  .rating-cell { font-weight: 700; font-variant-numeric: tabular-nums; color: #1a6b8a; }
+  .rank-cell {
+    font-weight: 700;
+    color: #888;
+    width: 36px;
+    text-align: center;
+  }
+  .team-cell { font-weight: 600; white-space: nowrap; }
+  .record-cell { font-variant-numeric: tabular-nums; color: #555; white-space: nowrap; }
 
-  .medal { font-variant-numeric: tabular-nums; }
+  /* Clickable cells - deep-link to Team Summary / Standings */
+  .linked { cursor: pointer; }
+  .linked:hover { text-decoration: underline; }
+  .team-cell.linked, .team-link.linked { color: #1a6b8a; }
+  .league-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+  .badge-Asia     { background: #cc0000; color: #fff; }
+  .badge-Americas { background: #0055a4; color: #fff; }
+  .badge-Europe   { background: #f5c518; color: #1a1a1a; }
+  .badge-Africa   { background: #00843d; color: #fff; }
+  .badge-Oceania  { background: #7b1fa2; color: #fff; }
+  .badge-Other    { background: #555; color: #fff; }
+
+  .rating-cell {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #1a6b8a;
+  }
+  .rating-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rating-bar-track {
+    width: 80px;
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .rating-bar-center-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 6px;
+    background: #ccc;
+  }
+  .rating-bar-fill {
+    position: absolute;
+    height: 6px;
+    border-radius: 3px;
+    top: 0;
+  }
+  .bar-pos { background: #1a6b8a; }
+  .bar-neg { background: #ff6eb4; }
+
+  .finish-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .finish-champion { background: #c8a84b; color: #1a6b8a; }
+  .finish-runner   { background: #ddd; color: #444; }
+  .finish-leader   { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .finish-bronze   { background: #cd7f32; color: #fff; }
+  .conf-pill       { background: #f4f4f4; color: #555; border: 1px solid #e8e8e8; }
+
+  .last-match-cell {
+    font-size: 12px;
+    color: #555;
+    max-width: 240px;
+  }
+  .result-W       { color: #2e7d32; font-weight: 700; }
+  .result-L       { color: #c62828; font-weight: 700; }
+  .result-W-stale { color: #2e7d32; font-weight: 400; }
+  .result-L-stale { color: #c62828; font-weight: 400; }
+
+  /* Season chart */
+  #chart-wrap {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  #season-chart {
+    width: 100%;
+    height: 180px;
+    display: block;
+  }
+
+  .loading { color: #888; padding: 20px; text-align: center; font-size: 13px; }
+  .error   { color: #c62828; padding: 20px; font-size: 13px; }
+  .data-note { font-size: 11px; color: #888; margin-bottom: 10px; }
+
+  /* Medals table */
   .medal-g { color: #c8a84b; font-weight: 700; }
   .medal-s { color: #9aa0a6; font-weight: 700; }
   .medal-b { color: #cd7f32; font-weight: 700; }
+  .medal-cell { text-align: center; font-variant-numeric: tabular-nums; }
+  #medals-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-  .last-match-cell { font-size: 12px; color: #555; max-width: 320px; white-space: nowrap;
-                     overflow: hidden; text-overflow: ellipsis; }
-  .result-W { color: #2e7d32; font-weight: 700; }
-  .result-L { color: #c62828; font-weight: 700; }
+  /* Table containers scroll horizontally rather than breaking layout */
+  #standings-table-wrap,
+  #team-table-wrap,
+  #goat-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-  .tour-tag {
-    display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 6px;
-    border-radius: 3px; letter-spacing: 0.3px; white-space: nowrap; color: #fff;
+  @media (max-width: 600px) {
+    header { padding: 14px 16px 12px; }
+    header h1 { font-size: 20px; letter-spacing: 2px; }
+    nav button { padding: 10px 14px; font-size: 12px; }
+    .tab { padding: 12px; }
+    td, th { padding: 7px 8px; font-size: 12px; }
+    .last-match-cell { max-width: 180px; }
+    .controls { flex-direction: column; align-items: stretch; }
+    select { min-width: unset; width: 100%; }
+    .rating-bar-track { display: none; }    /* drop bar on small screens, keep number */
+    .league-pills button { font-size: 11px; padding: 5px 9px; }
+    /* hide lower-priority columns on mobile */
+    .col-hide-mobile { display: none; }
   }
-  .tag-WBC { background: #c0102e; }
-  .tag-Premier12 { background: #1a6b8a; }
-  .tag-Olympics { background: #0b6e4f; }
-  .tag-WorldCup { background: #555; }
 
-  .finish-badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
-  .finish-gold   { background: #c8a84b; color: #1a1a1a; }
-  .finish-silver { background: #d9d9d9; color: #333; }
-  .finish-bronze { background: #cd7f32; color: #fff; }
-
-  .summary-card {
-    background: #fff; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    padding: 16px; margin-bottom: 14px;
-  }
-  .summary-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-  .summary-head h2 { font-size: 22px; font-weight: 800; white-space: nowrap; }
-  .stat-row { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 12px; }
-  .stat { min-width: 90px; }
-  .stat .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; color: #999; }
-  .stat .value { font-size: 18px; font-weight: 700; color: #1a6b8a; font-variant-numeric: tabular-nums; }
-
+  /* Fleet nav strip — links to sister sites in the fakeronjan sports ratings family */
   .fleet-nav {
-    background: #0e4a5f; display: flex; overflow-x: auto;
-    -webkit-overflow-scrolling: touch; font-size: 12px; align-items: stretch; white-space: nowrap;
+    background: #0e4a5f;
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 12px;
+    align-items: stretch;
+    white-space: nowrap;
   }
   .fleet-nav a {
-    color: rgba(255,255,255,0.72); text-decoration: none; padding: 8px 12px;
-    font-weight: 600; letter-spacing: 0.3px; transition: color 0.15s, background 0.15s;
-    flex-shrink: 0; display: flex; align-items: center;
+    color: rgba(255,255,255,0.72);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: color 0.15s, background 0.15s;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
   }
   .fleet-nav a:hover { color: #fff; background: rgba(255,255,255,0.08); }
   .fleet-nav a.active { color: #ff6eb4; }
@@ -138,261 +302,807 @@
 </head>
 <body>
 
+
 <nav class="fleet-nav">
   <a class="home" href="https://fakeronjan.com/sports" target="_top">📊 All Sports</a>
   <span class="sep"></span>
-  <a href="https://fakeronjan.com/nba" target="_top">🏀 NBA</a>
-  <a href="https://fakeronjan.com/wnba" target="_top">🏀 WNBA</a>
-  <a href="https://fakeronjan.com/nfl" target="_top">🏈 NFL</a>
-  <a href="https://fakeronjan.com/ncaafb" target="_top">🏈 NCAA</a>
-  <a href="https://fakeronjan.com/eurosoccer" target="_top">⚽ Euro</a>
-  <a href="https://fakeronjan.com/mls" target="_top">⚽ MLS</a>
-  <a href="https://fakeronjan.com/intlsoccer" target="_top">⚽ Intl</a>
-  <a href="https://fakeronjan.com/mlb" target="_top">⚾ MLB</a>
-  <a class="active" href="https://fakeronjan.com/intlbaseball" target="_top">⚾ Intl BB</a>
-  <a href="https://fakeronjan.com/nhl" target="_top">🏒 NHL</a>
-  <a href="https://fakeronjan.com/tennis" target="_top">🎾 Tennis</a>
-  <a href="https://fakeronjan.com/thechallenge" target="_top">📺 Challenge</a>
+  <a class="" href="https://fakeronjan.com/nba" target="_top">🏀 NBA</a>
+  <a class="" href="https://fakeronjan.com/wnba" target="_top">🏀 WNBA</a>
+  <a class="" href="https://fakeronjan.com/intlbasketball" target="_top">🏀 Intl</a>
+  <a class="" href="https://fakeronjan.com/nfl" target="_top">🏈 NFL</a>
+  <a class="" href="https://fakeronjan.com/ncaafb" target="_top">🏈 NCAA</a>
+  <a class="" href="https://fakeronjan.com/eurosoccer" target="_top">⚽ Euro</a>
+  <a class="" href="https://fakeronjan.com/mls" target="_top">⚽ MLS</a>
+  <a class="" href="https://fakeronjan.com/intlsoccer" target="_top">⚽ Intl</a>
+  <a class="" href="https://fakeronjan.com/mlb" target="_top">⚾ MLB</a>
+  <a class="active" href="https://fakeronjan.com/intlbaseball" target="_top">⚾ Intl</a>
+  <a class="" href="https://fakeronjan.com/nhl" target="_top">🏒 NHL</a>
+  <a class="" href="https://fakeronjan.com/tennis" target="_top">🎾 Tennis</a>
+  <a class="" href="https://fakeronjan.com/thechallenge" target="_top">📺 Challenge</a>
 </nav>
 
 <header>
   <h1>ICHIRO ⚾🌏</h1>
   <p class="subtitle">International Baseball Power Rankings · Alpha</p>
-  <p class="model-note">National-team strength from the World Baseball Classic, WBSC Premier12, and Olympic baseball. Considers strength of opponent, run margin (capped at 8), and recency, all at neutral venues. Reads as approximate run-spread vs an average team: ~1.5 = contender; ~3 = elite; ~4.5+ = generational (Japan 2024 = 4.48).</p>
+  <p class="model-note">Considers strength of opponent, run margin, and recency, all at neutral venues. Reads as approximate run-spread vs avg team. ~1.5 = contender; ~3 = elite; ~4.5+ = generational (Japan 2024 = 4.91).</p>
   <p class="updated" id="last-updated">Loading...</p>
   <p class="updated" id="last-refreshed" style="font-size:11px;color:#999;margin-top:-4px"></p>
 </header>
 
-<nav class="tabs">
+<nav>
   <button class="active" data-tab="standings">Standings</button>
   <button data-tab="team-summary">Team Summary</button>
-  <button data-tab="champions">Champions</button>
+  <button data-tab="medals">Medals</button>
   <button data-tab="goat">GOAT Table</button>
 </nav>
 
+<!-- ── STANDINGS ────────────────────────────────────────────────────────── -->
 <div id="standings" class="tab active">
-  <div class="league-pills" id="standings-pills"></div>
-  <div class="controls"><span class="count-label" id="standings-count"></span></div>
-  <table>
-    <thead><tr>
-      <th class="rank-cell">#</th><th>Team</th><th>Conf</th>
-      <th class="num">Rating</th><th class="num">GP</th><th class="num">Record</th>
-      <th class="num">🥇</th><th class="num">🥈</th><th class="num">🥉</th>
-      <th>Last game</th>
-    </tr></thead>
-    <tbody id="standings-body"></tbody>
-  </table>
-</div>
-
-<div id="team-summary" class="tab">
+  <div class="league-pills" id="standings-conf-pills"></div>
   <div class="controls">
-    <select id="team-select"></select>
-    <span class="count-label" id="summary-count"></span>
+    <select id="season-filter"></select>
+    <select id="date-filter" style="min-width:200px"></select>
+    <span class="count-label" id="standings-count"></span>
   </div>
-  <div id="summary-content"></div>
+  <div id="standings-table-wrap"><p class="loading">Loading standings...</p></div>
 </div>
 
-<div id="champions" class="tab">
-  <div class="league-pills" id="champions-pills"></div>
-  <table>
-    <thead><tr>
-      <th>Year</th><th>Tournament</th><th>🥇 Gold</th><th>🥈 Silver</th><th>🥉 Bronze</th>
-    </tr></thead>
-    <tbody id="champions-body"></tbody>
-  </table>
+<!-- ── TEAM SUMMARY ─────────────────────────────────────────────────────── -->
+<div id="team-summary" class="tab">
+  <div class="league-pills" id="ts-conf-pills"></div>
+  <div class="league-pills" id="ts-view-pills"></div>
+  <div class="controls">
+    <select id="team-select" disabled><option value="">- Select a country -</option></select>
+    <select id="season-select" style="display:none"></select>
+    <select id="date-type-select">
+      <option value="anchor">End of major tournament</option>
+    </select>
+  </div>
+  <div id="chart-wrap" style="display:none">
+    <svg id="season-chart"></svg>
+  </div>
+  <div id="team-table-wrap"><p class="loading">Select a team above.</p></div>
 </div>
 
+<!-- ── MEDALS ───────────────────────────────────────────────────────────── -->
+<div id="medals" class="tab">
+  <div class="league-pills" id="medals-conf-pills"></div>
+  <p class="data-note">All-time podium finishes across the World Baseball Classic, Olympic baseball, the WBSC Premier12, and the Baseball World Cup. Sorted by golds, then silvers, then bronzes.</p>
+  <div id="medals-table-wrap"><p class="loading">Loading medals...</p></div>
+</div>
+
+<!-- ── GOAT TABLE ───────────────────────────────────────────────────────── -->
 <div id="goat" class="tab">
-  <div class="controls"><span class="count-label">Single highest power rating each team has ever reached.</span></div>
-  <table>
-    <thead><tr>
-      <th class="rank-cell">#</th><th>Team</th><th>Conf</th>
-      <th class="num">Peak rating</th><th>Peak edition</th>
-      <th class="num">🥇</th><th class="num">🥈</th><th class="num">🥉</th>
-    </tr></thead>
-    <tbody id="goat-body"></tbody>
-  </table>
+  <div class="league-pills" id="goat-conf-pills"></div>
+  <p class="data-note">Top 50 single-snapshot ratings, taken at the end of each major tournament. Eligibility requires a podium finish (gold, silver, or bronze) in a major tournament that year. Data covers 2000 through the current year.</p>
+  <div id="goat-table-wrap"><p class="loading">Loading GOAT table...</p></div>
 </div>
 
 <script>
-const DATA = 'data/';
-let standings = [], teamsIndex = [], champions = [], goat = [], meta = {};
-let standingsConf = 'All', championsTour = 'All';
+const BASE = './data';
+let currentSeasonData = null;
+let currentSnapshot   = null;
+let goatData          = null;
+let teamsIndex        = null;
+let teamCache         = {};
+let nameToSlug        = {};  // country name → slug, built from teamsIndex
 
-function tourTag(t) {
-  const map = {'World Baseball Classic': ['WBC', 'tag-WBC'],
-               'WBSC Premier12': ['Premier12', 'tag-Premier12'],
-               'Olympics': ['Olympics', 'tag-Olympics'],
-               'Baseball World Cup': ['World Cup', 'tag-WorldCup']};
-  const [label, cls] = map[t] || [t, 'tag-WorldCup'];
-  return `<span class="tour-tag ${cls}">${label}</span>`;
-}
+// Pill state (replaces dropdown filters)
+let standingsConf  = 'all';
+let tsConf         = '';
+let goatConf       = 'all';
+let medalsConf     = 'all';
+let tsView         = 'cross';  // 'cross' (all-season summary) or 'single' (one season, all game-days)
 
-function lastMatchHtml(s) {
-  if (!s) return '<span style="color:#bbb">-</span>';
-  const wl = s.charAt(0);
-  const cls = wl === 'W' ? 'result-W' : 'result-L';
-  return `<span class="${cls}">${wl}</span>${s.slice(1)}`;
-}
+const CONF_OPTIONS = [
+  { value: 'Asia',     label: '🌏 Asia'     },
+  { value: 'Americas', label: '🌎 Americas' },
+  { value: 'Europe',   label: '🇪🇺 Europe'   },
+  { value: 'Africa',   label: '🌍 Africa'   },
+  { value: 'Oceania',  label: '🌏 Oceania'  },
+];
 
-async function load() {
-  [standings, teamsIndex, champions, goat, meta] = await Promise.all([
-    fetch(DATA + 'current_standings.json').then(r => r.json()),
-    fetch(DATA + 'teams_index.json').then(r => r.json()),
-    fetch(DATA + 'champions.json').then(r => r.json()),
-    fetch(DATA + 'goat_teams.json').then(r => r.json()),
-    fetch(DATA + 'meta.json').then(r => r.json()),
-  ]);
-  const teams = standings.teams || standings;
-  standings = teams;
-  document.getElementById('last-updated').textContent =
-    `Last updated: ${meta.coverage} (${meta.total_games} games across WBC, Premier12 & Olympics). Latest snapshot ${meta.as_of}.`;
-  document.getElementById('last-refreshed').textContent = `Refreshed ${meta.refreshed_utc || ''}`;
-  buildStandingsPills();
-  renderStandings();
-  buildTeamSelect();
-  buildChampionsPills();
-  renderChampions();
-  renderGoat();
-  postHeight();
-}
-
-// ── Standings ──────────────────────────────────────────────
-function buildStandingsPills() {
-  const confs = ['All', ...Array.from(new Set(standings.map(t => t.confederation))).sort()];
-  const el = document.getElementById('standings-pills');
-  el.innerHTML = confs.map(c =>
-    `<button class="${c === standingsConf ? 'active' : ''}" data-conf="${c}">${c}</button>`).join('');
-  el.querySelectorAll('button').forEach(b => b.onclick = () => {
-    standingsConf = b.dataset.conf; buildStandingsPills(); renderStandings();
+function buildPillsFromOpts(containerId, opts, current, onSelect, clearSiblings) {
+  const wrap = document.getElementById(containerId);
+  wrap.innerHTML = '';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.innerHTML = o.label;
+    b.dataset.value = o.value;
+    if (o.value === current) b.classList.add('active');
+    b.addEventListener('click', () => {
+      wrap.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+      (clearSiblings || []).forEach(sid => {
+        document.querySelectorAll(`#${sid} button`).forEach(x => x.classList.remove('active'));
+      });
+      b.classList.add('active');
+      onSelect(o.value);
+    });
+    wrap.appendChild(b);
   });
 }
-function renderStandings() {
-  let rows = standings;
-  if (standingsConf !== 'All') rows = rows.filter(t => t.confederation === standingsConf);
-  const body = document.getElementById('standings-body');
-  body.innerHTML = rows.map((t, i) => `
-    <tr>
-      <td class="rank-cell">${standingsConf === 'All' ? t.rank : i + 1}</td>
-      <td class="team-cell linked" onclick="openTeam('${t.slug}')">${t.flag} ${t.name}</td>
-      <td><span class="conf-pill">${t.confederation}</span></td>
-      <td class="num rating-cell">${t.rating.toFixed(2)}</td>
-      <td class="num">${t.games_played}</td>
-      <td class="num">${t.record}</td>
-      <td class="num medal medal-g">${t.gold || ''}</td>
-      <td class="num medal medal-s">${t.silver || ''}</td>
-      <td class="num medal medal-b">${t.bronze || ''}</td>
-      <td class="last-match-cell">${lastMatchHtml(t.last_match)}</td>
-    </tr>`).join('');
-  document.getElementById('standings-count').textContent = `${rows.length} teams`;
+
+function buildConfPills(containerId, includeAll, current, onSelect) {
+  const opts = includeAll
+    ? [{ value: 'all', label: 'All Confederations' }, ...CONF_OPTIONS]
+    : CONF_OPTIONS;
+  buildPillsFromOpts(containerId, opts, current, onSelect);
 }
 
-// ── Team Summary ───────────────────────────────────────────
-function buildTeamSelect() {
-  const sel = document.getElementById('team-select');
-  sel.innerHTML = teamsIndex.map(t =>
-    `<option value="${t.slug}">${t.flag} ${t.name}</option>`).join('');
-  sel.onchange = () => renderTeam(sel.value);
-  renderTeam(sel.value);
+// ── Utilities ───────────────────────────────────────────────────────────────
+const _CONF_BADGE_CLS = {
+  'Asia': 'badge-Asia', 'Americas': 'badge-Americas',
+  'Europe': 'badge-Europe', 'Africa': 'badge-Africa', 'Oceania': 'badge-Oceania',
+};
+const _CONF_BADGE_LABEL = {
+  'Asia':     '🌏 Asia',
+  'Americas': '🌎 Americas',
+  'Europe':   '🇪🇺 Europe',
+  'Africa':   '🌍 Africa',
+  'Oceania':  '🌏 Oceania',
+};
+
+function confederationBadge(confed, wonContinental) {
+  if (!confed) return '';
+  if (wonContinental) {
+    return `<span class="finish-badge finish-champion" title="${confed} Continental Champion">${confed} 🏆</span>`;
+  }
+  const cls = _CONF_BADGE_CLS[confed] || 'badge-Other';
+  const label = _CONF_BADGE_LABEL[confed] || confed;
+  return `<span class="league-badge ${cls}">${label}</span>`;
 }
-function openTeam(slug) {
-  document.querySelector('nav.tabs button[data-tab="team-summary"]').click();
+
+function confBadge(conf, wonContinental) {
+  // Team Summary uses a simpler gold-pill / plain-pill (no per-confederation color)
+  if (!conf) return '';
+  if (wonContinental) {
+    return `<span class="finish-badge finish-champion" title="${conf} Continental Champion">${conf} 🏆</span>`;
+  }
+  return `<span class="finish-badge conf-pill">${conf}</span>`;
+}
+
+
+function finishBadge(finishes) {
+  // finishes: list of {tournament, finish} where tournament is short label (WBC, Oly, P12, WC).
+  // 👑 reserved for World Baseball Classic gold (the premier global championship);
+  // 🏆 for Olympic / Premier12 / Baseball World Cup gold.
+  if (!finishes || !finishes.length) return '';
+  const cls = (f) => f === 1 ? 'finish-champion' : (f === 2 ? 'finish-runner' : 'finish-bronze');
+  const medal = (x) => {
+    if (x.finish === 1) return x.tournament === 'WBC' ? '👑' : '🏆';
+    if (x.finish === 2) return '🥈';
+    return '🥉';
+  };
+  return finishes.map(x =>
+    `<span class="finish-badge ${cls(x.finish)}">${x.tournament} ${medal(x)}</span>`
+  ).join(' ');
+}
+
+function resultClass(match, isStale) {
+  if (!match) return '';
+  const first = match[0];
+  const suffix = isStale ? '-stale' : '';
+  if (first === 'W') return 'result-W' + suffix;
+  if (first === 'L') return 'result-L' + suffix;
+  return '';
+}
+
+// ICHIRO format: "W 6-1 vs. Venezuela (WBSC Premier12)" - full tournament tag
+// preserved. Opponent country names match teamsIndex; they become deep-links.
+function renderLastMatch(raw, season, isStale) {
+  const display = displayMatch(raw);
+  if (!display) return '-';
+  const rc = resultClass(raw, isStale);
+  const m = display.match(/^([WL])\s+(\d+\s*-\s*\d+)\s+(vs\.?(?:\s*\(N\))?|@)\s+(.+?)\s*(\([^)]+\))?\s*$/);
+  if (!m) return `<span class="${rc}">${display}</span>`;
+  const [, letter, score, venue, opponent, comp] = m;
+  const slug = nameToSlug[opponent.trim()];
+  const oppHtml = slug
+    ? `<span class="team-link linked" data-team-slug="${slug}" data-season="${season}">${opponent}</span>`
+    : opponent;
+  const compStr = comp ? ` ${comp}` : '';
+  return `<span class="${rc}">${letter} ${score} ${venue} ${oppHtml}${compStr}</span>`;
+}
+
+// ── Deep-link handlers ──────────────────────────────────────────────────────
+async function teamLinkClick(slug, season) {
+  if (!slug) return;
+  if (!teamsIndex) await loadTeamsIndex();
+  const t = teamsIndex.find(x => x.slug === slug);
+  if (!t) return;
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  document.querySelector('nav button[data-tab="team-summary"]').classList.add('active');
+  document.getElementById('team-summary').classList.add('active');
+  tsConf = t.confederation;
+  buildConfPills('ts-conf-pills', false, tsConf, v => {
+    tsConf = v;
+    populateTeams(v);
+    document.getElementById('chart-wrap').style.display = 'none';
+    document.getElementById('team-table-wrap').innerHTML =
+      '<p class="loading">Select a country above.</p>';
+    document.getElementById('season-select').innerHTML = '';
+  });
+  populateTeams(tsConf);
   document.getElementById('team-select').value = slug;
-  renderTeam(slug);
-}
-async function renderTeam(slug) {
-  const t = await fetch(`${DATA}teams/${slug}.json`).then(r => r.json());
-  const games = [...t.games].reverse();
-  const html = `
-    <div class="summary-card">
-      <div class="summary-head">
-        <h2>${t.flag} ${t.name}</h2>
-        <span class="conf-pill">${t.confederation}</span>
-      </div>
-      <div class="stat-row">
-        <div class="stat"><div class="label">Current rank</div><div class="value">${t.current_rank ?? '-'}</div></div>
-        <div class="stat"><div class="label">Current rating</div><div class="value">${t.current_rating ?? '-'}</div></div>
-        <div class="stat"><div class="label">Peak rating</div><div class="value">${t.peak_rating}</div></div>
-        <div class="stat"><div class="label">Record</div><div class="value">${t.record}</div></div>
-        <div class="stat"><div class="label">Medals</div><div class="value"><span class="medal-g">${t.gold}</span> / <span class="medal-s">${t.silver}</span> / <span class="medal-b">${t.bronze}</span></div></div>
-      </div>
-    </div>
-    <table>
-      <thead><tr><th>Date</th><th>Tournament</th><th>Result</th><th>Opponent</th><th class="num">Score</th></tr></thead>
-      <tbody>${games.map(g => `
-        <tr>
-          <td class="num">${g.date}</td>
-          <td>${tourTag(g.tournament)} <span style="color:#999">${g.season}</span>${g.round ? ` <span class="finish-badge finish-${g.round === 'final' ? 'gold' : g.round === 'bronze' ? 'bronze' : 'silver'}">${g.round}</span>` : ''}</td>
-          <td class="result-${g.result}">${g.result}</td>
-          <td class="team-cell">${g.opp_flag} ${g.opponent}</td>
-          <td class="num">${g.runs_for}-${g.runs_against}</td>
-        </tr>`).join('')}</tbody>
-    </table>`;
-  document.getElementById('summary-content').innerHTML = html;
-  document.getElementById('summary-count').textContent = `${t.games.length} games`;
-  postHeight();
+  const wantSingle = season != null && season !== '';
+  tsView = wantSingle ? 'single' : 'cross';
+  buildPillsFromOpts('ts-view-pills', [
+    { value: 'cross',  label: 'All season summary' },
+    { value: 'single', label: 'All games within one season' },
+  ], tsView, v => {
+    tsView = v;
+    document.getElementById('season-select').style.display   = (v === 'single') ? '' : 'none';
+    document.getElementById('date-type-select').style.display = (v === 'cross')  ? '' : 'none';
+    renderTeamTable();
+  });
+  document.getElementById('season-select').style.display    = wantSingle ? '' : 'none';
+  document.getElementById('date-type-select').style.display = wantSingle ? 'none' : '';
+  await loadTeam(slug);
+  if (wantSingle) {
+    const sel = document.getElementById('season-select');
+    const targetVal = String(season);
+    if ([...sel.options].some(o => o.value === targetVal)) {
+      sel.value = targetVal;
+    }
+  }
+  renderTeamTable();
 }
 
-// ── Champions ──────────────────────────────────────────────
-function buildChampionsPills() {
-  const tours = ['All', ...Array.from(new Set(champions.map(e => e.tournament)))];
-  const el = document.getElementById('champions-pills');
-  el.innerHTML = tours.map(t =>
-    `<button class="${t === championsTour ? 'active' : ''}" data-tour="${t}">${t === 'All' ? 'All' : (t === 'World Baseball Classic' ? 'WBC' : t === 'WBSC Premier12' ? 'Premier12' : t)}</button>`).join('');
-  el.querySelectorAll('button').forEach(b => b.onclick = () => {
-    championsTour = b.dataset.tour; buildChampionsPills(); renderChampions();
+// Valid Standings confederation pill values (excludes 'all').
+const _STANDINGS_CONFS = new Set(CONF_OPTIONS.map(o => o.value));
+
+function seasonLinkClick(season, targetConf) {
+  if (!season) return;
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('nav button[data-tab="standings"]').classList.add('active');
+  document.getElementById('standings').classList.add('active');
+  if (targetConf && _STANDINGS_CONFS.has(targetConf)) {
+    standingsConf = targetConf;
+    buildConfPills('standings-conf-pills', true, standingsConf, v => {
+      standingsConf = v;
+      renderStandings();
+    });
+  }
+  document.getElementById('season-filter').value = season;
+  loadSeason(season);
+}
+
+function attachLinks() {
+  document.querySelectorAll('.team-cell.linked, .team-link.linked').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      teamLinkClick(el.dataset.teamSlug, el.dataset.season);
+    });
+  });
+  document.querySelectorAll('[data-season-link].linked').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      seasonLinkClick(el.dataset.seasonLink, el.dataset.targetConf);
+    });
   });
 }
-function renderChampions() {
-  let rows = champions;
-  if (championsTour !== 'All') rows = rows.filter(e => e.tournament === championsTour);
-  document.getElementById('champions-body').innerHTML = rows.map(e => `
-    <tr>
-      <td class="num">${e.season}</td>
-      <td>${tourTag(e.tournament)}</td>
-      <td class="team-cell"><span class="finish-badge finish-gold">${e.gold_flag} ${e.gold}</span></td>
-      <td class="team-cell">${e.silver ? `${e.silver_flag} ${e.silver}` : '-'}</td>
-      <td class="team-cell">${e.bronze ? `${e.bronze_flag} ${e.bronze}` : '-'}</td>
-    </tr>`).join('');
-  postHeight();
+
+// Strip legacy "no game yet" placeholders so empty cells render as a single dash.
+const _PLACEHOLDER_LM = new Set(['No match yet', 'No competitive match yet', 'No Game', 'Bye / No Game']);
+function displayMatch(s) { return (!s || _PLACEHOLDER_LM.has(s)) ? '' : s; }
+
+const BAR_MIN = -5, BAR_MAX = 5, BAR_RANGE = 10;
+
+function ratingBar(rating) {
+  if (rating == null) return '<span style="color:#bbb">-</span>';
+  const clipped = Math.max(BAR_MIN, Math.min(BAR_MAX, rating));
+  let leftPct, widthPct;
+  if (clipped >= 0) {
+    leftPct  = 50;
+    widthPct = (clipped / BAR_RANGE) * 100;
+  } else {
+    widthPct = (-clipped / BAR_RANGE) * 100;
+    leftPct  = 50 - widthPct;
+  }
+  return `<div class="rating-bar-wrap">
+    <span class="rating-cell">${rating.toFixed(2)}</span>
+    <div class="rating-bar-track">
+      <div class="rating-bar-center-line"></div>
+      <div class="rating-bar-fill ${rating >= 0 ? 'bar-pos' : 'bar-neg'}" style="left:${leftPct.toFixed(1)}%;width:${widthPct.toFixed(1)}%"></div>
+    </div>
+  </div>`;
 }
 
-// ── GOAT ───────────────────────────────────────────────────
-function renderGoat() {
-  document.getElementById('goat-body').innerHTML = goat.map(g => `
-    <tr>
-      <td class="rank-cell">${g.rank}</td>
-      <td class="team-cell linked" onclick="openTeam('${g.slug}')">${g.flag} ${g.name}</td>
-      <td><span class="conf-pill">${g.confederation}</span></td>
-      <td class="num rating-cell">${g.peak_rating.toFixed(2)}</td>
-      <td>${g.peak_edition}</td>
-      <td class="num medal medal-g">${g.gold || ''}</td>
-      <td class="num medal medal-s">${g.silver || ''}</td>
-      <td class="num medal medal-b">${g.bronze || ''}</td>
-    </tr>`).join('');
-}
-
-// ── Tabs ───────────────────────────────────────────────────
-document.querySelectorAll('nav.tabs button').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+// ── Tab switching ────────────────────────────────────────────────────────────
+document.querySelectorAll('nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById(btn.dataset.tab).classList.add('active');
-    postHeight();
-  };
+  });
 });
 
-// ── Iframe auto-resize (fleet pattern) ─────────────────────
-function postHeight() {
-  parent.postMessage({type: 'fakeronjan-resize', height: document.documentElement.scrollHeight}, '*');
-}
-window.addEventListener('load', postHeight);
-if (typeof ResizeObserver !== 'undefined') {
-  new ResizeObserver(postHeight).observe(document.body);
+// ── Standings ────────────────────────────────────────────────────────────────
+function fmtDate(ds) {
+  const d = new Date(ds + 'T00:00:00');
+  return d.toLocaleDateString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric'});
 }
 
-load();
+async function initStandings() {
+  try {
+    const res  = await fetch(`${BASE}/seasons_index.json`);
+    const meta = await res.json();
+    document.getElementById('last-updated').textContent =
+      `Ratings include games from ${fmtDate(meta.first_date)} to ${fmtDate(meta.last_date)}`;
+    if (meta.generated_at) {
+      const refreshed = new Date(meta.generated_at);
+      document.getElementById('last-refreshed').textContent =
+        `Last refreshed: ${refreshed.toLocaleString(undefined, {year:'numeric', month:'numeric', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'short'})}`;
+    }
+    const sel = document.getElementById('season-filter');
+    meta.seasons.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s; opt.textContent = s;
+      sel.appendChild(opt);
+    });
+    await loadSeason(meta.seasons[0]);
+  } catch(e) {
+    document.getElementById('standings-table-wrap').innerHTML =
+      `<p class="error">Could not load standings.</p>`;
+  }
+}
+
+async function loadSeason(season) {
+  try {
+    const res = await fetch(`${BASE}/seasons/${season}.json`);
+    currentSeasonData = await res.json();
+    const snaps = currentSeasonData.snapshots;
+    const dateSel = document.getElementById('date-filter');
+    dateSel.innerHTML = '';
+
+    // Tournament-end snapshots first (sorted by prestige), then a separator, then all dates.
+    const labeled = snaps.filter(s => s.label != null)
+      .sort((a, b) => (a.prestige ?? 99) - (b.prestige ?? 99));
+    labeled.forEach(snap => {
+      const opt = document.createElement('option');
+      opt.value = snap.date;
+      opt.textContent = `${snap.date} | ${snap.label}`;
+      dateSel.appendChild(opt);
+    });
+    if (labeled.length) {
+      const sep = document.createElement('option');
+      sep.disabled = true;
+      sep.textContent = '──────────';
+      dateSel.appendChild(sep);
+    }
+    [...snaps].reverse().forEach(snap => {
+      const opt = document.createElement('option');
+      opt.value = snap.date;
+      opt.textContent = snap.date;
+      dateSel.appendChild(opt);
+    });
+
+    // Default: highest-prestige tournament end for complete years; latest snapshot
+    // for the current calendar year (in-progress).
+    const isCurrentYear = currentSeasonData.season === new Date().getFullYear();
+    const defaultDate = (!isCurrentYear && labeled.length)
+      ? labeled[0].date
+      : snaps[snaps.length - 1].date;
+    selectSnapshot(defaultDate);
+  } catch(e) {
+    document.getElementById('standings-table-wrap').innerHTML =
+      `<p class="error">Could not load season data.</p>`;
+  }
+}
+
+function selectSnapshot(date) {
+  currentSnapshot = currentSeasonData.snapshots.find(s => s.date === date);
+  document.getElementById('date-filter').value = date;
+  renderStandings();
+}
+
+function renderStandings() {
+  if (!currentSnapshot) return;
+  const confed = standingsConf;
+
+  // Confederation rank: position within each confederation (sorted by OVR rank)
+  const confRankMap = {};
+  const confCounter = {};
+  currentSnapshot.teams.forEach(t => {
+    confCounter[t.confederation] = (confCounter[t.confederation] || 0) + 1;
+    confRankMap[t.team] = confCounter[t.confederation];
+  });
+
+  let teams = currentSnapshot.teams;
+  if (confed !== 'all') teams = teams.filter(t => t.confederation === confed);
+
+  const snaps = currentSeasonData.snapshots;
+  const idx = snaps.findIndex(s => s.date === currentSnapshot.date);
+  const prevDate = idx > 0 ? snaps[idx - 1].date : null;
+
+  const season = currentSeasonData && currentSeasonData.season;
+  const rows = teams.map(t => {
+    const cRank = confRankMap[t.team] || '-';
+    const isStale = !!(prevDate && t.last_match_date && t.last_match_date <= prevDate);
+    const slug = nameToSlug[t.team];
+    const cellInner = `<span style="margin-right:4px">${t.flag || ''}</span>${t.team}`;
+    const teamTd = slug
+      ? `<td class="team-cell linked" data-team-slug="${slug}" data-season="${season}">${cellInner}</td>`
+      : `<td class="team-cell">${cellInner}</td>`;
+    return `<tr>
+      <td class="rank-cell">${t.rank != null ? t.rank : '-'}</td>
+      <td class="rank-cell col-hide-mobile">${cRank}</td>
+      ${teamTd}
+      <td>${confederationBadge(t.confederation, !!t.continental_winner)}</td>
+      <td class="record-cell">${t.record || '-'}</td>
+      <td>${ratingBar(t.rating)}</td>
+      <td class="last-match-cell">${renderLastMatch(t.last_match, season, isStale)}</td>
+      <td class="col-hide-mobile" style="font-size:11px;color:#888;white-space:nowrap">${t.last_match_date || ''}</td>
+      <td class="col-hide-mobile" style="font-size:11px">${finishBadge(t.tournament_finishes)}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('standings-count').textContent =
+    `${teams.length} team${teams.length !== 1 ? 's' : ''}`;
+
+  document.getElementById('standings-table-wrap').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>OVR #</th><th class="col-hide-mobile">Conf #</th>
+        <th>Country</th><th>Conf</th><th>W-L</th><th>Rating</th>
+        <th>Last Game</th>
+        <th class="col-hide-mobile">Date</th>
+        <th class="col-hide-mobile">Honors</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  attachLinks();
+}
+
+document.getElementById('season-filter').addEventListener('change', e => loadSeason(e.target.value));
+document.getElementById('date-filter').addEventListener('change', e => selectSnapshot(e.target.value));
+buildConfPills('standings-conf-pills', true, standingsConf, v => {
+  standingsConf = v;
+  renderStandings();
+});
+
+// ── Team Summary ─────────────────────────────────────────────────────────────
+async function loadTeamsIndex() {
+  try {
+    const res = await fetch(`${BASE}/teams_index.json`);
+    teamsIndex = await res.json();
+    nameToSlug = {};
+    teamsIndex.forEach(t => { nameToSlug[t.name] = t.slug; });
+  } catch(e) {
+    document.getElementById('team-select').innerHTML =
+      '<option>Could not load teams</option>';
+  }
+}
+
+function populateTeams(confederation) {
+  const sel = document.getElementById('team-select');
+  sel.innerHTML = '<option value="">- Select a country -</option>';
+  if (!confederation || !teamsIndex) { sel.disabled = true; return; }
+  teamsIndex.filter(t => t.confederation === confederation).forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.slug;
+    opt.textContent = t.flag ? `${t.flag} ${t.name}` : t.name;
+    sel.appendChild(opt);
+  });
+  sel.disabled = false;
+}
+
+buildConfPills('ts-conf-pills', false, tsConf, v => {
+  tsConf = v;
+  populateTeams(v);
+  document.getElementById('chart-wrap').style.display = 'none';
+  document.getElementById('team-table-wrap').innerHTML =
+    '<p class="loading">Select a country above.</p>';
+  document.getElementById('season-select').innerHTML = '';
+});
+buildPillsFromOpts('ts-view-pills', [
+  { value: 'cross',  label: 'All season summary' },
+  { value: 'single', label: 'All games within one season' },
+], tsView, v => {
+  tsView = v;
+  document.getElementById('season-select').style.display   = (v === 'single') ? '' : 'none';
+  document.getElementById('date-type-select').style.display = (v === 'cross')  ? '' : 'none';
+  renderTeamTable();
+});
+// Initial dropdown visibility for default view ('cross')
+document.getElementById('date-type-select').style.display = '';
+document.getElementById('season-select').style.display    = 'none';
+
+async function loadTeam(slug) {
+  if (!slug) return;
+  if (!teamCache[slug]) {
+    document.getElementById('team-table-wrap').innerHTML =
+      '<p class="loading">Loading team data...</p>';
+    try {
+      const res = await fetch(`${BASE}/teams/${slug}.json`);
+      teamCache[slug] = await res.json();
+    } catch(e) {
+      document.getElementById('team-table-wrap').innerHTML =
+        '<p class="error">Could not load team data.</p>';
+      return;
+    }
+  }
+  const data = teamCache[slug];
+  const seasons = Object.keys(data.seasons).sort().reverse();
+  const seasonSel = document.getElementById('season-select');
+  const prevValue = seasonSel.value;
+  seasonSel.innerHTML = '';
+  seasons.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s;
+    opt.textContent = s;
+    seasonSel.appendChild(opt);
+  });
+  seasonSel.value = (prevValue && seasons.includes(prevValue)) ? prevValue : (seasons[0] || '');
+  renderTeamTable();
+}
+
+function renderTeamTable() {
+  const slug = document.getElementById('team-select').value;
+  if (!slug || !teamCache[slug]) return;
+  const data = teamCache[slug];
+
+  let rows = [];
+  const seasons = Object.keys(data.seasons).sort();
+  let seasonFilter;
+  if (tsView === 'single') {
+    seasonFilter = document.getElementById('season-select').value;
+    seasons.forEach(s => {
+      if (s !== seasonFilter) return;
+      let prevLastMatch = null;
+      data.seasons[s].forEach(g => {
+        const stale = prevLastMatch != null && g.last_match === prevLastMatch;
+        rows.push({...g, season: s, _isStale: stale});
+        prevLastMatch = g.last_match;
+      });
+    });
+  } else {
+    seasonFilter = 'all';
+    seasons.forEach(s => {
+      data.seasons[s].forEach(g => {
+        if (g.is_year_anchor === 1) rows.push({...g, season: s});
+      });
+    });
+  }
+
+  drawChart(rows, seasonFilter);
+
+  const targetConf = data.confederation || '';
+  const tableRows = [...rows].reverse().map(g => {
+    const dateLabel = g.year_anchor_label || '';
+    const dateCell = dateLabel
+      ? `${g.date}<div style="font-size:10px;color:#999;font-style:italic;line-height:1.2">${dateLabel}</div>`
+      : g.date;
+    return `<tr>
+    <td style="white-space:nowrap;color:#888;font-size:12px">${dateCell}</td>
+    <td class="linked" data-season-link="${g.season}" data-target-conf="${targetConf}" style="font-size:11px;color:#555">${g.season}</td>
+    <td class="last-match-cell">${renderLastMatch(g.last_match, g.season, !!g._isStale)}</td>
+    <td class="rank-cell">${g.rank}</td>
+    <td class="rank-cell col-hide-mobile">${g.conf_rank != null ? g.conf_rank : '-'}</td>
+    <td>${ratingBar(g.rating)}</td>
+    <td class="col-hide-mobile" style="font-size:11px">${confBadge(data.confederation, g.continental_winner)}</td>
+    <td class="col-hide-mobile" style="font-size:11px">${finishBadge(g.tournament_finishes)}</td>
+  </tr>`;
+  }).join('');
+
+  document.getElementById('team-table-wrap').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Date</th><th>Year</th><th>Last Game</th>
+        <th>OVR #</th><th class="col-hide-mobile">Conf #</th>
+        <th>Rating</th>
+        <th class="col-hide-mobile">Conf</th>
+        <th class="col-hide-mobile">Honors</th>
+      </tr></thead>
+      <tbody>${tableRows}</tbody>
+    </table>`;
+  attachLinks();
+}
+
+function drawChart(rows, seasonFilter) {
+  const wrap = document.getElementById('chart-wrap');
+  if (rows.length < 2) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+
+  const svg = document.getElementById('season-chart');
+  const W = svg.parentElement.clientWidth - 32;
+  const H = 180;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  const CHART_MIN = -5, CHART_MAX = 5;
+  const CTOP = 10, CBOT = 152;   // chart area; 152..178 reserved for x-axis
+
+  const px = (i) => (i / (rows.length - 1)) * (W - 20) + 10;
+  const py = (r) => CBOT - ((r - CHART_MIN) / (CHART_MAX - CHART_MIN)) * (CBOT - CTOP);
+
+  const zeroY  = py(0);
+  const points = rows.map((r, i) => `${px(i).toFixed(1)},${py(r.rating).toFixed(1)}`).join(' ');
+
+  const isSingle = seasonFilter !== 'all';
+  const MONTHS   = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const ticks = [], xlabels = [];
+  const seen = {};
+  let lastX = -99;
+
+  rows.forEach((r, i) => {
+    const key   = isSingle ? r.date.substring(0, 7) : r.date.substring(0, 4);
+    const label = isSingle
+      ? MONTHS[parseInt(r.date.substring(5, 7)) - 1]
+      : r.date.substring(0, 4);
+    if (!seen[key]) {
+      seen[key] = true;
+      const x = parseFloat(px(i).toFixed(1));
+      if (x - lastX >= 24) {
+        lastX = x;
+        ticks.push(`<line x1="${x}" y1="${CBOT + 2}" x2="${x}" y2="${CBOT + 6}" stroke="#bbb" stroke-width="1"/>`);
+        xlabels.push(`<text x="${x}" y="${CBOT + 16}" font-size="9" fill="#999" text-anchor="middle">${label}</text>`);
+      }
+    }
+  });
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="lineGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="${H}">
+        <stop offset="${(zeroY / H - 0.0001).toFixed(4)}" stop-color="#1a6b8a"/>
+        <stop offset="${(zeroY / H + 0.0001).toFixed(4)}" stop-color="#ff6eb4"/>
+      </linearGradient>
+    </defs>
+    <line x1="10" y1="${zeroY.toFixed(1)}" x2="${(W - 10).toFixed(1)}" y2="${zeroY.toFixed(1)}"
+          stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+    <line x1="10" y1="${CBOT + 2}" x2="${(W - 10).toFixed(1)}" y2="${CBOT + 2}"
+          stroke="#ddd" stroke-width="1"/>
+    ${ticks.join('')}
+    ${xlabels.join('')}
+    <polyline points="${points}" fill="none" stroke="url(#lineGrad)" stroke-width="2.5" stroke-linejoin="round"/>`;
+}
+
+document.getElementById('team-select').addEventListener('change', e => {
+  loadTeam(e.target.value);
+});
+document.getElementById('season-select').addEventListener('change', renderTeamTable);
+document.getElementById('date-type-select').addEventListener('change', renderTeamTable);
+
+// ── Medals ────────────────────────────────────────────────────────────────────
+let medalsData = null;
+
+async function loadMedals() {
+  try {
+    const res = await fetch(`${BASE}/medals.json`);
+    medalsData = await res.json();
+    renderMedals();
+  } catch(e) {
+    document.getElementById('medals-table-wrap').innerHTML =
+      `<p class="error">Could not load medals.</p>`;
+  }
+}
+
+function renderMedals() {
+  if (!medalsData) return;
+  let teams = medalsData;
+  if (medalsConf !== 'all') teams = teams.filter(t => t.confederation === medalsConf);
+
+  if (!teams.length) {
+    document.getElementById('medals-table-wrap').innerHTML =
+      `<p class="loading">No podium finishes for this confederation.</p>`;
+    return;
+  }
+
+  const rows = teams.map((t, i) => {
+    const slug = nameToSlug[t.team];
+    const cellInner = `<span style="margin-right:4px">${t.flag || ''}</span>${t.team}`;
+    const teamTd = slug
+      ? `<td class="team-cell linked" data-team-slug="${slug}">${cellInner}</td>`
+      : `<td class="team-cell">${cellInner}</td>`;
+    return `<tr>
+      <td class="rank-cell">${i + 1}</td>
+      ${teamTd}
+      <td>${confederationBadge(t.confederation, false)}</td>
+      <td class="medal-cell medal-g">${t.gold || '-'}</td>
+      <td class="medal-cell medal-s">${t.silver || '-'}</td>
+      <td class="medal-cell medal-b">${t.bronze || '-'}</td>
+      <td class="medal-cell" style="font-weight:700">${t.total}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('medals-table-wrap').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>#</th><th>Country</th><th>Conf</th>
+        <th style="text-align:center">🥇 Gold</th>
+        <th style="text-align:center">🥈 Silver</th>
+        <th style="text-align:center">🥉 Bronze</th>
+        <th style="text-align:center">Total</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  attachLinks();
+}
+
+// ── GOAT Table ────────────────────────────────────────────────────────────────
+async function loadGoat() {
+  try {
+    const res = await fetch(`${BASE}/goat_teams.json`);
+    goatData = await res.json();
+    renderGoat();
+  } catch(e) {
+    document.getElementById('goat-table-wrap').innerHTML =
+      `<p class="error">Could not load GOAT table.</p>`;
+  }
+}
+
+function renderGoat() {
+  if (!goatData) return;
+  let teams = goatData;
+  if (goatConf !== 'all') teams = teams.filter(t => t.confederation === goatConf);
+
+  const rows = teams.map(t => {
+    const slug = nameToSlug[t.team];
+    const cellInner = `<span style="margin-right:4px">${t.flag || ''}</span>${t.team}`;
+    const teamTd = slug
+      ? `<td class="team-cell linked" data-team-slug="${slug}" data-season="${t.season}">${cellInner}</td>`
+      : `<td class="team-cell">${cellInner}</td>`;
+    const targetConf = (goatConf !== 'all' ? goatConf : t.confederation) || '';
+    return `<tr>
+    <td class="rank-cell">${t.rank}</td>
+    <td class="season-cell linked" data-season-link="${t.season}" data-target-conf="${targetConf}" style="text-align:center;white-space:nowrap;font-weight:700;color:#1a6b8a">${t.season}</td>
+    ${teamTd}
+    <td>${confederationBadge(t.confederation, !!t.continental_winner)}</td>
+    <td>${ratingBar(t.rating)}</td>
+    <td class="col-hide-mobile" style="font-size:11px">${finishBadge(t.tournament_finishes)}</td>
+  </tr>`;
+  }).join('');
+
+  document.getElementById('goat-table-wrap').innerHTML = `
+    <table>
+      <thead><tr>
+        <th style="text-align:center">All time rank</th>
+        <th style="text-align:center">Year</th>
+        <th>Country</th><th>Conf</th>
+        <th>Rating</th>
+        <th class="col-hide-mobile">Honors</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  attachLinks();
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+buildConfPills('goat-conf-pills', true, goatConf, v => {
+  goatConf = v;
+  renderGoat();
+});
+buildConfPills('medals-conf-pills', true, medalsConf, v => {
+  medalsConf = v;
+  renderMedals();
+});
+// Load teams_index first so opponent/slug lookups are populated before any
+// table renders - avoids a double-render flash on initial page load.
+(async () => {
+  await loadTeamsIndex();
+  initStandings();
+  loadMedals();
+  loadGoat();
+})();
+
+// Auto-resize: when embedded in an iframe, post our scroll height to the
+// parent so the iframe can size itself with no internal scroll.
+(function() {
+  if (window.parent === window) return;
+  function postHeight() {
+    parent.postMessage({type: 'fakeronjan-resize', height: document.documentElement.scrollHeight}, '*');
+  }
+  window.addEventListener('load', postHeight);
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(postHeight).observe(document.body);
+  } else {
+    setTimeout(postHeight, 500);
+    setTimeout(postHeight, 1500);
+    setTimeout(postHeight, 3000);
+  }
+})();
 </script>
 </body>
 </html>
