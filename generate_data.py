@@ -156,9 +156,15 @@ podiums = pd.read_csv("tournament_podiums.csv")
 podiums["team"] = podiums["team"].map(canon_name)
 
 
-# ── W-L record per country over full history (no draws in baseball) ──────────
+# ── W-L record over the rating WINDOW (no draws in baseball) ─────────────────
+# Counted over the last WINDOW_YEARS so the standings record matches the
+# window-based rating beside it (not a jarring all-time tally).
+# WINDOW_YEARS must match ichiro.py's window.
+WINDOW_YEARS = 4
+_gdates = pd.to_datetime(games["date"])
+_win_cutoff = _gdates.max() - pd.DateOffset(years=WINDOW_YEARS)
 records = {}  # country -> {"w","l"}
-for _, g in games.iterrows():
+for _, g in games[_gdates >= _win_cutoff].iterrows():
     hw = g["home_runs"] > g["road_runs"]
     for team, won in ((g["home_team"], hw), (g["road_team"], not hw)):
         r = records.setdefault(team, {"w": 0, "l": 0})

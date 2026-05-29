@@ -55,7 +55,7 @@ HOME_COURT_ADJUSTMENT = 0.0
 # fire only every ~4yr, irregularly), so it gets a LONGER window than CARMELO's
 # 4yr — 8yr keeps ~2 WBC + ~2 Premier12 cycles in view per snapshot.
 # Tuning knob reviewed with user 2026-05-29; tune vs face-validity.
-WINDOW_YEARS = 8
+WINDOW_YEARS = 4
 WINDOW_DAYS = int(WINDOW_YEARS * 365.25)
 
 # Linear recency decay over calendar time: weight = 1 - (days_ago / WINDOW_DAYS),
