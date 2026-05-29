@@ -354,10 +354,62 @@ def discover_subpages(main_title, wikitext):
     return sorted(subs)
 
 
+def _baseballbox_blocks(text):
+    """Yield each {{Baseballbox ...}} block with balanced braces (case-insensitive)."""
+    low = text.lower()
+    i = 0
+    while True:
+        start = low.find("{{baseballbox", i)
+        if start == -1:
+            return
+        depth, j = 0, start
+        while j < len(text):
+            if text[j:j+2] == "{{":
+                depth += 1; j += 2
+            elif text[j:j+2] == "}}":
+                depth -= 1; j += 2
+                if depth == 0:
+                    yield text[start:j]
+                    break
+            else:
+                j += 1
+        else:
+            return
+        i = j
+
+
+def _bbox_field(block, key):
+    m = re.search(rf"\|\s*{key}\s*=\s*(.*?)(?=\n\s*\||\}}\}})", block, re.DOTALL | re.IGNORECASE)
+    return m.group(1).strip() if m else ""
+
+
+def parse_baseballboxes(wikitext, tournament, season):
+    """Yield game dicts from {{Baseballbox}} blocks. The older Baseball World Cup
+    pages (pre-2011) use this named-field template instead of {{bb res}}:
+    team1=road, team2=home, score='A &ndash; B'. Winner bolded but the score is
+    authoritative for the margin."""
+    rows = []
+    for block in _baseballbox_blocks(wikitext):
+        t1 = _extract_code(_bbox_field(block, "team1"))
+        t2 = _extract_code(_bbox_field(block, "team2"))
+        score = _bbox_field(block, "score").replace("&ndash;", "–").replace("&minus;", "–")
+        sa, sb = _parse_score(score)
+        gdate = _parse_date(_bbox_field(block, "date"), season)
+        if not (t1 and t2 and sa is not None and sb is not None and gdate is not None):
+            continue
+        rows.append({
+            "date": gdate, "tournament": tournament, "season": season,
+            "road_team": t1, "road_runs": sa,
+            "home_team": t2, "home_runs": sb,
+            "round": "",
+        })
+    return rows
+
+
 def scrape_event(main_title, tournament, season):
     """Scrape one event: main page + auto-discovered pool/championship sub-pages.
-    Both {{bb res}} and {{Linescore}} are parsed on every page. Games are
-    deduped by (date, road, home, road_runs, home_runs)."""
+    {{bb res}}, {{Linescore}}, and {{Baseballbox}} are all parsed on every page.
+    Games are deduped by (date, road, home, road_runs, home_runs)."""
     main_wt = fetch_wikitext(main_title)
     if not main_wt:
         print(f"  [warn] no wikitext for event {main_title!r}")
@@ -366,7 +418,9 @@ def scrape_event(main_title, tournament, season):
     all_rows, cache = [], {main_title: main_wt}
     for p in pages:
         wt = cache.get(p) or fetch_wikitext(p)
-        rows = parse_bb_res(wt, tournament, season) + parse_linescore(wt, tournament, season)
+        rows = (parse_bb_res(wt, tournament, season)
+                + parse_linescore(wt, tournament, season)
+                + parse_baseballboxes(wt, tournament, season))
         if rows:
             print(f"    {p}: {len(rows)} games")
         all_rows.extend(rows)

@@ -1,4 +1,124 @@
 date,tournament,season,road_team,road_runs,home_team,home_runs,round,tier,neutral
+2000-09-17,Olympics,2000,AUS,4,NED,6,,1.0,True
+2000-09-17,Olympics,2000,CUB,16,RSA,0,,1.0,True
+2000-09-17,Olympics,2000,ITA,2,KOR,10,,1.0,True
+2000-09-17,Olympics,2000,USA,4,JPN,2,,1.0,True
+2000-09-18,Olympics,2000,CUB,13,ITA,5,,1.0,True
+2000-09-18,Olympics,2000,JPN,10,NED,2,,1.0,True
+2000-09-18,Olympics,2000,KOR,3,AUS,5,,1.0,True
+2000-09-18,Olympics,2000,USA,11,RSA,1,,1.0,True
+2000-09-19,Olympics,2000,AUS,3,JPN,7,,1.0,True
+2000-09-19,Olympics,2000,KOR,5,CUB,6,,1.0,True
+2000-09-19,Olympics,2000,NED,2,USA,6,,1.0,True
+2000-09-19,Olympics,2000,RSA,0,ITA,13,,1.0,True
+2000-09-20,Olympics,2000,ITA,1,JPN,6,,1.0,True
+2000-09-20,Olympics,2000,NED,4,CUB,2,,1.0,True
+2000-09-20,Olympics,2000,RSA,4,AUS,10,,1.0,True
+2000-09-20,Olympics,2000,USA,4,KOR,0,,1.0,True
+2000-09-22,Olympics,2000,CUB,1,AUS,0,,1.0,True
+2000-09-22,Olympics,2000,KOR,2,NED,0,,1.0,True
+2000-09-22,Olympics,2000,RSA,0,JPN,8,,1.0,True
+2000-09-22,Olympics,2000,USA,4,ITA,2,,1.0,True
+2000-09-23,Olympics,2000,AUS,7,ITA,8,,1.0,True
+2000-09-23,Olympics,2000,CUB,6,USA,1,,1.0,True
+2000-09-23,Olympics,2000,JPN,6,KOR,7,,1.0,True
+2000-09-23,Olympics,2000,NED,2,RSA,3,,1.0,True
+2000-09-24,Olympics,2000,AUS,1,USA,12,,1.0,True
+2000-09-24,Olympics,2000,ITA,2,NED,3,,1.0,True
+2000-09-24,Olympics,2000,JPN,2,CUB,6,,1.0,True
+2000-09-24,Olympics,2000,KOR,13,RSA,3,,1.0,True
+2000-09-26,Olympics,2000,CUB,3,JPN,0,,1.0,True
+2000-09-26,Olympics,2000,USA,3,KOR,2,,1.0,True
+2000-09-27,Olympics,2000,CUB,0,USA,4,,1.0,True
+2000-09-27,Olympics,2000,KOR,3,JPN,1,,1.0,True
+2001-11-06,Baseball World Cup,2001,ITA,1,TPE,6,,0.7,True
+2001-11-07,Baseball World Cup,2001,NCA,5,FRA,1,,0.7,True
+2001-11-07,Baseball World Cup,2001,RSA,0,KOR,2,,0.7,True
+2001-11-07,Baseball World Cup,2001,USA,4,DOM,6,,0.7,True
+2001-11-08,Baseball World Cup,2001,FRA,0,TPE,10,,0.7,True
+2001-11-08,Baseball World Cup,2001,KOR,10,ITA,0,,0.7,True
+2001-11-08,Baseball World Cup,2001,NCA,4,DOM,8,,0.7,True
+2001-11-08,Baseball World Cup,2001,RSA,0,USA,5,,0.7,True
+2001-11-09,Baseball World Cup,2001,DOM,3,FRA,1,,0.7,True
+2001-11-09,Baseball World Cup,2001,ITA,11,RSA,2,,0.7,True
+2001-11-09,Baseball World Cup,2001,TPE,4,NCA,2,,0.7,True
+2001-11-09,Baseball World Cup,2001,USA,11,KOR,0,,0.7,True
+2001-11-10,Baseball World Cup,2001,FRA,1,KOR,14,,0.7,True
+2001-11-10,Baseball World Cup,2001,ITA,3,DOM,5,,0.7,True
+2001-11-10,Baseball World Cup,2001,NCA,3,USA,1,,0.7,True
+2001-11-10,Baseball World Cup,2001,TPE,8,RSA,2,,0.7,True
+2001-11-11,Baseball World Cup,2001,DOM,0,KOR,4,,0.7,True
+2001-11-11,Baseball World Cup,2001,FRA,1,ITA,5,,0.7,True
+2001-11-11,Baseball World Cup,2001,RSA,0,NCA,13,,0.7,True
+2001-11-11,Baseball World Cup,2001,TPE,0,USA,6,,0.7,True
+2001-11-13,Baseball World Cup,2001,DOM,1,TPE,5,,0.7,True
+2001-11-13,Baseball World Cup,2001,FRA,3,RSA,4,,0.7,True
+2001-11-13,Baseball World Cup,2001,ITA,0,USA,8,,0.7,True
+2001-11-13,Baseball World Cup,2001,KOR,12,NCA,1,,0.7,True
+2001-11-14,Baseball World Cup,2001,KOR,1,TPE,5,,0.7,True
+2001-11-14,Baseball World Cup,2001,NCA,5,ITA,2,,0.7,True
+2001-11-14,Baseball World Cup,2001,RSA,5,DOM,15,,0.7,True
+2001-11-14,Baseball World Cup,2001,USA,17,FRA,0,,0.7,True
+2003-10-12,Baseball World Cup,2003,JPN,12,NED,2,,0.7,True
+2003-10-12,Baseball World Cup,2003,MEX,0,USA,4,,0.7,True
+2003-10-12,Baseball World Cup,2003,TPE,3,CUB,6,,0.7,True
+2003-10-13,Baseball World Cup,2003,BRA,6,PAN,11,,0.7,True
+2003-10-13,Baseball World Cup,2003,CAN,4,NCA,2,,0.7,True
+2003-10-13,Baseball World Cup,2003,CHN,6,FRA,5,,0.7,True
+2003-10-13,Baseball World Cup,2003,RUS,1,ITA,9,,0.7,True
+2003-10-14,Baseball World Cup,2003,CAN,10,RUS,0,,0.7,True
+2003-10-14,Baseball World Cup,2003,FRA,0,JPN,18,,0.7,True
+2003-10-14,Baseball World Cup,2003,KOR,0,CUB,4,,0.7,True
+2003-10-14,Baseball World Cup,2003,NCA,5,TPE,2,,0.7,True
+2003-10-14,Baseball World Cup,2003,NED,12,CHN,5,,0.7,True
+2003-10-14,Baseball World Cup,2003,PAN,7,MEX,3,,0.7,True
+2003-10-14,Baseball World Cup,2003,USA,7,BRA,1,,0.7,True
+2003-10-15,Baseball World Cup,2003,BRA,5,MEX,3,,0.7,True
+2003-10-15,Baseball World Cup,2003,CAN,2,TPE,10,,0.7,True
+2003-10-15,Baseball World Cup,2003,ITA,5,NCA,6,,0.7,True
+2003-10-15,Baseball World Cup,2003,JPN,16,CHN,1,,0.7,True
+2003-10-15,Baseball World Cup,2003,NED,12,FRA,0,,0.7,True
+2003-10-15,Baseball World Cup,2003,PAN,5,USA,12,,0.7,True
+2003-10-15,Baseball World Cup,2003,RUS,3,KOR,26,,0.7,True
+2003-10-17,Baseball World Cup,2003,CAN,5,ITA,3,,0.7,True
+2003-10-17,Baseball World Cup,2003,JPN,8,BRA,2,,0.7,True
+2003-10-17,Baseball World Cup,2003,KOR,2,TPE,8,,0.7,True
+2003-10-17,Baseball World Cup,2003,MEX,5,CHN,0,,0.7,True
+2003-10-17,Baseball World Cup,2003,NED,2,PAN,4,,0.7,True
+2003-10-17,Baseball World Cup,2003,RUS,1,CUB,20,,0.7,True
+2003-10-17,Baseball World Cup,2003,USA,14,FRA,2,,0.7,True
+2003-10-18,Baseball World Cup,2003,BRA,2,NED,1,,0.7,True
+2003-10-18,Baseball World Cup,2003,FRA,0,MEX,15,,0.7,True
+2003-10-18,Baseball World Cup,2003,ITA,0,CUB,7,,0.7,True
+2003-10-18,Baseball World Cup,2003,JPN,10,PAN,4,,0.7,True
+2003-10-18,Baseball World Cup,2003,KOR,17,CAN,5,,0.7,True
+2003-10-18,Baseball World Cup,2003,NCA,14,RUS,3,,0.7,True
+2003-10-18,Baseball World Cup,2003,USA,4,CHN,1,,0.7,True
+2003-10-19,Baseball World Cup,2003,CHN,1,PAN,17,,0.7,True
+2003-10-19,Baseball World Cup,2003,CUB,8,CAN,0,,0.7,True
+2003-10-19,Baseball World Cup,2003,FRA,4,BRA,7,,0.7,True
+2003-10-19,Baseball World Cup,2003,ITA,4,TPE,5,,0.7,True
+2003-10-19,Baseball World Cup,2003,MEX,3,NED,6,,0.7,True
+2003-10-19,Baseball World Cup,2003,NCA,3,KOR,2,,0.7,True
+2003-10-19,Baseball World Cup,2003,USA,1,JPN,2,,0.7,True
+2003-10-20,Baseball World Cup,2003,CHN,0,BRA,4,,0.7,True
+2003-10-20,Baseball World Cup,2003,CUB,7,NCA,1,,0.7,True
+2003-10-20,Baseball World Cup,2003,ITA,2,KOR,4,,0.7,True
+2003-10-20,Baseball World Cup,2003,MEX,6,JPN,8,,0.7,True
+2003-10-20,Baseball World Cup,2003,PAN,19,FRA,2,,0.7,True
+2003-10-20,Baseball World Cup,2003,TPE,1,RUS,4,,0.7,True
+2003-10-22,Baseball World Cup,2003,CUB,4,BRA,3,,0.7,True
+2003-10-22,Baseball World Cup,2003,JPN,2,KOR,0,,0.7,True
+2003-10-22,Baseball World Cup,2003,NCA,0,PAN,5,,0.7,True
+2003-10-22,Baseball World Cup,2003,USA,1,TPE,2,,0.7,True
+2003-10-23,Baseball World Cup,2003,NCA,5,KOR,3,,0.7,True
+2003-10-23,Baseball World Cup,2003,PAN,4,JPN,1,,0.7,True
+2003-10-23,Baseball World Cup,2003,TPE,3,CUB,6,,0.7,True
+2003-10-23,Baseball World Cup,2003,USA,13,BRA,4,,0.7,True
+2003-10-24,Baseball World Cup,2003,KOR,3,BRA,8,,0.7,True
+2003-10-24,Baseball World Cup,2003,USA,13,NCA,2,,0.7,True
+2003-10-25,Baseball World Cup,2003,CUB,4,PAN,2,,0.7,True
+2003-10-25,Baseball World Cup,2003,TPE,3,JPN,7,,0.7,True
 2004-08-15,Olympics,2004,AUS,1,CUB,4,,1.0,True
 2004-08-15,Olympics,2004,JPN,12,ITA,0,,1.0,True
 2004-08-15,Olympics,2004,NED,11,GRE,0,,1.0,True
@@ -31,6 +151,90 @@ date,tournament,season,road_team,road_runs,home_team,home_runs,round,tier,neutra
 2004-08-24,Olympics,2004,CAN,5,CUB,8,semifinal,1.0,True
 2004-08-25,Olympics,2004,CUB,6,AUS,2,final,1.0,True
 2004-08-25,Olympics,2004,JPN,11,CAN,2,bronze,1.0,True
+2005-09-02,Baseball World Cup,2005,NED,13,CHN,3,,0.7,True
+2005-09-03,Baseball World Cup,2005,AUS,4,PUR,2,,0.7,True
+2005-09-03,Baseball World Cup,2005,CHN,6,BRA,5,,0.7,True
+2005-09-03,Baseball World Cup,2005,ESP,2,JPN,9,,0.7,True
+2005-09-03,Baseball World Cup,2005,KOR,3,PAN,5,,0.7,True
+2005-09-03,Baseball World Cup,2005,RSA,2,CUB,12,,0.7,True
+2005-09-03,Baseball World Cup,2005,SWE,0,NED,18,,0.7,True
+2005-09-03,Baseball World Cup,2005,TPE,10,CZE,1,,0.7,True
+2005-09-04,Baseball World Cup,2005,BRA,2,RSA,1,,0.7,True
+2005-09-04,Baseball World Cup,2005,CAN,10,SWE,0,,0.7,True
+2005-09-04,Baseball World Cup,2005,CZE,5,ESP,15,,0.7,True
+2005-09-04,Baseball World Cup,2005,NED,6,KOR,2,,0.7,True
+2005-09-04,Baseball World Cup,2005,NIC,2,AUS,0,,0.7,True
+2005-09-04,Baseball World Cup,2005,PAN,2,CUB,6,,0.7,True
+2005-09-04,Baseball World Cup,2005,PUR,5,JPN,4,,0.7,True
+2005-09-04,Baseball World Cup,2005,USA,12,COL,1,,0.7,True
+2005-09-05,Baseball World Cup,2005,AUS,4,USA,6,,0.7,True
+2005-09-05,Baseball World Cup,2005,COL,0,PUR,10,,0.7,True
+2005-09-05,Baseball World Cup,2005,CUB,11,BRA,1,,0.7,True
+2005-09-05,Baseball World Cup,2005,ESP,2,TPE,12,,0.7,True
+2005-09-05,Baseball World Cup,2005,JPN,19,CZE,0,,0.7,True
+2005-09-05,Baseball World Cup,2005,KOR,7,CAN,6,,0.7,True
+2005-09-05,Baseball World Cup,2005,RSA,1,CHN,11,,0.7,True
+2005-09-05,Baseball World Cup,2005,SWE,1,PAN,11,,0.7,True
+2005-09-06,Baseball World Cup,2005,CAN,12,RSA,1,,0.7,True
+2005-09-06,Baseball World Cup,2005,CHN,4,PAN,5,,0.7,True
+2005-09-06,Baseball World Cup,2005,CUB,15,SWE,0,,0.7,True
+2005-09-06,Baseball World Cup,2005,JPN,12,COL,0,,0.7,True
+2005-09-06,Baseball World Cup,2005,NED,7,BRA,0,,0.7,True
+2005-09-06,Baseball World Cup,2005,NIC,1,CZE,0,,0.7,True
+2005-09-06,Baseball World Cup,2005,TPE,4,PUR,6,,0.7,True
+2005-09-06,Baseball World Cup,2005,USA,11,ESP,1,,0.7,True
+2005-09-07,Baseball World Cup,2005,BRA,0,KOR,4,,0.7,True
+2005-09-07,Baseball World Cup,2005,CHN,8,CUB,12,,0.7,True
+2005-09-07,Baseball World Cup,2005,CZE,0,AUS,14,,0.7,True
+2005-09-07,Baseball World Cup,2005,ESP,2,NIC,5,,0.7,True
+2005-09-07,Baseball World Cup,2005,PAN,13,CAN,6,,0.7,True
+2005-09-07,Baseball World Cup,2005,PUR,6,USA,12,,0.7,True
+2005-09-07,Baseball World Cup,2005,RSA,2,NED,20,,0.7,True
+2005-09-07,Baseball World Cup,2005,TPE,1,JPN,7,,0.7,True
+2005-09-08,Baseball World Cup,2005,COL,2,NIC,12,,0.7,True
+2005-09-09,Baseball World Cup,2005,CAN,3,NED,7,,0.7,True
+2005-09-09,Baseball World Cup,2005,COL,3,TPE,2,,0.7,True
+2005-09-09,Baseball World Cup,2005,CUB,4,KOR,1,,0.7,True
+2005-09-09,Baseball World Cup,2005,JPN,4,AUS,2,,0.7,True
+2005-09-09,Baseball World Cup,2005,PAN,8,BRA,5,,0.7,True
+2005-09-09,Baseball World Cup,2005,PUR,11,CZE,1,,0.7,True
+2005-09-09,Baseball World Cup,2005,SWE,5,CHN,7,,0.7,True
+2005-09-09,Baseball World Cup,2005,USA,2,NIC,14,,0.7,True
+2005-09-10,Baseball World Cup,2005,AUS,4,TPE,11,,0.7,True
+2005-09-10,Baseball World Cup,2005,CAN,0,CUB,7,,0.7,True
+2005-09-10,Baseball World Cup,2005,ESP,6,COL,4,,0.7,True
+2005-09-10,Baseball World Cup,2005,KOR,3,CHN,1,,0.7,True
+2005-09-10,Baseball World Cup,2005,NED,9,PAN,5,,0.7,True
+2005-09-10,Baseball World Cup,2005,NIC,5,PUR,6,,0.7,True
+2005-09-10,Baseball World Cup,2005,RSA,4,SWE,10,,0.7,True
+2005-09-10,Baseball World Cup,2005,USA,6,JPN,7,,0.7,True
+2005-09-11,Baseball World Cup,2005,AUS,8,ESP,0,,0.7,True
+2005-09-11,Baseball World Cup,2005,BRA,11,SWE,4,,0.7,True
+2005-09-11,Baseball World Cup,2005,CHN,2,CAN,14,,0.7,True
+2005-09-11,Baseball World Cup,2005,CUB,3,NED,1,,0.7,True
+2005-09-11,Baseball World Cup,2005,CZE,3,COL,14,,0.7,True
+2005-09-11,Baseball World Cup,2005,JPN,11,NIC,3,,0.7,True
+2005-09-11,Baseball World Cup,2005,KOR,4,RSA,3,,0.7,True
+2005-09-12,Baseball World Cup,2005,BRA,4,CAN,12,,0.7,True
+2005-09-12,Baseball World Cup,2005,COL,1,AUS,5,,0.7,True
+2005-09-12,Baseball World Cup,2005,CZE,3,USA,7,,0.7,True
+2005-09-12,Baseball World Cup,2005,NIC,11,TPE,4,,0.7,True
+2005-09-12,Baseball World Cup,2005,PAN,5,RSA,1,,0.7,True
+2005-09-12,Baseball World Cup,2005,PUR,7,ESP,4,,0.7,True
+2005-09-12,Baseball World Cup,2005,SWE,2,KOR,12,,0.7,True
+2005-09-13,Baseball World Cup,2005,TPE,4,USA,5,,0.7,True
+2005-09-14,Baseball World Cup,2005,CUB,11,USA,3,,0.7,True
+2005-09-14,Baseball World Cup,2005,JPN,1,KOR,5,,0.7,True
+2005-09-14,Baseball World Cup,2005,NED,10,PUR,0,,0.7,True
+2005-09-14,Baseball World Cup,2005,NIC,1,PAN,2,,0.7,True
+2005-09-16,Baseball World Cup,2005,JPN,5,PUR,0,,0.7,True
+2005-09-16,Baseball World Cup,2005,KOR,7,NED,0,,0.7,True
+2005-09-16,Baseball World Cup,2005,PAN,2,CUB,15,,0.7,True
+2005-09-16,Baseball World Cup,2005,USA,0,NIC,9,,0.7,True
+2005-09-17,Baseball World Cup,2005,KOR,0,CUB,3,,0.7,True
+2005-09-17,Baseball World Cup,2005,NIC,1,JPN,8,,0.7,True
+2005-09-17,Baseball World Cup,2005,PAN,7,NED,6,,0.7,True
+2005-09-17,Baseball World Cup,2005,USA,11,PUR,3,,0.7,True
 2006-03-03,World Baseball Classic,2006,JPN,18,CHN,2,,1.0,True
 2006-03-03,World Baseball Classic,2006,KOR,2,TPE,0,,1.0,True
 2006-03-04,World Baseball Classic,2006,CHN,1,KOR,10,,1.0,True
@@ -142,6 +346,172 @@ date,tournament,season,road_team,road_runs,home_team,home_runs,round,tier,neutra
 2009-03-21,World Baseball Classic,2009,KOR,10,VEN,2,semifinal,1.0,True
 2009-03-22,World Baseball Classic,2009,US,4,JPN,9,semifinal,1.0,True
 2009-03-23,World Baseball Classic,2009,JPN,5,KOR,3,final,1.0,True
+2009-09-09,Baseball World Cup,2009,CZE,4,AUS,17,,0.7,True
+2009-09-09,Baseball World Cup,2009,ESP,15,RSA,0,,0.7,True
+2009-09-09,Baseball World Cup,2009,GER,14,CHN,1,,0.7,True
+2009-09-09,Baseball World Cup,2009,SWE,8,AHO,10,,0.7,True
+2009-09-10,Baseball World Cup,2009,CAN,9,KOR,1,,0.7,True
+2009-09-10,Baseball World Cup,2009,CRO,1,NIC,10,,0.7,True
+2009-09-10,Baseball World Cup,2009,GBR,7,JPN,9,,0.7,True
+2009-09-10,Baseball World Cup,2009,PUR,0,CUB,10,,0.7,True
+2009-09-10,Baseball World Cup,2009,TPE,0,MEX,8,,0.7,True
+2009-09-10,Baseball World Cup,2009,USA,9,VEN,13,,0.7,True
+2009-09-11,Baseball World Cup,2009,AHO,0,CAN,15,,0.7,True
+2009-09-11,Baseball World Cup,2009,AUS,7,TPE,5,,0.7,True
+2009-09-11,Baseball World Cup,2009,CUB,10,RSA,5,,0.7,True
+2009-09-11,Baseball World Cup,2009,ESP,3,PUR,5,,0.7,True
+2009-09-11,Baseball World Cup,2009,JPN,13,CRO,3,,0.7,True
+2009-09-11,Baseball World Cup,2009,KOR,5,SWE,1,,0.7,True
+2009-09-11,Baseball World Cup,2009,MEX,9,CZE,0,,0.7,True
+2009-09-11,Baseball World Cup,2009,NIC,10,GBR,0,,0.7,True
+2009-09-11,Baseball World Cup,2009,USA,9,GER,1,,0.7,True
+2009-09-11,Baseball World Cup,2009,VEN,17,CHN,2,,0.7,True
+2009-09-12,Baseball World Cup,2009,AUS,9,MEX,10,,0.7,True
+2009-09-12,Baseball World Cup,2009,CHN,0,USA,8,,0.7,True
+2009-09-12,Baseball World Cup,2009,CRO,1,GBR,4,,0.7,True
+2009-09-12,Baseball World Cup,2009,CUB,5,ESP,4,,0.7,True
+2009-09-12,Baseball World Cup,2009,CZE,1,TPE,10,,0.7,True
+2009-09-12,Baseball World Cup,2009,GER,1,VEN,12,,0.7,True
+2009-09-12,Baseball World Cup,2009,JPN,4,NIC,8,,0.7,True
+2009-09-12,Baseball World Cup,2009,KOR,5,AHO,9,,0.7,True
+2009-09-12,Baseball World Cup,2009,RSA,0,PUR,12,,0.7,True
+2009-09-12,Baseball World Cup,2009,SWE,1,CAN,19,,0.7,True
+2009-09-13,Baseball World Cup,2009,AUS,19,AHO,6,,0.7,True
+2009-09-13,Baseball World Cup,2009,CUB,6,GBR,0,,0.7,True
+2009-09-13,Baseball World Cup,2009,ITA,2,TPE,5,,0.7,True
+2009-09-13,Baseball World Cup,2009,JPN,9,MEX,3,,0.7,True
+2009-09-13,Baseball World Cup,2009,NED,4,KOR,2,,0.7,True
+2009-09-13,Baseball World Cup,2009,PUR,12,ESP,2,,0.7,True
+2009-09-13,Baseball World Cup,2009,USA,8,CAN,0,,0.7,True
+2009-09-13,Baseball World Cup,2009,VEN,7,NIC,4,,0.7,True
+2009-09-14,Baseball World Cup,2009,AHO,1,USA,11,,0.7,True
+2009-09-14,Baseball World Cup,2009,CAN,3,AUS,5,,0.7,True
+2009-09-14,Baseball World Cup,2009,ESP,8,VEN,1,,0.7,True
+2009-09-14,Baseball World Cup,2009,KOR,15,GBR,5,,0.7,True
+2009-09-14,Baseball World Cup,2009,MEX,6,ITA,3,,0.7,True
+2009-09-14,Baseball World Cup,2009,NED,5,PUR,2,,0.7,True
+2009-09-14,Baseball World Cup,2009,NIC,1,CUB,4,,0.7,True
+2009-09-15,Baseball World Cup,2009,TPE,5,AUS,4,,0.7,True
+2009-09-15,Baseball World Cup,2009,USA,4,JPN,2,,0.7,True
+2009-09-16,Baseball World Cup,2009,CUB,10,VEN,0,,0.7,True
+2009-09-16,Baseball World Cup,2009,ESP,5,NED,10,,0.7,True
+2009-09-16,Baseball World Cup,2009,GBR,1,NIC,4,,0.7,True
+2009-09-16,Baseball World Cup,2009,PUR,3,KOR,2,,0.7,True
+2009-09-17,Baseball World Cup,2009,AUS,5,ITA,4,,0.7,True
+2009-09-17,Baseball World Cup,2009,CAN,3,JPN,2,,0.7,True
+2009-09-17,Baseball World Cup,2009,ESP,0,CUB,10,,0.7,True
+2009-09-17,Baseball World Cup,2009,MEX,9,AHO,8,,0.7,True
+2009-09-17,Baseball World Cup,2009,NED,8,VEN,5,,0.7,True
+2009-09-17,Baseball World Cup,2009,NIC,2,KOR,7,,0.7,True
+2009-09-17,Baseball World Cup,2009,PUR,3,GBR,2,,0.7,True
+2009-09-17,Baseball World Cup,2009,TPE,3,USA,14,,0.7,True
+2009-09-18,Baseball World Cup,2009,AHO,2,CAN,19,,0.7,True
+2009-09-18,Baseball World Cup,2009,CUB,2,PUR,5,,0.7,True
+2009-09-18,Baseball World Cup,2009,ESP,5,NIC,9,,0.7,True
+2009-09-18,Baseball World Cup,2009,GBR,0,NED,6,,0.7,True
+2009-09-18,Baseball World Cup,2009,ITA,6,JPN,4,,0.7,True
+2009-09-18,Baseball World Cup,2009,TPE,1,MEX,0,,0.7,True
+2009-09-18,Baseball World Cup,2009,VEN,4,KOR,1,,0.7,True
+2009-09-19,Baseball World Cup,2009,AHO,3,TPE,12,,0.7,True
+2009-09-19,Baseball World Cup,2009,CAN,16,ITA,7,,0.7,True
+2009-09-19,Baseball World Cup,2009,GBR,3,ESP,10,,0.7,True
+2009-09-19,Baseball World Cup,2009,JPN,0,AUS,5,,0.7,True
+2009-09-19,Baseball World Cup,2009,KOR,1,CUB,5,,0.7,True
+2009-09-19,Baseball World Cup,2009,MEX,3,USA,7,,0.7,True
+2009-09-19,Baseball World Cup,2009,NIC,4,NED,8,,0.7,True
+2009-09-19,Baseball World Cup,2009,VEN,3,PUR,5,,0.7,True
+2009-09-20,Baseball World Cup,2009,AUS,6,MEX,5,,0.7,True
+2009-09-20,Baseball World Cup,2009,CAN,5,TPE,3,,0.7,True
+2009-09-20,Baseball World Cup,2009,ITA,3,USA,12,,0.7,True
+2009-09-20,Baseball World Cup,2009,JPN,10,AHO,1,,0.7,True
+2009-09-20,Baseball World Cup,2009,KOR,2,ESP,1,,0.7,True
+2009-09-20,Baseball World Cup,2009,NED,3,CUB,5,,0.7,True
+2009-09-20,Baseball World Cup,2009,NIC,0,PUR,16,,0.7,True
+2009-09-20,Baseball World Cup,2009,VEN,6,GBR,1,,0.7,True
+2009-09-22,Baseball World Cup,2009,CUB,2,AUS,1,,0.7,True
+2009-09-22,Baseball World Cup,2009,NED,11,TPE,2,,0.7,True
+2009-09-22,Baseball World Cup,2009,PUR,0,CAN,3,,0.7,True
+2009-09-22,Baseball World Cup,2009,USA,6,VEN,3,,0.7,True
+2009-09-23,Baseball World Cup,2009,AUS,5,NED,2,,0.7,True
+2009-09-23,Baseball World Cup,2009,CAN,9,VEN,2,,0.7,True
+2009-09-23,Baseball World Cup,2009,PUR,0,USA,3,,0.7,True
+2009-09-23,Baseball World Cup,2009,TPE,0,CUB,8,,0.7,True
+2009-09-24,Baseball World Cup,2009,CAN,11,NED,5,,0.7,True
+2009-09-24,Baseball World Cup,2009,TPE,2,PUR,8,,0.7,True
+2009-09-24,Baseball World Cup,2009,USA,5,CUB,3,,0.7,True
+2009-09-24,Baseball World Cup,2009,VEN,9,AUS,4,,0.7,True
+2009-09-25,Baseball World Cup,2009,AUS,2,PUR,4,,0.7,True
+2009-09-25,Baseball World Cup,2009,CUB,5,CAN,1,,0.7,True
+2009-09-25,Baseball World Cup,2009,NED,2,USA,8,,0.7,True
+2009-09-25,Baseball World Cup,2009,VEN,6,TPE,4,,0.7,True
+2009-09-26,Baseball World Cup,2009,NED,1,AUS,4,,0.7,True
+2009-09-26,Baseball World Cup,2009,PUR,2,CAN,6,,0.7,True
+2009-09-26,Baseball World Cup,2009,VEN,6,TPE,3,,0.7,True
+2009-09-27,Baseball World Cup,2009,CUB,5,USA,10,,0.7,True
+2011-10-01,Baseball World Cup,2011,PAN,8,GRE,3,,0.7,True
+2011-10-02,Baseball World Cup,2011,AUS,0,CUB,14,,0.7,True
+2011-10-02,Baseball World Cup,2011,DOM,7,ITA,0,,0.7,True
+2011-10-02,Baseball World Cup,2011,GER,4,NIC,5,,0.7,True
+2011-10-02,Baseball World Cup,2011,NED,2,TPE,1,,0.7,True
+2011-10-02,Baseball World Cup,2011,PUR,1,CAN,9,,0.7,True
+2011-10-02,Baseball World Cup,2011,VEN,5,KOR,4,,0.7,True
+2011-10-03,Baseball World Cup,2011,CAN,3,JPN,1,,0.7,True
+2011-10-03,Baseball World Cup,2011,CUB,3,DOM,0,,0.7,True
+2011-10-03,Baseball World Cup,2011,ITA,7,AUS,0,,0.7,True
+2011-10-03,Baseball World Cup,2011,KOR,6,GER,5,,0.7,True
+2011-10-03,Baseball World Cup,2011,NED,19,GRE,0,,0.7,True
+2011-10-03,Baseball World Cup,2011,NIC,2,VEN,5,,0.7,True
+2011-10-03,Baseball World Cup,2011,TPE,8,PAN,14,,0.7,True
+2011-10-03,Baseball World Cup,2011,USA,4,PUR,8,,0.7,True
+2011-10-04,Baseball World Cup,2011,CUB,14,VEN,2,,0.7,True
+2011-10-04,Baseball World Cup,2011,GER,2,DOM,13,,0.7,True
+2011-10-04,Baseball World Cup,2011,GRE,2,CAN,12,,0.7,True
+2011-10-04,Baseball World Cup,2011,ITA,6,NIC,3,,0.7,True
+2011-10-04,Baseball World Cup,2011,JPN,2,NED,5,,0.7,True
+2011-10-04,Baseball World Cup,2011,KOR,8,AUS,0,,0.7,True
+2011-10-04,Baseball World Cup,2011,PAN,4,PUR,2,,0.7,True
+2011-10-04,Baseball World Cup,2011,TPE,1,USA,15,,0.7,True
+2011-10-05,Baseball World Cup,2011,JPN,3,USA,7,,0.7,True
+2011-10-06,Baseball World Cup,2011,CAN,4,TPE,0,,0.7,True
+2011-10-06,Baseball World Cup,2011,CUB,4,KOR,1,,0.7,True
+2011-10-06,Baseball World Cup,2011,ITA,7,GER,2,,0.7,True
+2011-10-06,Baseball World Cup,2011,JPN,2,PAN,6,,0.7,True
+2011-10-06,Baseball World Cup,2011,NED,5,PUR,0,,0.7,True
+2011-10-06,Baseball World Cup,2011,NIC,3,AUS,4,,0.7,True
+2011-10-06,Baseball World Cup,2011,USA,3,GRE,0,,0.7,True
+2011-10-06,Baseball World Cup,2011,VEN,6,DOM,3,,0.7,True
+2011-10-07,Baseball World Cup,2011,CAN,3,PAN,12,,0.7,True
+2011-10-07,Baseball World Cup,2011,DOM,9,AUS,11,,0.7,True
+2011-10-07,Baseball World Cup,2011,GER,5,VEN,10,,0.7,True
+2011-10-07,Baseball World Cup,2011,ITA,1,CUB,5,,0.7,True
+2011-10-07,Baseball World Cup,2011,JPN,3,TPE,1,,0.7,True
+2011-10-07,Baseball World Cup,2011,KOR,6,NIC,4,,0.7,True
+2011-10-07,Baseball World Cup,2011,PUR,10,GRE,1,,0.7,True
+2011-10-07,Baseball World Cup,2011,USA,5,NED,7,,0.7,True
+2011-10-08,Baseball World Cup,2011,AUS,15,VEN,0,,0.7,True
+2011-10-08,Baseball World Cup,2011,CUB,8,GER,2,,0.7,True
+2011-10-08,Baseball World Cup,2011,DOM,16,NIC,1,,0.7,True
+2011-10-08,Baseball World Cup,2011,KOR,4,ITA,0,,0.7,True
+2011-10-08,Baseball World Cup,2011,NED,4,CAN,5,,0.7,True
+2011-10-08,Baseball World Cup,2011,PUR,6,JPN,0,,0.7,True
+2011-10-09,Baseball World Cup,2011,AUS,9,GER,6,,0.7,True
+2011-10-09,Baseball World Cup,2011,DOM,4,KOR,5,,0.7,True
+2011-10-09,Baseball World Cup,2011,GRE,4,JPN,9,,0.7,True
+2011-10-09,Baseball World Cup,2011,NIC,0,CUB,6,,0.7,True
+2011-10-09,Baseball World Cup,2011,PAN,3,NED,7,,0.7,True
+2011-10-09,Baseball World Cup,2011,TPE,3,PUR,1,,0.7,True
+2011-10-09,Baseball World Cup,2011,USA,1,CAN,6,,0.7,True
+2011-10-09,Baseball World Cup,2011,VEN,7,ITA,6,,0.7,True
+2011-10-10,Baseball World Cup,2011,GRE,0,TPE,15,,0.7,True
+2011-10-10,Baseball World Cup,2011,PAN,0,USA,5,,0.7,True
+2011-10-11,Baseball World Cup,2011,CAN,0,AUS,7,,0.7,True
+2011-10-11,Baseball World Cup,2011,CUB,8,USA,7,,0.7,True
+2011-10-11,Baseball World Cup,2011,NED,5,KOR,1,,0.7,True
+2011-10-11,Baseball World Cup,2011,VEN,4,PAN,11,,0.7,True
+2011-10-12,Baseball World Cup,2011,NED,1,AUS,1,,0.7,True
+2011-10-15,Baseball World Cup,2011,AUS,3,KOR,2,,0.7,True
+2011-10-15,Baseball World Cup,2011,NED,2,CUB,1,,0.7,True
+2011-10-15,Baseball World Cup,2011,PAN,3,VEN,8,,0.7,True
 2013-03-02,World Baseball Classic,2013,AUS,1,TPE,4,,1.0,True
 2013-03-02,World Baseball Classic,2013,JPN,5,BRA,3,,1.0,True
 2013-03-02,World Baseball Classic,2013,KOR,0,NED,5,,1.0,True
