@@ -426,6 +426,236 @@ def parse_baseballboxes(wikitext, tournament, season):
     return rows
 
 
+# ------------------------------------------------------------
+# LEGACY wikitable parsing (older events with NO box templates)
+# ------------------------------------------------------------
+# The 1992 & 1996 Olympic baseball pages and the 2007 Baseball World Cup encode
+# games as raw wikitables, not {{bb res}}/{{Linescore}}/{{Baseballbox}}:
+#   * 1992/1996 (Format A): one R/H/E linescore table per game -- a "Team | 1..9
+#     | R | H | E" header with exactly TWO team rows. 1992 uses {{bb|CODE}};
+#     1996 uses {{flagicon|Full Country}}. R (total runs) is the 3rd-from-last
+#     integer in each team row.
+#   * 2007 (Format B): a schedule table -- "Team1 | A-B | Team2 | Time" rows,
+#     with "! colspan | <Month Day>" header rows giving the date.
+
+# Full country name -> IOC code (older pages spell teams out via {{flagicon}}).
+_NAME_TO_CODE = {
+    "United States": "USA", "Cuba": "CUB", "Japan": "JPN", "Nicaragua": "NCA",
+    "Netherlands": "NED", "Australia": "AUS", "Italy": "ITA", "South Korea": "KOR",
+    "Korea": "KOR", "Chinese Taipei": "TPE", "Taiwan": "TPE", "Spain": "ESP",
+    "Dominican Republic": "DOM", "Puerto Rico": "PUR", "Panama": "PAN",
+    "South Africa": "RSA", "Mexico": "MEX", "Canada": "CAN", "Venezuela": "VEN",
+    "Brazil": "BRA", "China": "CHN", "Colombia": "COL", "Great Britain": "GBR",
+    "Israel": "ISR", "Greece": "GRE", "Germany": "GER", "Czech Republic": "CZE",
+}
+
+_INT_RE = re.compile(r"-?\d+")
+_MONTHS = {m: i for i, m in enumerate(
+    ["january", "february", "march", "april", "may", "june", "july",
+     "august", "september", "october", "november", "december"], start=1)}
+
+
+def _team_token_to_code(raw):
+    """Resolve a team cell ({{bb|CODE}}, {{flagicon|CODE}}, {{flagicon|Name}},
+    or a bold full name) to an IOC code."""
+    c = _extract_code(raw)  # handles {{bb|}}/{{bb-rt|}}
+    if not c:
+        m = re.search(r"\{\{\s*flag(?:icon|country|)?\s*\|\s*([^}|]+)", raw, re.I)
+        if m:
+            c = m.group(1).strip()
+    if not c:
+        return None
+    c = re.sub(r"'''", "", c).strip()
+    if c in _NAME_TO_CODE:
+        return _NAME_TO_CODE[c]
+    if 2 <= len(c) <= 3 and c.isupper():
+        return c
+    return _NAME_TO_CODE.get(c)
+
+
+def _wikitables(text):
+    """Yield (table_text, start_offset) for each {| ... |} block (depth-aware)."""
+    i = 0
+    while True:
+        start = text.find("{|", i)
+        if start == -1:
+            return
+        depth, j = 0, start
+        while j < len(text) - 1:
+            two = text[j:j + 2]
+            if two == "{|":
+                depth += 1; j += 2
+            elif two == "|}":
+                depth -= 1; j += 2
+                if depth == 0:
+                    yield text[start:j], start
+                    break
+            else:
+                j += 1
+        else:
+            return
+        i = j
+
+
+def _row_runs(row):
+    """Total runs (R) for a team row = 3rd-from-last integer (after R come H, E).
+    Strips templates / links / bold / table-attribute tokens / hex colors first
+    so only the inning + R/H/E numbers remain."""
+    s = re.sub(r"\{\{[^{}]*\}\}", " ", row)
+    s = re.sub(r"\[\[[^\]]*\]\]", " ", s)
+    s = s.replace("'''", " ")
+    s = re.sub(r"#[0-9a-fA-F]{3,6}", " ", s)          # css hex colors
+    s = re.sub(r'[A-Za-z_][\w-]*\s*=\s*"[^"]*"', " ", s)  # attr="..."
+    s = re.sub(r'[A-Za-z_][\w-]*\s*=\s*[\w#%.;:-]+', " ", s)  # align=left, width=6%
+    ints = _INT_RE.findall(s)
+    return int(ints[-3]) if len(ints) >= 3 else None
+
+
+def parse_re_tables(wikitext, tournament, season, section_date):
+    """Format A: one R/H/E linescore table per game (exactly 2 team rows)."""
+    sections = [(m.start(), m.group(2).strip())
+                for m in re.finditer(r"^(={2,5})\s*(.*?)\s*\1\s*$", wikitext, re.M)]
+
+    def date_for(pos):
+        title = ""
+        for s, t in sections:
+            if s > pos:
+                break
+            title = t
+        return section_date(title)
+
+    rows = []
+    for table, pos in _wikitables(wikitext):
+        teams = []
+        for rb in re.split(r"\n\|-", table):
+            if "{{bb" not in rb and "{{flag" not in rb.lower():
+                continue
+            code = _team_token_to_code(rb)
+            runs = _row_runs(rb)
+            if code and runs is not None:
+                teams.append((code, runs))
+        if len(teams) != 2:
+            continue  # not a 2-team game table (e.g. an 8-row standings table)
+        gdate = date_for(pos)
+        if gdate is None:
+            continue
+        (ra, sa), (hb, sb) = teams
+        rows.append({"date": gdate, "tournament": tournament, "season": season,
+                     "road_team": ra, "road_runs": sa,
+                     "home_team": hb, "home_runs": sb, "round": ""})
+    return rows
+
+
+def parse_bracket_templates(wikitext, tournament, season):
+    """Knockout games encoded in {{Round...}} bracket templates (e.g. the 2007
+    World Cup '{{Round8-with third}}'). Each match line is
+    '|<date place> | {{flagicon|A}} [[link]] |scoreA| {{flagicon|B}} [[link]] |scoreB'.
+    """
+    rows = []
+    i = 0
+    while True:
+        start = wikitext.find("{{Round", i)
+        if start == -1:
+            break
+        depth, j = 0, start
+        while j < len(wikitext) - 1:
+            two = wikitext[j:j + 2]
+            if two == "{{":
+                depth += 1; j += 2
+            elif two == "}}":
+                depth -= 1; j += 2
+                if depth == 0:
+                    break
+            else:
+                j += 1
+        block = wikitext[start:j]
+        i = j
+        body = re.sub(r"\[\[[^\]]*\]\]", " ", block)  # drop links (they carry pipes)
+        for m in re.finditer(
+            r"\|\s*([A-Z][a-z]+ \d{1,2})[^|]*\|\s*\{\{\s*flagicon\s*\|\s*([^}|]+)[^}]*\}\}"
+            r"\s*\|\s*(\d+)\s*\|\s*\{\{\s*flagicon\s*\|\s*([^}|]+)[^}]*\}\}\s*\|\s*(\d+)",
+                body):
+            gdate = _parse_date(m.group(1), season)
+            a = _team_token_to_code("{{flagicon|%s}}" % m.group(2))
+            b = _team_token_to_code("{{flagicon|%s}}" % m.group(4))
+            if gdate and a and b and a != b:
+                rows.append({"date": gdate, "tournament": tournament, "season": season,
+                             "road_team": a, "road_runs": int(m.group(3)),
+                             "home_team": b, "home_runs": int(m.group(5)), "round": ""})
+    return rows
+
+
+def parse_schedule_tables(wikitext, tournament, season):
+    """Format B: schedule tables -- 'Team1 | A-B | Team2 | Time' rows, dates from
+    '! colspan | <Month Day>' header rows."""
+    rows = []
+    for table, _ in _wikitables(wikitext):
+        if "wikitable" not in table:
+            continue
+        cur_date = None
+        for rb in re.split(r"\n\|-", table):
+            dm = re.search(r"colspan[^|]*\|\s*([A-Z][a-z]+ \d{1,2})", rb)
+            if dm:
+                d = _parse_date(dm.group(1), season)
+                if d:
+                    cur_date = d
+                continue
+            flags = re.findall(r"\{\{\s*flag(?:icon|country|)?\s*\|\s*([^}|]+)", rb, re.I)
+            body = re.sub(r"\{\{[^{}]*\}\}", " ", rb)
+            sc = re.search(r"(\d+)\s*[-–—]\s*(\d+)", body)
+            if cur_date and len(flags) >= 2 and sc:
+                a = _team_token_to_code("{{flagicon|%s}}" % flags[0])
+                b = _team_token_to_code("{{flagicon|%s}}" % flags[1])
+                if a and b and a != b:
+                    rows.append({"date": cur_date, "tournament": tournament,
+                                 "season": season, "road_team": a, "road_runs": int(sc.group(1)),
+                                 "home_team": b, "home_runs": int(sc.group(2)), "round": ""})
+    return rows
+
+
+# 1992 Barcelona baseball: section -> (month, day), read off the page's own
+# Schedule narrative (the round tables carry no dates of their own).
+_OLY1992_DATES = {
+    "Round 1": (7, 26), "Round 2": (7, 27), "Round 3": (7, 28), "Round 4": (7, 29),
+    "Round 5": (7, 31), "Round 6": (8, 1), "Round 7": (8, 2),
+    "Semifinals": (8, 4), "Bronze medal match": (8, 5), "Final": (8, 5),
+}
+
+
+def scrape_legacy_event(main_title, tournament, season):
+    """Scrape an older event whose games live in raw wikitables (no box
+    templates). Picks Format A (R/H/E tables) or Format B (schedule) by content."""
+    from datetime import date
+    wt = fetch_wikitext(main_title)
+    if not wt:
+        print(f"  [warn] no wikitext for legacy event {main_title!r}")
+        return pd.DataFrame()
+
+    if season == 1992:
+        def section_date(title):
+            md = _OLY1992_DATES.get(title.strip())
+            return date(1992, *md) if md else None
+    else:  # 1996 etc.: date is in the section header, e.g. "Day 1 (July 20)"
+        def section_date(title):
+            m = re.search(r"\(([A-Za-z]+)\s+(\d{1,2})\)", title)
+            if m and m.group(1).lower() in _MONTHS:
+                return date(season, _MONTHS[m.group(1).lower()], int(m.group(2)))
+            return None
+
+    rows = parse_re_tables(wt, tournament, season, section_date) + \
+        parse_schedule_tables(wt, tournament, season) + \
+        parse_bracket_templates(wt, tournament, season)
+    df = pd.DataFrame(rows)
+    if len(df):
+        df["_gamekey"] = df.apply(
+            lambda r: frozenset(((r["road_team"], r["road_runs"]),
+                                 (r["home_team"], r["home_runs"]))), axis=1)
+        df = df.drop_duplicates(subset="_gamekey", keep="first").drop(columns="_gamekey")
+        df["tier"] = TIER_WEIGHTS.get(tournament, 1.0)
+        df["neutral"] = True
+    return df
+
+
 def scrape_event(main_title, tournament, season):
     """Scrape one event: main page + auto-discovered pool/championship sub-pages.
     {{bb res}}, {{Linescore}}, and {{Baseballbox}} are all parsed on every page.
@@ -498,11 +728,22 @@ def union_with_existing(fresh_df, path=ALL_GAMES_CSV):
     return combined.drop(columns=["_pri"]).reset_index(drop=True)
 
 
+# Older events with no box templates (games live in raw wikitables / bracket
+# templates) -- routed to scrape_legacy_event instead of scrape_event.
+_LEGACY_TITLES = {
+    "Baseball at the 1992 Summer Olympics",
+    "Baseball at the 1996 Summer Olympics",
+    "2007 Baseball World Cup",
+}
+
+
 def build_dataset(events, write=True):
     frames = []
     for main_title, tournament, season in events:
         print(f"== {main_title} ({tournament} {season}) ==")
-        df = scrape_event(main_title, tournament, season)
+        df = (scrape_legacy_event(main_title, tournament, season)
+              if main_title in _LEGACY_TITLES
+              else scrape_event(main_title, tournament, season))
         if len(df):
             print(f"   -> {len(df)} games")
             frames.append(df)
