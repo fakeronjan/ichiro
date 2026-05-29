@@ -427,8 +427,17 @@ def compute_podiums(df):
             records.append({"tournament": tournament, "season": season, "team": bronze, "finish": 3})
 
     podiums = pd.DataFrame(records)
-    podiums.to_csv(PODIUMS_CSV, index=False)
-    print(f"{PODIUMS_CSV} saved ({len(podiums)} podium records)")
+    # tournament_podiums.csv is now a CURATED, hand-verified file (authoritative
+    # vs Wikipedia). The bracket-walk above is UNRELIABLE: it cannot find 3rd
+    # place where no bronze game is played (the WBC ranks its two semifinal
+    # losers WITHOUT a game), and it mis-identifies the "final" in round-robin
+    # World Cups (got 2001/2005 champions wrong). So it must NEVER overwrite the
+    # curated source generate_data.py reads -- write to a debug file only. Same
+    # lesson as CARMELO's curated_podiums.csv (bracket-walk podiums abandoned).
+    podiums.to_csv("_podiums_autoderived_debug.csv", index=False)
+    print(f"[diagnostic] auto-derived podiums -> _podiums_autoderived_debug.csv "
+          f"({len(podiums)} recs; NOT used downstream, curated "
+          f"tournament_podiums.csv is authoritative)")
     return podiums
 
 
@@ -452,6 +461,7 @@ if __name__ == "__main__":
     print(f"\n=== Top 12 at latest snapshot ({latest_date}) ===")
     print(latest.head(12)[["rank", "name", "rating", "games_played"]].to_string(index=False))
 
-    print("\n=== Podiums (gold) by edition ===")
+    print("\n=== Auto-derived podium golds (DIAGNOSTIC ONLY -- curated "
+          "tournament_podiums.csv is authoritative) ===")
     gold = podiums[podiums["finish"] == 1].sort_values(["tournament", "season"])
     print(gold[["tournament", "season", "team"]].to_string(index=False))

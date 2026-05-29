@@ -1,19 +1,19 @@
 tournament,season,team,finish
-Baseball World Cup,2001,Chinese Taipei,1
-Baseball World Cup,2001,South Korea,2
-Baseball World Cup,2001,United States,3
+Baseball World Cup,2001,Cuba,1
+Baseball World Cup,2001,United States,2
+Baseball World Cup,2001,Chinese Taipei,3
 Baseball World Cup,2003,Cuba,1
 Baseball World Cup,2003,Panama,2
 Baseball World Cup,2003,Japan,3
-Baseball World Cup,2005,Japan,1
-Baseball World Cup,2005,NIC,2
-Baseball World Cup,2005,United States,3
+Baseball World Cup,2005,Cuba,1
+Baseball World Cup,2005,South Korea,2
+Baseball World Cup,2005,Panama,3
 Baseball World Cup,2009,United States,1
 Baseball World Cup,2009,Cuba,2
 Baseball World Cup,2009,Canada,3
 Baseball World Cup,2011,Netherlands,1
 Baseball World Cup,2011,Cuba,2
-Baseball World Cup,2011,Venezuela,3
+Baseball World Cup,2011,Canada,3
 Olympics,2000,United States,1
 Olympics,2000,Cuba,2
 Olympics,2000,South Korea,3
@@ -28,6 +28,7 @@ Olympics,2021,United States,2
 Olympics,2021,Dominican Republic,3
 WBSC Premier12,2015,South Korea,1
 WBSC Premier12,2015,United States,2
+WBSC Premier12,2015,Japan,3
 WBSC Premier12,2019,Japan,1
 WBSC Premier12,2019,South Korea,2
 WBSC Premier12,2019,Mexico,3
@@ -36,15 +37,19 @@ WBSC Premier12,2024,Japan,2
 WBSC Premier12,2024,United States,3
 World Baseball Classic,2006,Japan,1
 World Baseball Classic,2006,Cuba,2
+World Baseball Classic,2006,South Korea,3
 World Baseball Classic,2009,Japan,1
 World Baseball Classic,2009,South Korea,2
+World Baseball Classic,2009,Venezuela,3
 World Baseball Classic,2013,Dominican Republic,1
 World Baseball Classic,2013,Puerto Rico,2
+World Baseball Classic,2013,Japan,3
 World Baseball Classic,2017,United States,1
 World Baseball Classic,2017,Puerto Rico,2
+World Baseball Classic,2017,Japan,3
 World Baseball Classic,2023,Japan,1
 World Baseball Classic,2023,United States,2
-World Baseball Classic,2023,Puerto Rico,3
+World Baseball Classic,2023,Mexico,3
 World Baseball Classic,2026,Venezuela,1
 World Baseball Classic,2026,United States,2
 World Baseball Classic,2026,Dominican Republic,3

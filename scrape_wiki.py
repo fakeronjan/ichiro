@@ -446,16 +446,27 @@ def scrape_event(main_title, tournament, season):
         all_rows.extend(rows)
     df = pd.DataFrame(all_rows)
     if len(df):
-        # When a game appears on both main + sub-page, prefer the copy that
-        # carries a round label (final/bronze/semifinal) over a blank one.
         if "round" not in df.columns:
             df["round"] = ""
         df["round"] = df["round"].fillna("")
+        # Identify a game by its unordered {team: runs} mapping WITHIN the
+        # edition, NOT by date. Date is the least-reliable field: the same game
+        # can be dated differently on different pages (e.g. the 2017 NED-PUR
+        # semifinal is "Mar 20" on the main page but "Mar 19" on the
+        # championship sub-page -- a Wikipedia typo). Keying on the team/score
+        # mapping collapses those cross-source date conflicts AND home/road
+        # swaps, while keeping reversed-score rematches (e.g. pool-then-tiebreaker
+        # with different scores) distinct. Two genuinely different games with
+        # identical teams AND identical score don't occur within one edition.
+        # On a residual conflict we prefer a round-labeled row, then the later
+        # date (deterministic; the rating impact of a 1-day shift is nil).
+        df["_gamekey"] = df.apply(
+            lambda r: frozenset(((r["road_team"], r["road_runs"]),
+                                 (r["home_team"], r["home_runs"]))), axis=1)
         df["_has_round"] = (df["round"] != "").astype(int)
-        df = (df.sort_values("_has_round", ascending=False)
-                .drop_duplicates(subset=["date", "road_team", "home_team",
-                                         "road_runs", "home_runs"], keep="first")
-                .drop(columns="_has_round"))
+        df = (df.sort_values(["_has_round", "date"], ascending=[False, False])
+                .drop_duplicates(subset="_gamekey", keep="first")
+                .drop(columns=["_has_round", "_gamekey"]))
         df["tier"] = TIER_WEIGHTS.get(tournament, 1.0)
         df["neutral"] = True
     return df
