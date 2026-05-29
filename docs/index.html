@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICHIRO - International Baseball Power Rankings</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8f8f6;
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  header { background: #1a6b8a; color: #fff; padding: 20px 24px 16px; }
+  header h1 { font-size: 28px; font-weight: 800; letter-spacing: 3px; color: #ff6eb4; }
+  header p.subtitle {
+    font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 2px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  header p.model-note {
+    font-size: 12px; color: rgba(255,255,255,0.82); margin-top: 8px;
+    max-width: 760px; line-height: 1.5;
+  }
+  header p.updated { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 6px; }
+
+  nav.tabs { background: #155a75; display: flex; gap: 0; overflow-x: auto; }
+  nav.tabs button {
+    background: none; border: none; color: #aaa; padding: 12px 20px;
+    font-size: 13px; font-weight: 600; cursor: pointer; letter-spacing: 0.5px;
+    white-space: nowrap; border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  nav.tabs button:hover { color: #fff; }
+  nav.tabs button.active { color: #ff6eb4; border-bottom-color: #ff6eb4; }
+
+  .tab { display: none; padding: 16px; max-width: 1100px; margin: 0 auto; }
+  .tab.active { display: block; }
+
+  .league-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .league-pills button {
+    background: #fff; border: 1px solid #ddd; color: #155a75; padding: 6px 12px;
+    font-size: 12px; font-weight: 600; border-radius: 999px; cursor: pointer;
+    letter-spacing: 0.3px; white-space: nowrap;
+  }
+  .league-pills button:hover { background: #fafafa; }
+  .league-pills button.active { background: #1a6b8a; color: #ff6eb4; border-color: #1a6b8a; }
+
+  select {
+    padding: 7px 10px; border: 1px solid #ddd; border-radius: 4px;
+    font-size: 13px; background: #fff; cursor: pointer; min-width: 200px;
+  }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+  .count-label { font-size: 12px; color: #888; margin-left: auto; }
+
+  table {
+    width: 100%; border-collapse: collapse; background: #fff; border-radius: 6px;
+    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  thead th {
+    background: #1a6b8a; color: #ff6eb4; padding: 10px 12px; text-align: left;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid #f0f0f0; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #fafafa; }
+  tbody td { padding: 9px 12px; font-size: 13px; vertical-align: middle; }
+
+  .rank-cell { font-weight: 700; color: #888; width: 36px; text-align: center; }
+  .team-cell { font-weight: 600; white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+
+  .linked { cursor: pointer; }
+  .linked:hover { text-decoration: underline; }
+  .team-cell.linked { color: #1a6b8a; }
+
+  .conf-pill {
+    display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px;
+    border-radius: 999px; letter-spacing: 0.3px; white-space: nowrap;
+    background: #f4f4f4; color: #555; border: 1px solid #e8e8e8;
+  }
+
+  .rating-cell { font-weight: 700; font-variant-numeric: tabular-nums; color: #1a6b8a; }
+
+  .medal { font-variant-numeric: tabular-nums; }
+  .medal-g { color: #c8a84b; font-weight: 700; }
+  .medal-s { color: #9aa0a6; font-weight: 700; }
+  .medal-b { color: #cd7f32; font-weight: 700; }
+
+  .last-match-cell { font-size: 12px; color: #555; max-width: 320px; white-space: nowrap;
+                     overflow: hidden; text-overflow: ellipsis; }
+  .result-W { color: #2e7d32; font-weight: 700; }
+  .result-L { color: #c62828; font-weight: 700; }
+
+  .tour-tag {
+    display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 6px;
+    border-radius: 3px; letter-spacing: 0.3px; white-space: nowrap; color: #fff;
+  }
+  .tag-WBC { background: #c0102e; }
+  .tag-Premier12 { background: #1a6b8a; }
+  .tag-Olympics { background: #0b6e4f; }
+  .tag-WorldCup { background: #555; }
+
+  .finish-badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
+  .finish-gold   { background: #c8a84b; color: #1a1a1a; }
+  .finish-silver { background: #d9d9d9; color: #333; }
+  .finish-bronze { background: #cd7f32; color: #fff; }
+
+  .summary-card {
+    background: #fff; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    padding: 16px; margin-bottom: 14px;
+  }
+  .summary-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .summary-head h2 { font-size: 22px; font-weight: 800; white-space: nowrap; }
+  .stat-row { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 12px; }
+  .stat { min-width: 90px; }
+  .stat .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; color: #999; }
+  .stat .value { font-size: 18px; font-weight: 700; color: #1a6b8a; font-variant-numeric: tabular-nums; }
+
+  .fleet-nav {
+    background: #0e4a5f; display: flex; overflow-x: auto;
+    -webkit-overflow-scrolling: touch; font-size: 12px; align-items: stretch; white-space: nowrap;
+  }
+  .fleet-nav a {
+    color: rgba(255,255,255,0.72); text-decoration: none; padding: 8px 12px;
+    font-weight: 600; letter-spacing: 0.3px; transition: color 0.15s, background 0.15s;
+    flex-shrink: 0; display: flex; align-items: center;
+  }
+  .fleet-nav a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  .fleet-nav a.active { color: #ff6eb4; }
+  .fleet-nav .home { font-weight: 700; }
+  .fleet-nav .sep { width: 1px; background: rgba(255,255,255,0.18); margin: 4px 4px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<nav class="fleet-nav">
+  <a class="home" href="https://fakeronjan.com/sports" target="_top">📊 All Sports</a>
+  <span class="sep"></span>
+  <a href="https://fakeronjan.com/nba" target="_top">🏀 NBA</a>
+  <a href="https://fakeronjan.com/wnba" target="_top">🏀 WNBA</a>
+  <a href="https://fakeronjan.com/nfl" target="_top">🏈 NFL</a>
+  <a href="https://fakeronjan.com/ncaafb" target="_top">🏈 NCAA</a>
+  <a href="https://fakeronjan.com/eurosoccer" target="_top">⚽ Euro</a>
+  <a href="https://fakeronjan.com/mls" target="_top">⚽ MLS</a>
+  <a href="https://fakeronjan.com/intlsoccer" target="_top">⚽ Intl</a>
+  <a href="https://fakeronjan.com/mlb" target="_top">⚾ MLB</a>
+  <a class="active" href="https://fakeronjan.com/intlbaseball" target="_top">⚾ Intl BB</a>
+  <a href="https://fakeronjan.com/nhl" target="_top">🏒 NHL</a>
+  <a href="https://fakeronjan.com/tennis" target="_top">🎾 Tennis</a>
+  <a href="https://fakeronjan.com/thechallenge" target="_top">📺 Challenge</a>
+</nav>
+
+<header>
+  <h1>ICHIRO ⚾🌏</h1>
+  <p class="subtitle">International Baseball Power Rankings · Alpha</p>
+  <p class="model-note">National-team strength from the World Baseball Classic, WBSC Premier12, and Olympic baseball. Considers strength of opponent, run margin (capped at 8), and recency, all at neutral venues. Reads as approximate run-spread vs an average team: ~1.5 = contender; ~3 = elite; ~4.5+ = generational (Japan 2024 = 4.48).</p>
+  <p class="updated" id="last-updated">Loading...</p>
+  <p class="updated" id="last-refreshed" style="font-size:11px;color:#999;margin-top:-4px"></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-tab="standings">Standings</button>
+  <button data-tab="team-summary">Team Summary</button>
+  <button data-tab="champions">Champions</button>
+  <button data-tab="goat">GOAT Table</button>
+</nav>
+
+<div id="standings" class="tab active">
+  <div class="league-pills" id="standings-pills"></div>
+  <div class="controls"><span class="count-label" id="standings-count"></span></div>
+  <table>
+    <thead><tr>
+      <th class="rank-cell">#</th><th>Team</th><th>Conf</th>
+      <th class="num">Rating</th><th class="num">GP</th><th class="num">Record</th>
+      <th class="num">🥇</th><th class="num">🥈</th><th class="num">🥉</th>
+      <th>Last game</th>
+    </tr></thead>
+    <tbody id="standings-body"></tbody>
+  </table>
+</div>
+
+<div id="team-summary" class="tab">
+  <div class="controls">
+    <select id="team-select"></select>
+    <span class="count-label" id="summary-count"></span>
+  </div>
+  <div id="summary-content"></div>
+</div>
+
+<div id="champions" class="tab">
+  <div class="league-pills" id="champions-pills"></div>
+  <table>
+    <thead><tr>
+      <th>Year</th><th>Tournament</th><th>🥇 Gold</th><th>🥈 Silver</th><th>🥉 Bronze</th>
+    </tr></thead>
+    <tbody id="champions-body"></tbody>
+  </table>
+</div>
+
+<div id="goat" class="tab">
+  <div class="controls"><span class="count-label">Single highest power rating each team has ever reached.</span></div>
+  <table>
+    <thead><tr>
+      <th class="rank-cell">#</th><th>Team</th><th>Conf</th>
+      <th class="num">Peak rating</th><th>Peak edition</th>
+      <th class="num">🥇</th><th class="num">🥈</th><th class="num">🥉</th>
+    </tr></thead>
+    <tbody id="goat-body"></tbody>
+  </table>
+</div>
+
+<script>
+const DATA = 'data/';
+let standings = [], teamsIndex = [], champions = [], goat = [], meta = {};
+let standingsConf = 'All', championsTour = 'All';
+
+function tourTag(t) {
+  const map = {'World Baseball Classic': ['WBC', 'tag-WBC'],
+               'WBSC Premier12': ['Premier12', 'tag-Premier12'],
+               'Olympics': ['Olympics', 'tag-Olympics'],
+               'Baseball World Cup': ['World Cup', 'tag-WorldCup']};
+  const [label, cls] = map[t] || [t, 'tag-WorldCup'];
+  return `<span class="tour-tag ${cls}">${label}</span>`;
+}
+
+function lastMatchHtml(s) {
+  if (!s) return '<span style="color:#bbb">-</span>';
+  const wl = s.charAt(0);
+  const cls = wl === 'W' ? 'result-W' : 'result-L';
+  return `<span class="${cls}">${wl}</span>${s.slice(1)}`;
+}
+
+async function load() {
+  [standings, teamsIndex, champions, goat, meta] = await Promise.all([
+    fetch(DATA + 'current_standings.json').then(r => r.json()),
+    fetch(DATA + 'teams_index.json').then(r => r.json()),
+    fetch(DATA + 'champions.json').then(r => r.json()),
+    fetch(DATA + 'goat_teams.json').then(r => r.json()),
+    fetch(DATA + 'meta.json').then(r => r.json()),
+  ]);
+  const teams = standings.teams || standings;
+  standings = teams;
+  document.getElementById('last-updated').textContent =
+    `Last updated: ${meta.coverage} (${meta.total_games} games across WBC, Premier12 & Olympics). Latest snapshot ${meta.as_of}.`;
+  document.getElementById('last-refreshed').textContent = `Refreshed ${meta.refreshed_utc || ''}`;
+  buildStandingsPills();
+  renderStandings();
+  buildTeamSelect();
+  buildChampionsPills();
+  renderChampions();
+  renderGoat();
+  postHeight();
+}
+
+// ── Standings ──────────────────────────────────────────────
+function buildStandingsPills() {
+  const confs = ['All', ...Array.from(new Set(standings.map(t => t.confederation))).sort()];
+  const el = document.getElementById('standings-pills');
+  el.innerHTML = confs.map(c =>
+    `<button class="${c === standingsConf ? 'active' : ''}" data-conf="${c}">${c}</button>`).join('');
+  el.querySelectorAll('button').forEach(b => b.onclick = () => {
+    standingsConf = b.dataset.conf; buildStandingsPills(); renderStandings();
+  });
+}
+function renderStandings() {
+  let rows = standings;
+  if (standingsConf !== 'All') rows = rows.filter(t => t.confederation === standingsConf);
+  const body = document.getElementById('standings-body');
+  body.innerHTML = rows.map((t, i) => `
+    <tr>
+      <td class="rank-cell">${standingsConf === 'All' ? t.rank : i + 1}</td>
+      <td class="team-cell linked" onclick="openTeam('${t.slug}')">${t.flag} ${t.name}</td>
+      <td><span class="conf-pill">${t.confederation}</span></td>
+      <td class="num rating-cell">${t.rating.toFixed(2)}</td>
+      <td class="num">${t.games_played}</td>
+      <td class="num">${t.record}</td>
+      <td class="num medal medal-g">${t.gold || ''}</td>
+      <td class="num medal medal-s">${t.silver || ''}</td>
+      <td class="num medal medal-b">${t.bronze || ''}</td>
+      <td class="last-match-cell">${lastMatchHtml(t.last_match)}</td>
+    </tr>`).join('');
+  document.getElementById('standings-count').textContent = `${rows.length} teams`;
+}
+
+// ── Team Summary ───────────────────────────────────────────
+function buildTeamSelect() {
+  const sel = document.getElementById('team-select');
+  sel.innerHTML = teamsIndex.map(t =>
+    `<option value="${t.slug}">${t.flag} ${t.name}</option>`).join('');
+  sel.onchange = () => renderTeam(sel.value);
+  renderTeam(sel.value);
+}
+function openTeam(slug) {
+  document.querySelector('nav.tabs button[data-tab="team-summary"]').click();
+  document.getElementById('team-select').value = slug;
+  renderTeam(slug);
+}
+async function renderTeam(slug) {
+  const t = await fetch(`${DATA}teams/${slug}.json`).then(r => r.json());
+  const games = [...t.games].reverse();
+  const html = `
+    <div class="summary-card">
+      <div class="summary-head">
+        <h2>${t.flag} ${t.name}</h2>
+        <span class="conf-pill">${t.confederation}</span>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="label">Current rank</div><div class="value">${t.current_rank ?? '-'}</div></div>
+        <div class="stat"><div class="label">Current rating</div><div class="value">${t.current_rating ?? '-'}</div></div>
+        <div class="stat"><div class="label">Peak rating</div><div class="value">${t.peak_rating}</div></div>
+        <div class="stat"><div class="label">Record</div><div class="value">${t.record}</div></div>
+        <div class="stat"><div class="label">Medals</div><div class="value"><span class="medal-g">${t.gold}</span> / <span class="medal-s">${t.silver}</span> / <span class="medal-b">${t.bronze}</span></div></div>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Date</th><th>Tournament</th><th>Result</th><th>Opponent</th><th class="num">Score</th></tr></thead>
+      <tbody>${games.map(g => `
+        <tr>
+          <td class="num">${g.date}</td>
+          <td>${tourTag(g.tournament)} <span style="color:#999">${g.season}</span>${g.round ? ` <span class="finish-badge finish-${g.round === 'final' ? 'gold' : g.round === 'bronze' ? 'bronze' : 'silver'}">${g.round}</span>` : ''}</td>
+          <td class="result-${g.result}">${g.result}</td>
+          <td class="team-cell">${g.opp_flag} ${g.opponent}</td>
+          <td class="num">${g.runs_for}-${g.runs_against}</td>
+        </tr>`).join('')}</tbody>
+    </table>`;
+  document.getElementById('summary-content').innerHTML = html;
+  document.getElementById('summary-count').textContent = `${t.games.length} games`;
+  postHeight();
+}
+
+// ── Champions ──────────────────────────────────────────────
+function buildChampionsPills() {
+  const tours = ['All', ...Array.from(new Set(champions.map(e => e.tournament)))];
+  const el = document.getElementById('champions-pills');
+  el.innerHTML = tours.map(t =>
+    `<button class="${t === championsTour ? 'active' : ''}" data-tour="${t}">${t === 'All' ? 'All' : (t === 'World Baseball Classic' ? 'WBC' : t === 'WBSC Premier12' ? 'Premier12' : t)}</button>`).join('');
+  el.querySelectorAll('button').forEach(b => b.onclick = () => {
+    championsTour = b.dataset.tour; buildChampionsPills(); renderChampions();
+  });
+}
+function renderChampions() {
+  let rows = champions;
+  if (championsTour !== 'All') rows = rows.filter(e => e.tournament === championsTour);
+  document.getElementById('champions-body').innerHTML = rows.map(e => `
+    <tr>
+      <td class="num">${e.season}</td>
+      <td>${tourTag(e.tournament)}</td>
+      <td class="team-cell"><span class="finish-badge finish-gold">${e.gold_flag} ${e.gold}</span></td>
+      <td class="team-cell">${e.silver ? `${e.silver_flag} ${e.silver}` : '-'}</td>
+      <td class="team-cell">${e.bronze ? `${e.bronze_flag} ${e.bronze}` : '-'}</td>
+    </tr>`).join('');
+  postHeight();
+}
+
+// ── GOAT ───────────────────────────────────────────────────
+function renderGoat() {
+  document.getElementById('goat-body').innerHTML = goat.map(g => `
+    <tr>
+      <td class="rank-cell">${g.rank}</td>
+      <td class="team-cell linked" onclick="openTeam('${g.slug}')">${g.flag} ${g.name}</td>
+      <td><span class="conf-pill">${g.confederation}</span></td>
+      <td class="num rating-cell">${g.peak_rating.toFixed(2)}</td>
+      <td>${g.peak_edition}</td>
+      <td class="num medal medal-g">${g.gold || ''}</td>
+      <td class="num medal medal-s">${g.silver || ''}</td>
+      <td class="num medal medal-b">${g.bronze || ''}</td>
+    </tr>`).join('');
+}
+
+// ── Tabs ───────────────────────────────────────────────────
+document.querySelectorAll('nav.tabs button').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    postHeight();
+  };
+});
+
+// ── Iframe auto-resize (fleet pattern) ─────────────────────
+function postHeight() {
+  parent.postMessage({type: 'fakeronjan-resize', height: document.documentElement.scrollHeight}, '*');
+}
+window.addEventListener('load', postHeight);
+if (typeof ResizeObserver !== 'undefined') {
+  new ResizeObserver(postHeight).observe(document.body);
+}
+
+load();
+</script>
+</body>
+</html>
