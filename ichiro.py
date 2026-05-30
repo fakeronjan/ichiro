@@ -40,7 +40,9 @@ PODIUMS_CSV   = "tournament_podiums.csv"
 # the bulk of international games uncapped; only the worst blowouts (mercy-rule
 # routs vs minnows) get trimmed so they don't dominate the regression.
 MARGIN_TRANSFORM = "cap"
-MARGIN_CAP = 8
+# Old cap=8 capped 22.5% of intl baseball games (WBC + World Cup pre-2011
+# had genuine blowouts). Raised to 15 per user 2026-05-30 -- caps only ~5%.
+MARGIN_CAP = 15
 
 # ---- Home-court adjustment ------------------------------------------------
 # 0 for international baseball: WBC / Premier12 / Olympics play at neutral or
