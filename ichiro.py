@@ -1,11 +1,11 @@
 """
-ICHIRO - International men's baseball power ratings via WLS Massey solver.
+ICHIRO - International men's baseball power ratings via WLS fakeronjan WLS solver.
 
 Named after Ichiro Suzuki, the international (Japan -> MLB) icon.
 
 Model stack clones GRIFFEY (MLB) with international adaptations borrowed from
 MESSI (international soccer):
-  - Homebrew WLS Massey solver (no rankit dependency; copy of griffey._solve_massey)
+  - Homebrew WLS fakeronjan WLS solver (no rankit dependency; copy of griffey._solve_wls)
   - Margin cap to suppress blowouts: MARGIN_CAP = 8 runs (baseball-specific)
   - HCA = 0: WBC / Premier12 / Olympics are at neutral / host venues, not true
     home games. Every game is tagged neutral=True by the scraper.
@@ -148,7 +148,7 @@ def code_to_country(code):
 
 
 # =========================================================
-# WLS MASSEY SOLVER (clone of griffey._solve_massey, single zero-sum anchor)
+# WLS FAKERONJAN WLS SOLVER (clone of griffey._solve_wls, single zero-sum anchor)
 # =========================================================
 
 def _apply_margin_transform(margin, transform, cap):
@@ -186,8 +186,8 @@ def _connected_components(teams, edges):
     return out
 
 
-def _solve_massey(window_df):
-    """WLS Massey solve on one rolling window. One zero-sum anchor per connected
+def _solve_wls(window_df):
+    """WLS fakeronjan WLS solve on one rolling window. One zero-sum anchor per connected
     component (international baseball is a single confederation-spanning network,
     so usually one component; the per-component anchor is defensive for any
     edition that doesn't connect to the rest).
@@ -318,7 +318,7 @@ def compute_ratings(df):
         season = int(rid_to_season.get(i, current_date.year))
 
         try:
-            ranked = _solve_massey(window)
+            ranked = _solve_wls(window)
         except Exception as e:
             print(f"  [skip] grouped_date_id {i} ({current_date.date()}): {e}")
             continue
