@@ -391,7 +391,6 @@
   <p class="subtitle">International Baseball Power Rankings · Alpha</p>
   <p class="model-note">Considers strength of opponent, run margin, and recency, all at neutral venues. Reads as approximate run-spread vs avg team. ~2 = contender; ~4 = elite; ~6+ = generational (Cuba 1992 = 8.1).</p>
   <p class="updated"><span class="cadence-inline">🛠️ Updated manually</span> <span class="cadence-sep">|</span> <span id="last-updated">Loading...</span></p>
-  <p class="updated" id="last-refreshed" style="font-size:11px;color:#999;margin-top:-4px"></p>
 </header>
 
 <nav>
@@ -714,11 +713,6 @@ async function initStandings() {
     const meta = await res.json();
     document.getElementById('last-updated').textContent =
       `Ratings include games from ${fmtDate(meta.first_date)} to ${fmtDate(meta.last_date)}`;
-    if (meta.generated_at) {
-      const refreshed = new Date(meta.generated_at);
-      document.getElementById('last-refreshed').textContent =
-        `Last refreshed: ${refreshed.toLocaleString(undefined, {year:'numeric', month:'numeric', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'short'})}`;
-    }
     const sel = document.getElementById('season-filter');
     meta.seasons.forEach(s => {
       const opt = document.createElement('option');
