@@ -1,0 +1,51 @@
+name: Update ICHIRO Ratings
+
+on:
+  schedule:
+    - cron: '47 9 * * *'  # 09:47 UTC daily — Wikipedia source, not rate-limited
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Scrape latest Wikipedia data
+        run: python scrape_wiki.py
+
+      - name: Run ratings engine
+        run: python ichiro.py
+
+      - name: Generate web data
+        run: python generate_data.py
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name  "ICHIRO Bot"
+          git config user.email "ichiro-bot@users.noreply.github.com"
+          git add all_games.csv tournament_podiums.csv docs/data/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update ratings $(date -u '+%Y-%m-%d')"
+            # Race-safe push: rebase onto remote head if it moved during the run.
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "Push attempt $i failed; retrying in 5s..."
+              sleep 5
+            done
+          fi
