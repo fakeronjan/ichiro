@@ -453,7 +453,7 @@ let nameToSlug        = {};  // country name → slug, built from teamsIndex
 
 // Pill state (replaces dropdown filters)
 let standingsConf  = 'all';
-let tsConf         = '';
+let tsConf         = 'all';
 let goatConf       = 'all';
 let tsView         = 'cross';  // 'cross' (all-season summary) or 'single' (one season, all game-days)
 let historyTourny  = 'World Baseball Classic';
@@ -590,7 +590,7 @@ async function teamLinkClick(slug, season) {
   document.querySelector('nav button[data-tab="team-summary"]').classList.add('active');
   document.getElementById('team-summary').classList.add('active');
   tsConf = t.confederation;
-  buildConfPills('ts-conf-pills', false, tsConf, v => {
+  buildConfPills('ts-conf-pills', true, tsConf, v => {
     tsConf = v;
     populateTeams(v);
     document.getElementById('chart-wrap').style.display = 'none';
@@ -670,7 +670,7 @@ function attachLinks() {
 const _PLACEHOLDER_LM = new Set(['No match yet', 'No competitive match yet', 'No Game', 'Bye / No Game']);
 function displayMatch(s) { return (!s || _PLACEHOLDER_LM.has(s)) ? '' : s; }
 
-const BAR_MIN = -8, BAR_MAX = 8, BAR_RANGE = 16;
+const BAR_MIN = -10, BAR_MAX = 10, BAR_RANGE = 20;
 
 function ratingBar(rating) {
   if (rating == null) return '<span style="color:#bbb">-</span>';
@@ -862,17 +862,23 @@ async function loadTeamsIndex() {
 function populateTeams(confederation) {
   const sel = document.getElementById('team-select');
   sel.innerHTML = '<option value="">- Select a country -</option>';
-  if (!confederation || !teamsIndex) { sel.disabled = true; return; }
-  teamsIndex.filter(t => t.confederation === confederation).forEach(t => {
+  if (!teamsIndex) { sel.disabled = true; return; }
+  const list = (!confederation || confederation === 'all')
+    ? teamsIndex.slice()
+    : teamsIndex.filter(t => t.confederation === confederation);
+  list.sort((a, b) => a.name.localeCompare(b.name));
+  list.forEach(t => {
     const opt = document.createElement('option');
     opt.value = t.slug;
-    opt.textContent = t.flag ? `${t.flag} ${t.name}` : t.name;
+    const priors = (t.historical_names || []);
+    const baseLabel = t.flag ? `${t.flag} ${t.name}` : t.name;
+    opt.textContent = priors.length ? `${baseLabel} (${priors.join(' / ')})` : baseLabel;
     sel.appendChild(opt);
   });
   sel.disabled = false;
 }
 
-buildConfPills('ts-conf-pills', false, tsConf, v => {
+buildConfPills('ts-conf-pills', true, tsConf, v => {
   tsConf = v;
   populateTeams(v);
   document.getElementById('chart-wrap').style.display = 'none';
@@ -1002,7 +1008,7 @@ function drawChart(rows, seasonFilter) {
   const H = 180;
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-  const CHART_MIN = -8, CHART_MAX = 8;
+  const CHART_MIN = -10, CHART_MAX = 10;
   const CTOP = 10, CBOT = 152;   // chart area; 152..178 reserved for x-axis
 
   const px = (i) => (i / (rows.length - 1)) * (W - 20) + 10;
@@ -1224,6 +1230,7 @@ buildPillsFromOpts('history-world-pills', HISTORY_WORLD, historyTourny, onHistor
 // table renders - avoids a double-render flash on initial page load.
 (async () => {
   await loadTeamsIndex();
+  populateTeams(tsConf);
   renderLeagueHistory(historyTourny);
   initStandings();
   loadChampions();
