@@ -2,7 +2,7 @@ name: Update ICHIRO Ratings
 
 on:
   schedule:
-    - cron: '47 9 * * *'  # 09:47 UTC daily — Wikipedia source, not rate-limited
+    - cron: '47 9 * * *'  # 09:47 UTC daily - Wikipedia source, not rate-limited
   workflow_dispatch:
 
 permissions:

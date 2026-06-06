@@ -212,7 +212,7 @@ def _parse_score(raw):
     """Parse 'A–B' (en-dash or hyphen) from a score cell; return (a, b) ints."""
     clean = raw.replace("'''", "")
     clean = re.sub(r"\[\[[^\]]*\|", "", clean).replace("[[", "").replace("]]", "")
-    m = re.search(r"(\d+)\s*[–—\-]\s*(\d+)", clean)
+    m = re.search(r"(\d+)\s*[–-\-]\s*(\d+)", clean)
     if not m:
         return None, None
     return int(m.group(1)), int(m.group(2))
@@ -278,7 +278,7 @@ def parse_bb_res(wikitext, tournament, season):
 # ------------------------------------------------------------
 # Named fields. Road/Home hold {{bb|..}} or {{#invoke:flag|bb|..}}; RoadAbr/
 # HomeAbr give the code directly (preferred). RR / HR are total runs (RR=road,
-# HR or RR-home). Beware RoadHR / HomeHR (home-run hitters) — must NOT match HR.
+# HR or RR-home). Beware RoadHR / HomeHR (home-run hitters) - must NOT match HR.
 
 def _linescore_field(block, key):
     """Extract |Key=value (value up to next top-level |Field= or closing }})."""
@@ -602,7 +602,7 @@ def parse_schedule_tables(wikitext, tournament, season):
                 continue
             flags = re.findall(r"\{\{\s*flag(?:icon|country|)?\s*\|\s*([^}|]+)", rb, re.I)
             body = re.sub(r"\{\{[^{}]*\}\}", " ", rb)
-            sc = re.search(r"(\d+)\s*[-–—]\s*(\d+)", body)
+            sc = re.search(r"(\d+)\s*[-–-]\s*(\d+)", body)
             if cur_date and len(flags) >= 2 and sc:
                 a = _team_token_to_code("{{flagicon|%s}}" % flags[0])
                 b = _team_token_to_code("{{flagicon|%s}}" % flags[1])

@@ -1,5 +1,5 @@
 """
-generate_data.py — reads ichiro_ratings.csv + all_games.csv + tournament_podiums.csv
+generate_data.py - reads ichiro_ratings.csv + all_games.csv + tournament_podiums.csv
 and writes the JSON the ICHIRO web frontend (a MESSI-clone single-page app)
 consumes. Run after ichiro.py. Outputs to docs/data/.
 
@@ -14,7 +14,7 @@ Emits the MESSI JSON contract so the ported index.html works unchanged:
 
 Sport adaptation vs MESSI:
   - confederations are display-only regions: Asia / Americas / Europe / Africa / Oceania
-  - margins are "runs" (baseball), no draws — W-L records only
+  - margins are "runs" (baseball), no draws - W-L records only
   - "League History" tab becomes a "Tournaments" tab built from champions.json,
     one row per edition (Gold / Silver / Bronze) with cumulative medal counts,
     each medalist's rating/rank at that edition's final snapshot, and that
@@ -87,7 +87,7 @@ COUNTRY_TO_ISO = {
     # Minor nations that appear in the ratings via raw codes (see CODE_FIXUP)
     "Croatia": "HR", "France": "FR", "Germany": "DE", "Russia": "RU",
     "Sweden": "SE",
-    # Netherlands Antilles (AHO) is defunct — no flag emoji.
+    # Netherlands Antilles (AHO) is defunct - no flag emoji.
 }
 
 CONFEDERATION = {
@@ -175,7 +175,7 @@ podiums["team"] = podiums["team"].map(canon_name)
 # ── W-L record over the rating WINDOW, AS OF a snapshot date (no draws) ───────
 # Each snapshot shows its team's W-L over the WINDOW_YEARS ending at THAT
 # snapshot's date, so a historical season file shows the record that produced
-# its rating — not a global present-day window (which would, e.g., show a
+# its rating - not a global present-day window (which would, e.g., show a
 # nation as 0-0 in an old file just because it has no recent games).
 # WINDOW_YEARS must match ichiro.py's window.
 WINDOW_YEARS = 4
@@ -203,7 +203,7 @@ def record_str(name, as_of):
     return f"{w}-{(hi - lo) - w}"
 
 
-# ── Last game per (team, date) — the game that produced each snapshot ────────
+# ── Last game per (team, date) - the game that produced each snapshot ────────
 # For each team, the most recent game on/before a given snapshot date. Built as
 # a sorted per-team list so a bisect-style scan resolves the snapshot's row.
 team_games = {}  # team -> [(date, "W 6-4 vs. Netherlands (Olympics)")]
@@ -229,7 +229,7 @@ def last_game_asof(team, asof_date):
 
 
 # ============================================================
-# PODIUMS — per-edition gold/silver/bronze come straight from the podium table.
+# PODIUMS - per-edition gold/silver/bronze come straight from the podium table.
 # (Unlike CARMELO we don't have to walk the bracket: ICHIRO ships a curated
 # tournament_podiums.csv with finish positions per edition.)
 # ============================================================
@@ -285,7 +285,7 @@ def finishes_for(name, year):
 
 
 # ============================================================
-# TOURNAMENT FINAL DATES (per tournament+year) — labels, GOAT + year anchors
+# TOURNAMENT FINAL DATES (per tournament+year) - labels, GOAT + year anchors
 # ============================================================
 # In-progress gate (see [[feedback-in-progress-season-gate]]): only assign a
 # "final date" to a tournament edition that has actually concluded. A naive
@@ -443,7 +443,7 @@ print(f"  {len(all_seasons)} season files + seasons_index.json")
 
 
 # ============================================================
-# 2) CURRENT STANDINGS (latest snapshot) — compatibility output
+# 2) CURRENT STANDINGS (latest snapshot) - compatibility output
 # ============================================================
 latest_id = int(df["ranking_id"].max())
 latest = df[(df["ranking_id"] == latest_id) & df["eligible"]].sort_values("rank")
@@ -460,13 +460,13 @@ print(f"  current_standings.json: {len(standings)} teams as of {latest_date}")
 
 
 # ============================================================
-# 3) GOAT TABLE — top single-snapshot ratings at FLAGSHIP finals
+# 3) GOAT TABLE - top single-snapshot ratings at FLAGSHIP finals
 # ============================================================
 print("Writing goat_teams.json...")
 # Eligibility: medaled (1st/2nd/3rd) in a FLAGSHIP tournament (WBC or Olympics)
 # that year. Anchor the rating at THAT tournament's final date. Premier12 +
 # Baseball World Cup still feed the rolling rating but do NOT anchor a GOAT
-# entry — this dedupes to one entry per team per flagship edition and drops the
+# entry - this dedupes to one entry per team per flagship edition and drops the
 # overlapping-window clusters from non-flagship years. Mirrors MESSI's logic.
 eligible_podiums = []  # (name, year, tournament)
 for (tour, season), res in edition_results.items():
@@ -586,7 +586,7 @@ print(f"  teams_index.json + {len(teams_index)} team files")
 
 
 # ============================================================
-# 4b) CHAMPIONS TABLE (per tournament edition) — Tournaments tab
+# 4b) CHAMPIONS TABLE (per tournament edition) - Tournaments tab
 # ============================================================
 # Emits the MESSI champions.json contract, grouped by tournament, editions
 # newest-first. Each medalist cell carries:
@@ -597,7 +597,7 @@ print(f"  teams_index.json + {len(teams_index)} team files")
 # pre_rated (UI renders dashes + † footnote, mirroring MESSI).
 print("Writing champions.json...")
 
-# Final-day rating/rank lookup keyed by (name, date_str) — reuse the GOAT index.
+# Final-day rating/rank lookup keyed by (name, date_str) - reuse the GOAT index.
 _df_str = df.copy()
 _df_str["_date_str"] = _df_str["date"].astype(str)
 _champ_idx = _df_str.set_index(["name", "_date_str"])
