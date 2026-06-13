@@ -26,6 +26,7 @@ Sport adaptation vs MESSI:
 
 import json
 import os
+import glob
 import re
 import bisect
 import pandas as pd
@@ -348,6 +349,7 @@ ANCHOR_PRIORITY = [
     ("Baseball World Cup",     "End of Baseball World Cup"),
 ]
 
+_CURRENT_YEAR = datetime.now(timezone.utc).year  # in-progress-year gate
 team_year_anchor = {}
 for (name, year_f), last_game in team_year_last_game.items():
     year = int(year_f)
@@ -358,7 +360,7 @@ for (name, year_f), last_game in team_year_last_game.items():
             chosen = (tournament_final_date[(tour, year)], label)
             break
     if chosen is None:
-        chosen = (last_game, "End of year")
+        chosen = (last_game, "End of year" if year < _CURRENT_YEAR else "Current")
     team_year_anchor[(name, year)] = chosen
 
 df["is_year_anchor"] = 0
@@ -582,6 +584,15 @@ for name in all_names:
 
 teams_index.sort(key=lambda x: x["name"])
 jdump(teams_index, os.path.join(DATA, "teams_index.json"))
+# Prune orphaned team files: when the data source renames an entity (e.g.
+# 'China PR' -> 'China') or drops one, the old-slug file lingers - unreachable
+# from the UI (not in teams_index) but serving frozen stale data. Remove any
+# team file whose slug is no longer in the live index.
+_live_team_files = {f"{t['slug']}.json" for t in teams_index}
+for _f in glob.glob(os.path.join(TEAMS, "*.json")):
+    if os.path.basename(_f) not in _live_team_files:
+        os.remove(_f)
+        print(f"  Pruned orphaned team file: {os.path.basename(_f)}")
 print(f"  teams_index.json + {len(teams_index)} team files")
 
 
