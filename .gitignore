@@ -3,3 +3,6 @@ __pycache__/
 .DS_Store
 *.bak
 _podiums_autoderived_debug.csv
+
+# Engine-migration backup snapshots (never commit)
+*-bak
