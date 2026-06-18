@@ -264,8 +264,13 @@ def prepare_games():
     df["home_runs"] = df["home_runs"].astype(int)
     df["road_runs"] = df["road_runs"].astype(int)
 
-    # Drop ties (baseball has no ties; a 0-margin row is a data error)
-    df = df[df["home_runs"] != df["road_runs"]].copy()
+    # KEEP ties: international baseball CAN tie (called / curfewed games) - e.g.
+    # CHN 0-0 KOR (2008 Olympics), NED 1-1 AUS (2011 Baseball World Cup). A tie
+    # between mismatched teams is signal, and with HCA=0 (all neutral) a tie is
+    # exactly adj_margin == 0 - the old "0-margin = data error" drop was the same
+    # vestigial bug that broke MESSI. Only 2 such games exist (both pre-2012).
+    # Removed 2026-06-18.
+    df = df.copy()
 
     if "tier" not in df.columns:
         df["tier"] = df["tournament"].map(TIER_WEIGHTS).fillna(1.0)
