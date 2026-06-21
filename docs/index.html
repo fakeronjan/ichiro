@@ -185,7 +185,9 @@
     font-weight: 700;
     font-variant-numeric: tabular-nums;
     color: #1a6b8a;
+    text-align: center;
   }
+  thead th.col-num { text-align: center; }
   .rating-bar-wrap {
     display: flex;
     flex-direction: column;
@@ -839,8 +841,8 @@ function renderStandings() {
   document.getElementById('standings-table-wrap').innerHTML = `
     <table>
       <thead><tr>
-        <th>OVR #</th><th class="col-hide-mobile">Conf #</th>
-        <th>Country</th><th>Conf</th><th>W-L</th><th>Rating</th>
+        <th class="col-num">OVR #</th><th class="col-hide-mobile col-num">Conf #</th>
+        <th>Country</th><th>Conf</th><th>W-L</th><th class="col-num">Rating</th>
         <th>Last Game</th>
         <th class="col-hide-mobile">Date</th>
         <th class="col-hide-mobile">Honors</th>
@@ -1000,8 +1002,8 @@ function renderTeamTable() {
     <table>
       <thead><tr>
         <th style="text-align:center">Year</th><th>Date</th><th>Last Game</th>
-        <th>OVR #</th><th class="col-hide-mobile">Conf #</th>
-        <th>Rating</th>
+        <th class="col-num">OVR #</th><th class="col-hide-mobile col-num">Conf #</th>
+        <th class="col-num">Rating</th>
         <th class="col-hide-mobile">Conf</th>
         <th class="col-hide-mobile">Honors</th>
       </tr></thead>
@@ -1193,17 +1195,17 @@ function renderLeagueHistory(league) {
       <thead><tr>
         <th>Year</th>
         <th class="col-champ">Gold</th>
-        <th class="col-champ col-hide-mobile">OVR #</th>
-        <th class="col-champ col-hide-mobile">Conf #</th>
-        <th class="col-champ">Rating</th>
+        <th class="col-champ col-hide-mobile col-num">OVR #</th>
+        <th class="col-champ col-hide-mobile col-num">Conf #</th>
+        <th class="col-champ col-num">Rating</th>
         <th class="col-ru">Silver</th>
-        <th class="col-ru col-hide-mobile">OVR #</th>
-        <th class="col-ru col-hide-mobile">Conf #</th>
-        <th class="col-ru">Rating</th>
+        <th class="col-ru col-hide-mobile col-num">OVR #</th>
+        <th class="col-ru col-hide-mobile col-num">Conf #</th>
+        <th class="col-ru col-num">Rating</th>
         <th class="col-ru">Bronze</th>
-        <th class="col-ru col-hide-mobile">OVR #</th>
-        <th class="col-ru col-hide-mobile">Conf #</th>
-        <th class="col-ru">Rating</th>
+        <th class="col-ru col-hide-mobile col-num">OVR #</th>
+        <th class="col-ru col-hide-mobile col-num">Conf #</th>
+        <th class="col-ru col-num">Rating</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>
@@ -1252,7 +1254,7 @@ function renderGoat() {
         <th style="text-align:center">All time rank</th>
         <th style="text-align:center">Year</th>
         <th>Country</th><th>Conf</th>
-        <th>Rating</th>
+        <th class="col-num">Rating</th>
         <th class="col-hide-mobile">Honors</th>
       </tr></thead>
       <tbody>${rows}</tbody>
