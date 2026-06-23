@@ -624,6 +624,7 @@ async function teamLinkClick(slug, season) {
   buildPillsFromOpts('ts-view-pills', [
     { value: 'cross',  label: 'Yearly summary' },
     { value: 'single', label: 'All games within one year' },
+    { value: 'wbc',    label: 'WBC' },
   ], tsView, v => {
     tsView = v;
     document.getElementById('season-select').style.display   = (v === 'single') ? '' : 'none';
@@ -902,6 +903,7 @@ buildConfPills('ts-conf-pills', true, tsConf, v => {
 buildPillsFromOpts('ts-view-pills', [
   { value: 'cross',  label: 'Yearly summary' },
   { value: 'single', label: 'All games within one year' },
+  { value: 'wbc',    label: 'WBC' },
 ], tsView, v => {
   tsView = v;
   document.getElementById('season-select').style.display   = (v === 'single') ? '' : 'none';
@@ -941,6 +943,26 @@ async function loadTeam(slug) {
   renderTeamTable();
 }
 
+// WBC finish medal on its own line atop the record cell: 👑 champion,
+// 🥈 runner-up, 🥉 third. Mirrors finishBadge's glyphs.
+function wbcMedal(finishes) {
+  const w = (finishes || []).find(x => x.tournament === 'WBC');
+  if (!w) return '';
+  return w.finish === 1 ? '👑' : w.finish === 2 ? '🥈' : w.finish === 3 ? '🥉' : '';
+}
+
+// WBC edition record cell, top to bottom: finish medal on its own line
+// (omitted with no top-3 / in progress), POOL W-L (primary), KNOCKOUT W-L
+// (dimmed sub-line, omitted before the knockout round). Baseball has no
+// draws/points, so records are plain W-L.
+function fmtWbcRecord(r, finishes) {
+  if (!r) return '0-0';
+  const e = wbcMedal(finishes);
+  const medalLine = e ? `<div style="line-height:1.3">${e}</div>` : '';
+  const koLine = (r.k_w + r.k_l) ? `<div style="font-size:10px;color:#888;font-weight:400;line-height:1.2">${r.k_w}-${r.k_l}</div>` : '';
+  return `${medalLine}${r.p_w}-${r.p_l}${koLine}`;
+}
+
 function renderTeamTable() {
   const slug = document.getElementById('team-select').value;
   if (!slug || !teamCache[slug]) return;
@@ -960,6 +982,19 @@ function renderTeamTable() {
         prevLastMatch = g.last_match;
       });
     });
+  } else if (tsView === 'wbc') {
+    seasonFilter = 'all';
+    seasons.forEach(s => {
+      data.seasons[s].forEach(g => {
+        if (g.wbc_record) rows.push({...g, season: s});
+      });
+    });
+    if (rows.length === 0) {
+      document.getElementById('chart-wrap').style.display = 'none';
+      document.getElementById('team-table-wrap').innerHTML =
+        '<p class="loading">No World Baseball Classic appearances in the rating era.</p>';
+      return;
+    }
   } else {
     seasonFilter = 'all';
     seasons.forEach(s => {
@@ -989,23 +1024,27 @@ function renderTeamTable() {
     return `<tr>
     <td class="linked" data-season-link="${g.season}" data-target-conf="${targetConf}" style="font-size:11px;color:#555;text-align:center">${seasonCell}</td>
     <td style="white-space:nowrap;color:#888;font-size:12px">${dateCell}</td>
-    <td class="last-match-cell">${renderLastMatch(g.last_match, g.season, !!g._isStale)}</td>
+    ${tsView === 'wbc'
+      ? `<td class="last-match-cell" style="white-space:normal">${((g.wbc_record && g.wbc_record.matches) || []).slice().reverse().map(mm => { const opp = (mm.r != null) ? ` <span style="color:#999;font-size:0.85em">(#${mm.r}, ${mm.g.toFixed(2)})</span>` : ''; return `<div>${renderLastMatch(mm.s, g.season, false)}${opp}</div>`; }).join('')}</td>`
+      : `<td class="last-match-cell">${renderLastMatch(g.last_match, g.season, !!g._isStale)}</td>`}
+    ${tsView === 'wbc' ? `<td style="font-variant-numeric:tabular-nums;white-space:nowrap">${fmtWbcRecord(g.wbc_record, g.tournament_finishes)}</td>` : ''}
     <td class="rank-cell">${g.rank}</td>
     <td class="rank-cell col-hide-mobile">${g.conf_rank != null ? g.conf_rank : '-'}</td>
     <td>${ratingBar(g.rating, _bs1)}</td>
     <td class="col-hide-mobile" style="font-size:11px">${confBadge(data.confederation, g.continental_winner)}</td>
-    <td class="col-hide-mobile" style="font-size:11px">${finishBadge(g.tournament_finishes)}</td>
+    ${tsView === 'wbc' ? '' : `<td class="col-hide-mobile" style="font-size:11px">${finishBadge(g.tournament_finishes)}</td>`}
   </tr>`;
   }).join('');
 
   document.getElementById('team-table-wrap').innerHTML = `
     <table>
       <thead><tr>
-        <th style="text-align:center">Year</th><th>Date</th><th>Last Game</th>
+        <th style="text-align:center">Year</th><th>Date</th><th>${tsView === 'wbc' ? 'Matches' : 'Last Game'}</th>
+        ${tsView === 'wbc' ? '<th>Pool W-L<div style="font-weight:400;font-size:0.82em;opacity:0.7;line-height:1.3;margin-top:1px">Knockout W-L</div></th>' : ''}
         <th class="col-num">OVR #</th><th class="col-hide-mobile col-num">Conf #</th>
         <th class="col-num">Rating</th>
         <th class="col-hide-mobile">Conf</th>
-        <th class="col-hide-mobile">Honors</th>
+        ${tsView === 'wbc' ? '' : '<th class="col-hide-mobile">Honors</th>'}
       </tr></thead>
       <tbody>${tableRows}</tbody>
     </table>`;

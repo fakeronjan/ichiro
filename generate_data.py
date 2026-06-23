@@ -535,6 +535,96 @@ print(f"  goat_teams.json: {len(goat_data)} teams")
 # 4) PER-TEAM JSON FILES + teams_index.json
 # ============================================================
 print("Writing per-team JSON files...")
+
+# ── World Baseball Classic per-edition record (pool + knockout split) ────────
+# Mirrors MESSI's WC view. Baseball has no draws, so records are plain W-L:
+# top line = POOL play, bottom line = KNOCKOUT. Knockout (single-elimination)
+# games come from the 'round' tags (semifinal/final/bronze - covers 2006-2017,
+# which had no quarterfinals) plus a Wikipedia-verified set for the editions
+# that added an untagged quarterfinal round (2023, 2026). Each match line also
+# carries the opponent's pre-match rank/rating. games team names are already
+# canonical full names here (mapped at load), matching the ratings `name`.
+from bisect import bisect_left
+
+_team_snaps = {}
+for _nm, _sub in df[["name", "date", "rank", "rating"]].dropna(subset=["date"]).groupby("name"):
+    _sub = _sub.sort_values("date")
+    _team_snaps[_nm] = (list(_sub["date"]), list(_sub["rank"]), list(_sub["rating"]))
+
+
+def opp_standing(opp, match_date):
+    """Opponent (rank, rating) as of just before match_date; None if unknown."""
+    snap = _team_snaps.get(opp)
+    if not snap:
+        return None
+    dates, ranks, ratings = snap
+    i = bisect_left(dates, match_date)
+    if i == 0:
+        return None
+    rk, rt = ranks[i - 1], ratings[i - 1]
+    if pd.isna(rk) or pd.isna(rt):
+        return None
+    return int(rk), round(float(rt), 2)
+
+
+# Knockout games whose round the scraper left untagged. Verified vs Wikipedia:
+# /wiki/2023_World_Baseball_Classic and /wiki/2026_World_Baseball_Classic.
+_WBC_KO_EXTRA = {
+    ("2023-03-15", frozenset({"Australia", "Cuba"})),          # QF (shares date with pool games)
+    ("2023-03-16", frozenset({"Italy", "Japan"})),             # QF
+    ("2023-03-17", frozenset({"Puerto Rico", "Mexico"})),      # QF
+    ("2023-03-18", frozenset({"United States", "Venezuela"})), # QF
+    ("2023-03-21", frozenset({"United States", "Japan"})),     # final (untagged)
+}
+
+
+def _wbc_is_knockout(date_str, home, away, rnd):
+    if isinstance(rnd, str) and rnd.strip() in ("semifinal", "final", "bronze"):
+        return True
+    if (date_str, frozenset({home, away})) in _WBC_KO_EXTRA:
+        return True
+    # 2026 added quarterfinals; pool play ended Mar 11, knockout ran Mar 13-17.
+    return "2026-03-13" <= date_str <= "2026-03-17"
+
+
+_wbc_team_games = {}
+for _, _g in games[games["tournament"] == "World Baseball Classic"].iterrows():
+    if pd.isna(_g["date"]) or pd.isna(_g["home_runs"]) or pd.isna(_g["road_runs"]):
+        continue
+    _yr = int(_g["season"])
+    _hr, _rr = int(_g["home_runs"]), int(_g["road_runs"])
+    _ds = str(_g["date"])
+    _ko = _wbc_is_knockout(_ds, _g["home_team"], _g["road_team"], _g.get("round"))
+    _neu = bool(_g.get("neutral"))
+    _wbc_team_games.setdefault((_g["home_team"], _yr), []).append(
+        {"date": _g["date"], "gf": _hr, "ga": _rr, "opp": _g["road_team"], "home": True, "neutral": _neu, "ko": _ko})
+    _wbc_team_games.setdefault((_g["road_team"], _yr), []).append(
+        {"date": _g["date"], "gf": _rr, "ga": _hr, "opp": _g["home_team"], "home": False, "neutral": _neu, "ko": _ko})
+
+_wbc_record = {}
+for (_team, _yr), _gl in _wbc_team_games.items():
+    _gl.sort(key=lambda m: m["date"])
+    _rec = {"p_w": 0, "p_l": 0, "k_w": 0, "k_l": 0}
+    _matches = []
+    for _m in _gl:
+        _gf, _ga = _m["gf"], _m["ga"]
+        _letter = "W" if _gf > _ga else "L"  # baseball: no ties
+        _venue = " vs. (N) " if _m["neutral"] else (" vs. " if _m["home"] else " @ ")
+        _st = opp_standing(_m["opp"], _m["date"])
+        _matches.append({"s": f"{_letter} {_gf}-{_ga}{_venue}{_m['opp']}",
+                         "r": _st[0] if _st else None, "g": _st[1] if _st else None})
+        _tgt = "k" if _m["ko"] else "p"
+        _rec[f"{_tgt}_w" if _gf > _ga else f"{_tgt}_l"] += 1
+    _rec["matches"] = _matches
+    _wbc_record[(_team, _yr)] = _rec
+
+
+def wbc_record(name, season):
+    if pd.isna(season):
+        return None
+    return _wbc_record.get((name, int(season)))
+
+
 team_data = df[(df["is_game_day"] == 1) | (df["is_end_of_season"] == 1) |
                (df["is_year_anchor"] == 1)].copy()
 team_data = team_data.sort_values(["name", "date"])
@@ -562,7 +652,7 @@ for name in all_names:
         if (name, int(season)) not in played_team_years:
             continue
         fin = finishes_for(name, season)
-        seasons[int(season)] = [
+        rows = [
             {
                 "date":                str(r["date"]),
                 "rating":              round2(r["rating"]),
@@ -578,6 +668,20 @@ for name in all_names:
             }
             for _, r in sdf.sort_values("date").iterrows()
         ]
+        # Attach the WBC edition record (the row the WBC view filters on).
+        # Completed editions: to the 'End of World Baseball Classic' anchor.
+        # In-progress (no anchor yet): to the latest snapshot, so it shows the
+        # current rating + record-so-far (medal keys off finishes, so none yet).
+        _wbc_rec = wbc_record(name, season)
+        if _wbc_rec and rows:
+            _anchors = [row for row in rows if row["year_anchor_label"] == "End of World Baseball Classic"]
+            if _anchors:
+                for row in _anchors:
+                    row["wbc_record"] = _wbc_rec
+            else:
+                rows[-1]["wbc_record"] = _wbc_rec
+                rows[-1]["wbc_in_progress"] = 1
+        seasons[int(season)] = rows
 
     jdump({"team": name, "flag": fl, "confederation": confed, "seasons": seasons},
           os.path.join(TEAMS, f"{team_slug}.json"))
