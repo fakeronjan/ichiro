@@ -1011,7 +1011,7 @@ function renderTeamTable() {
   // beneath the season number when it differs from the canonical (the
   // team page's identity). Stays out of the way for unchanged franchises.
   const canonical = data.team;
-  const _bs1 = barScale([...rows].reverse().map(g => g.rating));
+  const _bs1 = barScale([...rows].reverse().filter(g => g.rank != null).map(g => g.rating));
   const tableRows = [...rows].reverse().map(g => {
     const dateLabel = g.year_anchor_label || '';
     const dateCell = dateLabel
@@ -1028,9 +1028,9 @@ function renderTeamTable() {
       ? `<td class="last-match-cell" style="white-space:normal">${((g.wbc_record && g.wbc_record.matches) || []).slice().reverse().map(mm => { const opp = (mm.r != null) ? ` <span style="color:#999;font-size:0.85em">#${mm.r} · ${mm.g.toFixed(2)}</span>` : ''; return `<div>${renderLastMatch(mm.s, g.season, false)}${opp}</div>`; }).join('')}</td>`
       : `<td class="last-match-cell">${renderLastMatch(g.last_match, g.season, !!g._isStale)}</td>`}
     ${tsView === 'wbc' ? `<td style="font-variant-numeric:tabular-nums;white-space:nowrap">${fmtWbcRecord(g.wbc_record, g.tournament_finishes)}</td>` : ''}
-    <td class="rank-cell">${g.rank}</td>
+    <td class="rank-cell">${g.rank != null ? g.rank : '-'}</td>
     <td class="rank-cell col-hide-mobile">${g.conf_rank != null ? g.conf_rank : '-'}</td>
-    <td>${ratingBar(g.rating, _bs1)}</td>
+    <td>${g.rank != null ? ratingBar(g.rating, _bs1) : '<span style="color:#bbb">-</span>'}</td>
     <td class="col-hide-mobile" style="font-size:11px">${confBadge(data.confederation, g.continental_winner)}</td>
     ${tsView === 'wbc' ? '' : `<td class="col-hide-mobile" style="font-size:11px">${finishBadge(g.tournament_finishes)}</td>`}
   </tr>`;
