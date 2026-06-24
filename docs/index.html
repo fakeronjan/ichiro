@@ -161,7 +161,7 @@
   .team-cell { font-weight: 600; white-space: nowrap; }
   .record-cell { font-variant-numeric: tabular-nums; color: #555; white-space: nowrap; }
 
-  /* Clickable cells - deep-link to Team Summary / Standings */
+  /* Clickable cells - deep-link to Country Summary / Standings */
   .linked { cursor: pointer; }
   .linked:hover { text-decoration: underline; }
   .team-cell.linked, .team-link.linked { color: #1a6b8a; }
@@ -411,7 +411,7 @@
 
 <nav>
   <button class="active" data-tab="standings">Standings</button>
-  <button data-tab="team-summary">Team Summary</button>
+  <button data-tab="team-summary">Country Summary</button>
   <button data-tab="league-history">Tournaments</button>
   <button data-tab="goat">GOAT Table</button>
 </nav>
@@ -547,7 +547,7 @@ function confederationBadge(confed, wonContinental) {
 }
 
 function confBadge(conf, wonContinental) {
-  // Team Summary uses a simpler gold-pill / plain-pill (no per-confederation color)
+  // Country Summary uses a simpler gold-pill / plain-pill (no per-confederation color)
   if (!conf) return '';
   if (wonContinental) {
     return `<span class="finish-badge finish-champion" title="${conf} Continental Champion">${conf} 🏆</span>`;
@@ -861,7 +861,7 @@ buildConfPills('standings-conf-pills', true, standingsConf, v => {
   renderStandings();
 });
 
-// ── Team Summary ─────────────────────────────────────────────────────────────
+// ── Country Summary ─────────────────────────────────────────────────────────────
 async function loadTeamsIndex() {
   try {
     const res = await fetch(`${BASE}/teams_index.json`);
