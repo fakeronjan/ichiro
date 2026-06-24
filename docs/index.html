@@ -583,7 +583,7 @@ function resultClass(match, isStale) {
 
 // ICHIRO format: "W 6-1 vs. Venezuela (WBSC Premier12)" - full tournament tag
 // preserved. Opponent country names match teamsIndex; they become deep-links.
-function renderLastMatch(raw, season, isStale) {
+function renderLastMatch(raw, season, isStale, tsViewLink) {
   const display = displayMatch(raw);
   if (!display) return '-';
   const rc = resultClass(raw, isStale);
@@ -592,14 +592,14 @@ function renderLastMatch(raw, season, isStale) {
   const [, letter, score, venue, opponent, comp] = m;
   const slug = nameToSlug[opponent.trim()];
   const oppHtml = slug
-    ? `<span class="team-link linked" data-team-slug="${slug}" data-season="${season}">${opponent}</span>`
+    ? `<span class="team-link linked" data-team-slug="${slug}" data-season="${season}"${tsViewLink ? ` data-ts-view="${tsViewLink}"` : ''}>${opponent}</span>`
     : opponent;
   const compStr = comp ? ` ${comp}` : '';
   return `<span class="${rc}">${letter} ${score} ${venue} ${oppHtml}${compStr}</span>`;
 }
 
 // ── Deep-link handlers ──────────────────────────────────────────────────────
-async function teamLinkClick(slug, season) {
+async function teamLinkClick(slug, season, viewOverride) {
   if (!slug) return;
   if (!teamsIndex) await loadTeamsIndex();
   const t = teamsIndex.find(x => x.slug === slug);
@@ -619,8 +619,9 @@ async function teamLinkClick(slug, season) {
   });
   populateTeams(tsConf);
   document.getElementById('team-select').value = slug;
-  const wantSingle = season != null && season !== '';
-  tsView = wantSingle ? 'single' : 'cross';
+  const isTourneyView = viewOverride && viewOverride !== 'single' && viewOverride !== 'cross';
+  const wantSingle = !isTourneyView && season != null && season !== '';
+  tsView = isTourneyView ? viewOverride : (wantSingle ? 'single' : 'cross');
   buildPillsFromOpts('ts-view-pills', [
     { value: 'cross',  label: 'Yearly summary' },
     { value: 'single', label: 'All games within one year' },
@@ -631,8 +632,8 @@ async function teamLinkClick(slug, season) {
     document.getElementById('date-type-select').style.display = (v === 'cross')  ? '' : 'none';
     renderTeamTable();
   });
-  document.getElementById('season-select').style.display    = wantSingle ? '' : 'none';
-  document.getElementById('date-type-select').style.display = wantSingle ? 'none' : '';
+  document.getElementById('season-select').style.display    = (tsView === 'single') ? '' : 'none';
+  document.getElementById('date-type-select').style.display = (tsView === 'cross')  ? '' : 'none';
   await loadTeam(slug);
   if (wantSingle) {
     const sel = document.getElementById('season-select');
@@ -675,7 +676,7 @@ function attachLinks() {
   document.querySelectorAll('.team-cell.linked, .team-link.linked').forEach(el => {
     el.addEventListener('click', (e) => {
       e.stopPropagation();
-      teamLinkClick(el.dataset.teamSlug, el.dataset.season);
+      teamLinkClick(el.dataset.teamSlug, el.dataset.season, el.dataset.tsView);
     });
   });
   document.querySelectorAll('[data-season-link].linked').forEach(el => {
@@ -1025,7 +1026,7 @@ function renderTeamTable() {
     <td class="linked" data-season-link="${g.season}" data-target-conf="${targetConf}" style="font-size:11px;color:#555;text-align:center">${seasonCell}</td>
     <td style="white-space:nowrap;color:#888;font-size:12px">${dateCell}</td>
     ${tsView === 'wbc'
-      ? `<td class="last-match-cell" style="white-space:normal">${((g.wbc_record && g.wbc_record.matches) || []).slice().reverse().map(mm => { const opp = (mm.r != null) ? ` <span style="color:#999;font-size:0.85em">#${mm.r} · ${mm.g.toFixed(2)}</span>` : ''; return `<div>${renderLastMatch(mm.s, g.season, false)}${opp}</div>`; }).join('')}</td>`
+      ? `<td class="last-match-cell" style="white-space:normal">${((g.wbc_record && g.wbc_record.matches) || []).slice().reverse().map(mm => { const opp = (mm.r != null) ? ` <span style="color:#999;font-size:0.85em">#${mm.r} · ${mm.g.toFixed(2)}</span>` : ''; return `<div>${renderLastMatch(mm.s, g.season, false, tsView)}${opp}</div>`; }).join('')}</td>`
       : `<td class="last-match-cell">${renderLastMatch(g.last_match, g.season, !!g._isStale)}</td>`}
     ${tsView === 'wbc' ? `<td style="font-variant-numeric:tabular-nums;white-space:nowrap">${fmtWbcRecord(g.wbc_record, g.tournament_finishes)}</td>` : ''}
     <td class="rank-cell">${g.rank != null ? g.rank : '-'}</td>
