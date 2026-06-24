@@ -544,7 +544,7 @@ print("Writing per-team JSON files...")
 # that added an untagged quarterfinal round (2023, 2026). Each match line also
 # carries the opponent's pre-match rank/rating. games team names are already
 # canonical full names here (mapped at load), matching the ratings `name`.
-from bisect import bisect_left
+from bisect import bisect_left, bisect_right
 
 _team_snaps = {}
 for _nm, _sub in df[["name", "date", "rank", "rating"]].dropna(subset=["date"]).groupby("name"):
@@ -552,19 +552,27 @@ for _nm, _sub in df[["name", "date", "rank", "rating"]].dropna(subset=["date"]).
     _team_snaps[_nm] = (list(_sub["date"]), list(_sub["rank"]), list(_sub["rating"]))
 
 
-def opp_standing(opp, match_date):
-    """Opponent (rank, rating) as of just before match_date; None if unknown."""
-    snap = _team_snaps.get(opp)
+def country_standing(country, match_date, inclusive=False):
+    """A country's (rank, rating) relative to match_date; None if unknown.
+    inclusive=False -> latest snapshot strictly BEFORE the date (going-in value);
+    inclusive=True  -> latest snapshot ON or before the date (the game-day update,
+    i.e. the post-game value once that day's result is baked in)."""
+    snap = _team_snaps.get(country)
     if not snap:
         return None
     dates, ranks, ratings = snap
-    i = bisect_left(dates, match_date)
+    i = bisect_right(dates, match_date) if inclusive else bisect_left(dates, match_date)
     if i == 0:
         return None
     rk, rt = ranks[i - 1], ratings[i - 1]
     if pd.isna(rk) or pd.isna(rt):
         return None
     return int(rk), round(float(rt), 2)
+
+
+def opp_standing(opp, match_date):
+    """Opponent (rank, rating) as of just before match_date; None if unknown."""
+    return country_standing(opp, match_date, inclusive=False)
 
 
 # Knockout games whose round the scraper left untagged. Verified vs Wikipedia:
@@ -612,10 +620,24 @@ for (_team, _yr), _gl in _wbc_team_games.items():
         _venue = " vs. (N) " if _m["neutral"] else (" vs. " if _m["home"] else " @ ")
         _st = opp_standing(_m["opp"], _m["date"])
         _matches.append({"s": f"{_letter} {_gf}-{_ga}{_venue}{_m['opp']}",
-                         "r": _st[0] if _st else None, "g": _st[1] if _st else None})
+                         "r": _st[0] if _st else None, "g": _st[1] if _st else None,
+                         "d": f"{_m['date'].month:02d}-{_m['date'].day:02d}"})
         _tgt = "k" if _m["ko"] else "p"
         _rec[f"{_tgt}_w" if _gf > _ga else f"{_tgt}_l"] += 1
     _rec["matches"] = _matches
+    # The selected team's OWN rank/rating walk across the edition: N+1 boundary
+    # standings in date order - index 0 is pre-tournament (strictly before the
+    # first game), index i+1 is the post-game standing after game i. Mirrors
+    # 'matches' so the frontend can render an offset stairstep beside it; the
+    # final entry equals the end-of-tournament headline rating. {r, g} = rank,
+    # rating (None,None when no snapshot exists, e.g. a country's WBC debut).
+    _walk = []
+    _pre = country_standing(_team, _gl[0]["date"], inclusive=False)
+    _walk.append({"r": _pre[0], "g": _pre[1]} if _pre else {"r": None, "g": None})
+    for _m in _gl:
+        _ws = country_standing(_team, _m["date"], inclusive=True)
+        _walk.append({"r": _ws[0], "g": _ws[1]} if _ws else {"r": None, "g": None})
+    _rec["team_walk"] = _walk
     _wbc_record[(_team, _yr)] = _rec
 
 

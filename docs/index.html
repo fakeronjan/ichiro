@@ -964,6 +964,52 @@ function fmtWbcRecord(r, finishes) {
   return `${medalLine}${r.p_w}-${r.p_l}${koLine}`;
 }
 
+// World Baseball Classic view: the selected country's OWN rank·rating walk
+// across the edition, rendered as an offset "stairstep" beside the game list.
+// The walk has N+1 boundary nodes (pre-tournament .. post-final) for N games.
+// Both columns use fixed WC_ROW-tall rows; the games cell is pushed down half a
+// row (wcMatchesCell) so each game lands in the GAP between the two walk nodes
+// it sits between - the node below a game is the rating going IN, the node above
+// is the rating coming OUT. Per-node delta is measured against the
+// chronologically prior boundary: teal for a rating gain, pink for a drop
+// (mirrors the season chart's +D/-D palette); the arrow shows rank movement.
+const WC_ROW = 30;  // px - fixed height of every walk node AND game row
+const WC_PAD = 9;   // px - shared top baseline (tbody td default); set inline on
+                    // BOTH cells so the half-row offset is exact and mobile-proof
+function wcWalkCell(walk) {
+  const nodes = (walk || []).slice().reverse();   // top = end of WBC, bottom = pre-WBC
+  const html = nodes.map((w, d) => {
+    const below = nodes[d + 1];                    // the chronologically earlier boundary
+    let delta = '';
+    if (below && w.g != null && below.g != null) {
+      const dr = +(w.g - below.g).toFixed(2);
+      const dk = (below.r != null && w.r != null) ? below.r - w.r : null;  // + => rank improved
+      const arrow = dk == null ? '' : dk > 0 ? `▲${dk}` : dk < 0 ? `▼${-dk}` : '–';
+      const col = dr > 0 ? '#1a6b8a' : dr < 0 ? '#ff6eb4' : '#aaa';
+      delta = `<span style="color:${col};font-size:0.82em;margin-left:5px">${arrow} ${dr > 0 ? '+' : ''}${dr.toFixed(2)}</span>`;
+    }
+    const val = (w.r != null)
+      ? `<span style="font-variant-numeric:tabular-nums">#${w.r} · ${w.g.toFixed(2)}</span>`
+      : '<span style="color:#bbb">–</span>';
+    return `<div style="height:${WC_ROW}px;display:flex;align-items:center;white-space:nowrap">${val}${delta}</div>`;
+  }).join('');
+  return `<td style="white-space:nowrap;vertical-align:top;font-size:12px;color:#555;padding-top:${WC_PAD}px">${html}</td>`;
+}
+
+function wcMatchesCell(g) {
+  const ms = ((g.wbc_record && g.wbc_record.matches) || []).slice().reverse();
+  const html = ms.map(mm => {
+    const date = mm.d ? `<span style="color:#999;font-size:0.85em;margin-right:8px;font-variant-numeric:tabular-nums">${mm.d}</span>` : '';
+    const opp = (mm.r != null) ? ` <span style="color:#999;font-size:0.85em">#${mm.r} · ${mm.g.toFixed(2)}</span>` : '';
+    // Wrap game + opp in ONE inline span: in this flex row a bare whitespace
+    // text node between two flex items is dropped, which would kill the space
+    // before the opponent rank. Inside a single span it renders normally.
+    return `<div style="height:${WC_ROW}px;display:flex;align-items:center;white-space:nowrap">${date}<span>${renderLastMatch(mm.s, g.season, false, 'wbc')}${opp}</span></div>`;
+  }).join('');
+  // baseline + half a row offsets the games DOWN so each lands between two walk nodes
+  return `<td class="last-match-cell" style="padding-top:${WC_PAD + WC_ROW / 2}px;vertical-align:top">${html}</td>`;
+}
+
 function renderTeamTable() {
   const slug = document.getElementById('team-select').value;
   if (!slug || !teamCache[slug]) return;
@@ -1024,9 +1070,9 @@ function renderTeamTable() {
       : g.season;
     return `<tr>
     <td class="linked" data-season-link="${g.season}" data-target-conf="${targetConf}" style="font-size:11px;color:#555;text-align:center">${seasonCell}</td>
-    <td style="white-space:nowrap;color:#888;font-size:12px">${dateCell}</td>
+    ${tsView === 'wbc' ? '' : `<td style="white-space:nowrap;color:#888;font-size:12px">${dateCell}</td>`}
     ${tsView === 'wbc'
-      ? `<td class="last-match-cell" style="white-space:normal">${((g.wbc_record && g.wbc_record.matches) || []).slice().reverse().map(mm => { const opp = (mm.r != null) ? ` <span style="color:#999;font-size:0.85em">#${mm.r} · ${mm.g.toFixed(2)}</span>` : ''; return `<div>${renderLastMatch(mm.s, g.season, false, tsView)}${opp}</div>`; }).join('')}</td>`
+      ? wcWalkCell(g.wbc_record && g.wbc_record.team_walk) + wcMatchesCell(g)
       : `<td class="last-match-cell">${renderLastMatch(g.last_match, g.season, !!g._isStale)}</td>`}
     ${tsView === 'wbc' ? `<td style="font-variant-numeric:tabular-nums;white-space:nowrap">${fmtWbcRecord(g.wbc_record, g.tournament_finishes)}</td>` : ''}
     <td class="rank-cell">${g.rank != null ? g.rank : '-'}</td>
@@ -1040,10 +1086,12 @@ function renderTeamTable() {
   document.getElementById('team-table-wrap').innerHTML = `
     <table>
       <thead><tr>
-        <th style="text-align:center">Year</th><th>Date</th><th>${tsView === 'wbc' ? 'Games<div style="font-weight:400;font-size:0.82em;opacity:0.7;line-height:1.3;margin-top:1px">opponent rank · rating prior to game</div>' : 'Last Game'}</th>
+        <th style="text-align:center">Year</th>${tsView === 'wbc' ? '' : '<th>Date</th>'}
+        ${tsView === 'wbc' ? '<th style="white-space:nowrap">Rating Evolution<div style="font-weight:400;font-size:0.82em;opacity:0.7;line-height:1.3;margin-top:1px">Rank · Rating</div></th>' : ''}
+        <th>${tsView === 'wbc' ? 'Games<div style="font-weight:400;font-size:0.82em;opacity:0.7;line-height:1.3;margin-top:1px">opponent rank · rating prior to game</div>' : 'Last Game'}</th>
         ${tsView === 'wbc' ? '<th>Pool W-L<div style="font-weight:400;font-size:0.82em;opacity:0.7;line-height:1.3;margin-top:1px">Knockout W-L</div></th>' : ''}
         <th class="col-num">OVR #</th><th class="col-hide-mobile col-num">Conf #</th>
-        <th class="col-num">Rating</th>
+        <th class="col-num">${tsView === 'wbc' ? 'Final<br>Rating' : 'Rating'}</th>
         <th class="col-hide-mobile">Conf</th>
         ${tsView === 'wbc' ? '' : '<th class="col-hide-mobile">Honors</th>'}
       </tr></thead>
