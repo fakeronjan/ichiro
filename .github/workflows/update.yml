@@ -1,8 +1,8 @@
 name: Update ICHIRO Ratings
 
+# Mothballed 2026-10-15: no schedule (droplet dispatch removed too).
+# Revive: re-add a schedule here and a line in /opt/fleet-dispatch/crontab.
 on:
-  schedule:
-    - cron: '47 12 * * *'  # backstop, 12:47 UTC. The droplet (157.245.209.249) dispatches this at 09:47 UTC; GitHub's own cron starts hours late, see /opt/fleet-dispatch there
   workflow_dispatch:
 
 permissions:
